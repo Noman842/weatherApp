@@ -24,7 +24,7 @@ const HomeWeather = () => {
     }, [])
 
     const getCurrentLocation = () => {
-        console.log('Test')
+        console.log('Maps Added')
         Geolocation.getCurrentPosition(
             (pos) => {
                 console.log('Your Cords', pos);
