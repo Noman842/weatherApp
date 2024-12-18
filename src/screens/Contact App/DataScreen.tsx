@@ -5,6 +5,10 @@ import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import InputText from './../../components/InputText'
 import { launchImageLibrary, } from 'react-native-image-picker';
+import Edit from 'react-native-vector-icons/MaterialCommunityIcons'
+import Profile from 'react-native-vector-icons/MaterialIcons'
+
+
 
 
 export const DataScreen = () => {
@@ -12,7 +16,7 @@ export const DataScreen = () => {
 
 
   const openImagePicker = () => {
-    const options:any = {
+    const options: any = {
       mediaType: 'photo',
       includeBase64: false,
       maxHeight: 2000,
@@ -128,17 +132,23 @@ export const DataScreen = () => {
   return (
     <View style={styles.body}>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20, marginTop: 10 }}>
+      <View style={{ flexDirection: 'row', marginTop: 15 ,justifyContent:'center'}}>
+      { selectedImage?
+          selectedImage &&
+          <Image style={{ height: 70, width: 70, borderRadius: 35 }} source={{ uri: selectedImage }} />:
+        <Profile
+        name='account-circle' size={80} color='gray'
+        />
+        }
         <TouchableOpacity
-          style={{ alignSelf: 'center' }}
+          style={{ alignSelf: 'flex-end' }}
           onPress={openImagePicker}
         >
-          <Text style={{ color: 'red' }}>Add Profile Pic</Text>
+          <Edit 
+          name='image-edit' color='black' size={20}
+          />
         </TouchableOpacity>
-        {
-          selectedImage &&
-          <Image style={{ height: 40, width: 40, borderRadius: 35 }} source={{ uri: selectedImage }} />
-        }
+       
 
       </View>
       <View style={{ height: 390 }}>
@@ -168,15 +178,15 @@ export const DataScreen = () => {
 
         <View style={styles.mainname}>
           <Text style={styles.titalname}>Phone Number:</Text>
-          <TextInput
+          {/* <TextInput
             style={styles.name}
             value={number}
             onChangeText={setNumber}
             placeholder='+923__-________'
             placeholderTextColor={'gray'}
             keyboardType='phone-pad'
-          />
-          {/* <InputText value={number} setValue={setNumber} placeholder='+923__-_______' keyboardType='phone-pad' /> */}
+          /> */}
+          <InputText value={number} setValue={setNumber} placeholder='+923__-_______' keyboardType='phone-pad' />
         </View>
 
         <View style={{ alignItems: 'center' }}>

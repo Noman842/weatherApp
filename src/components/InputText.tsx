@@ -12,6 +12,7 @@ const InputText = (props:any) => {
             onChangeText={setValue}
             placeholder={placeholder}
             placeholderTextColor={'gray'}
+            keyboardType={keyboardType}
           
           />
             {/* <Stars 
