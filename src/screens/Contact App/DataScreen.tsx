@@ -4,8 +4,33 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import InputText from './../../components/InputText'
+import { launchImageLibrary, } from 'react-native-image-picker';
+
 
 export const DataScreen = () => {
+  const [selectedImage, setSelectedImage] = useState<any>(null)
+
+
+  const openImagePicker = () => {
+    const options:any = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response: any) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setSelectedImage(imageUri);
+      }
+    });
+  };
+
 
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
@@ -13,19 +38,21 @@ export const DataScreen = () => {
   const [data, setData] = useState([])
   const navigation = useNavigation()
 
+
   useEffect(() => {
     getStoredObjectValue()
   }, [])
 
   const SaveData = () => {
     if (name !== '' && number !== '') {
-      const dataArray = [...data, { ContactName: name, SurName: surname, PhoneNumber: number }]
+      const dataArray = [...data, { ContactName: name, SurName: surname, PhoneNumber: number, Image: selectedImage, }]
       console.log('Data', dataArray)
       storeObjectValue(dataArray)
       setData(dataArray as any)
       setName('')
       setSurname('')
       setNumber('')
+      setSelectedImage(null)
       navigation.navigate('AllContacts' as never)
     }
     else {
@@ -66,39 +93,54 @@ export const DataScreen = () => {
   }
 
   // const renderData = ({ item, index }: any) => {
-  const renderData =({index}:any)=>{
-  //   return (
-  //     <View style={styles.storeddata}>
-  //       <View style={{ flexDirection: 'row' }}>
-  //         <Image source={require('./../images/profileicon.jpg')} />
-  //         <View style={{ flexDirection: 'column' }}>
-  //           <Text style={styles.storeddatatxt}>
-  //             {item.ContactName} {item.SurName}
-  //           </Text>
-  //           <Text style={styles.storeddatatxt}>
-  //             {item.PhoneNumber}
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <TouchableOpacity
-  //         style={{ justifyContent: 'center' }}
-  //       >
-  //         <Icon
-  //           name="call" color="green" size={25}
-  //         />
-  //       </TouchableOpacity>
-        
-        <TouchableOpacity 
-        style={{justifyContent:'center'}}
-        onPress={() => deleteContact(index)}>
-         <Icon
-         name="delete-sweep" color="red" size={25}/>
-        </TouchableOpacity>}
+  const renderData = ({ index }: any) => {
+    //   return (
+    //     <View style={styles.storeddata}>
+    //       <View style={{ flexDirection: 'row' }}>
+    //         <Image source={require('./../images/profileicon.jpg')} />
+    //         <View style={{ flexDirection: 'column' }}>
+    //           <Text style={styles.storeddatatxt}>
+    //             {item.ContactName} {item.SurName}
+    //           </Text>
+    //           <Text style={styles.storeddatatxt}>
+    //             {item.PhoneNumber}
+    //           </Text>
+    //         </View>
+    //       </View>
+    //       <TouchableOpacity
+    //         style={{ justifyContent: 'center' }}
+    //       >
+    //         <Icon
+    //           name="call" color="green" size={25}
+    //         />
+    //       </TouchableOpacity>
+
+    <TouchableOpacity
+      style={{ justifyContent: 'center' }}
+      onPress={() => deleteContact(index)}>
+      <Icon
+        name="delete-sweep" color="red" size={25} />
+    </TouchableOpacity>
+  }
   //     </View>
   //   )
   // }
   return (
     <View style={styles.body}>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20, marginTop: 10 }}>
+        <TouchableOpacity
+          style={{ alignSelf: 'center' }}
+          onPress={openImagePicker}
+        >
+          <Text style={{ color: 'red' }}>Add Profile Pic</Text>
+        </TouchableOpacity>
+        {
+          selectedImage &&
+          <Image style={{ height: 40, width: 40, borderRadius: 35 }} source={{ uri: selectedImage }} />
+        }
+
+      </View>
       <View style={{ height: 390 }}>
         <View style={styles.mainnametop}>
           <Text style={styles.titalname}>Name:</Text>
@@ -109,32 +151,32 @@ export const DataScreen = () => {
             placeholder='Enter name'
             placeholderTextColor={'gray'}
           /> */}
-          <InputText value={name} setValue={setName} placeholder='Enter Name'/>
+          <InputText value={name} setValue={setName} placeholder='Enter Name' />
         </View>
 
         <View style={styles.mainname}>
-           <Text style={styles.titalname}>Surname:</Text>
-         {/* <TextInput
+          <Text style={styles.titalname}>Surname:</Text>
+          {/* <TextInput
             style={styles.name}
             value={surname}
             onChangeText={setSurname}
             placeholder='Enter surname (Optional)'
             placeholderTextColor={'gray'}
           /> */}
-          <InputText value={surname} setValue={setSurname} placeholder='Enter SurName(optional)'/>
+          <InputText value={surname} setValue={setSurname} placeholder='Enter SurName(optional)' />
         </View>
 
         <View style={styles.mainname}>
           <Text style={styles.titalname}>Phone Number:</Text>
-          {/* <TextInput
+          <TextInput
             style={styles.name}
             value={number}
             onChangeText={setNumber}
             placeholder='+923__-________'
             placeholderTextColor={'gray'}
             keyboardType='phone-pad'
-          /> */}
-          <InputText value={number} setValue={setNumber} placeholder='+923__-_______' keyboardType='phone-pad'/>
+          />
+          {/* <InputText value={number} setValue={setNumber} placeholder='+923__-_______' keyboardType='phone-pad' /> */}
         </View>
 
         <View style={{ alignItems: 'center' }}>
@@ -150,6 +192,8 @@ export const DataScreen = () => {
       data={data}
       renderItem={renderData}
       /> */}
+
+
     </View>
   )
 }

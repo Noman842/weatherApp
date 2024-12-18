@@ -1,88 +1,50 @@
-// import React from 'react'
-// import Contacts from './Contacts'
-// import Practice from './Practice'
-// import DataScreen from './screens/Contact App/DataScreen';
-// import allcontacts from './screens/Contact App/allcontacts';
-// import Contactinfo from './screens/Contact App/Contactinfo';
-// import Settings from './screens/Contact App/Settings';
-// import AboutUs from './screens/Contact App/AboutUs';
-// import Profile from './screens/Contact App/Profile';
-// import { createStaticNavigation } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import Icon from 'react-native-vector-icons/MaterialIcons'
-// import Detail from 'react-native-vector-icons/MaterialCommunityIcons'
+import React from 'react'
+import Contacts from './Contacts'
+import Practice from './Practice'
+import DataScreen from './screens/Contact App/DataScreen';
+import allcontacts from './screens/Contact App/allcontacts';
+import Contactinfo from './screens/Contact App/Contactinfo';
+import Settings from './screens/Contact App/Settings';
+import AboutUs from './screens/Contact App/AboutUs';
+import Profile from './screens/Contact App/Profile';
+import { createStaticNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Detail from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Screen } from 'react-native-screens';
 
-// const Stack = createNativeStackNavigator({
-//   screens: {
-//     DataScreen: {screen:DataScreen, options:{headerShown:false}}
+const Stack = createNativeStackNavigator({
+  screens: {
+     AllContacts:{
+      screen:allcontacts,
+      options:{
+        headerShown:false
+      }
+     },
+     AddContact:{
+      screen:DataScreen,
+     },
+     Contactinfo:{
+      screen:Contactinfo,
+      options:{headerShown:false}
+     }
+  },
+});
 
-//   },
-//   AllContact:allcontacts,
-//   ContactInfo:Contactinfo
-// });
-
-// const MyDrawer = createDrawerNavigator({
-//   screens: {
-//     AddContacts: Stack, 
-//     Profile: Profile,
-//     Settings: Settings,
-//     AboutUs:AboutUs
-//   },
-//   // screenOptions: {
-//   //   headerShown: false
-//   // }
-// });
-
-// const BottomStack = createBottomTabNavigator({
-
-//   screens: {
-//     Home:{screen:MyDrawer,
-//       options: {
-//         tabBarIcon:() => (
-//           <Detail name="home-variant" color={'black'} size={25}/>  
-//         ),
-//         tabBarLabel: 'Home',
-//         tabBarLabelStyle: {color: 'black'}
-//       }
-//     },
-//     AllContacts : {
-//       screen: allcontacts,
-//       options: {
-//         tabBarIcon:() => (
-//           <Icon name="call" color={'black'} size={25}/>  
-//         ),
-//         tabBarLabel: 'All Contacts',
-//         tabBarLabelStyle: {color: 'black'}
-//       }
-//     },
-//     Contactinfo : {
-//       screen: Contactinfo,
-//       options: {
-//         headerShown:false,
-//         tabBarIcon:() => (
-//           <Detail name="account-details-outline" color={'black'} size={25}/>  
-//         ),
-//         tabBarLabel: 'Contacts Info',
-//         tabBarLabelStyle: {color: 'black'}
-//       }
-//     },
-//   },
-// });
-
-// // DrawerStack:MyDrawer,
-// // ContactList: allcontacts,
-// // ContactInfo: {screen:Contactinfo, options:{headerShown:false}}
+// DrawerStack:MyDrawer,
+// ContactList: allcontacts,
+// ContactInfo: {screen:Contactinfo, options:{headerShown:false}}
 
 
-// const Navigation = createStaticNavigation(BottomStack);
+const Navigation = createStaticNavigation(Stack);
 
-// const App = () => {
-//   return <Navigation/>
-// }
+const App = () => {
+  return <Navigation/>
+}
 
-// export default App
+export default App
 
 
 
@@ -327,36 +289,36 @@
 
 
 
-import React from 'react'
-// Navigations
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { createStaticNavigation } from '@react-navigation/native'
-// Screens
-import Weather from './screens/WeatherApp/Weather'
-import HomeWeather from './screens/WeatherApp/HomeWeather'
+// import React from 'react'
+// // Navigations
+// import { createNativeStackNavigator } from '@react-navigation/native-stack'
+// import { createStaticNavigation } from '@react-navigation/native'
+// // Screens
+// import Weather from './screens/WeatherApp/Weather'
+// import HomeWeather from './screens/WeatherApp/HomeWeather'
 
-const Stack = createNativeStackNavigator({
-  screens: {
-    HomeWeather: {
-      screen: HomeWeather,
-      options: {
-        headerShown: false,
-      }
-    },
-    Weather: {
-      screen: Weather,
-      options: {
-        headerShown: false
-      }
-    },
-  }
-})
-
-const Navigation = createStaticNavigation(Stack)
-const App = () => {
-  return <Navigation />
-}
-export default App
+// const Stack = createNativeStackNavigator({
+//   screens: {
+//     HomeWeather: {
+//       screen: HomeWeather,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     Weather: {
+//       screen: Weather,
+//       options: {
+//         headerShown: false
+//       }
+//     },
+//   }
+// })
+ 
+// const Navigation = createStaticNavigation(Stack)
+// const App = () => {
+//   return <Navigation />
+// }
+// export default App
 
 
 
