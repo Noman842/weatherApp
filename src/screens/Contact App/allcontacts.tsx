@@ -4,6 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icon1 from 'react-native-vector-icons/MaterialIcons'
+import Add from 'react-native-vector-icons/Ionicons'
 
 
 
@@ -48,7 +49,7 @@ const allcontacts = () => {
               <Icon1 name="account-circle" size={51} color="grey" />
             }
 
-            <View style={{ flexDirection: 'column',marginLeft:5 }}>
+            <View style={{ flexDirection: 'column', marginLeft: 5 }}>
               <Text style={styles.storeddatatxt}>
                 {item.ContactName} {item.SurName}
               </Text>
@@ -76,8 +77,8 @@ const allcontacts = () => {
         data={data}
         renderItem={renderData}
       /> :
-      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30,alignSelf:'center' }}>
-        <Image style={{alignSelf:'center'}} source={require('./../../images/Group3.png')} />
+      <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 30, alignSelf: 'center' }}>
+        <Image style={{ alignSelf: 'center' }} source={require('./../../images/Group3.png')} />
 
       </View>
   }
@@ -87,14 +88,15 @@ const allcontacts = () => {
         <Text style={{ color: 'black', fontSize: 22, fontWeight: '500' }}>All Contacts</Text>
       </View>
       <Emplylist />
-      <View style={{ alignItems: 'flex-end', justifyContent: 'center', right:50,bottom:100, flex: 1, position: 'absolute' }}>
+      <View style={{ alignItems: 'flex-end', justifyContent: 'center', right: 50, bottom: 100, flex: 1, position: 'absolute' }}>
         <TouchableOpacity
           onPress={() => navigation.navigate('AddContact' as never)}
           style={{ height: 55, width: 55, borderRadius: 30, backgroundColor: '#00B2FF', justifyContent: 'center' }}
         >
-          <Text style={{ color: '#fff', fontSize: 29, textAlign: 'center' }}>
-            +
-          </Text>
+          <Add
+            style={{ alignSelf: 'center' }}
+            name='add' color='#fff' size={28}
+          />
         </TouchableOpacity></View>
     </View>
   )
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     marginRight: 20,
     marginTop: 12,
-    marginBottom:7,
+    marginBottom: 7,
     flex: 0.,
 
   },

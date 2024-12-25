@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const Contactinfo = ({ route }: any) => {
     const { Save, index } = route.params
     console.log('Data stored', Save)
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [number, setNumber] = useState('')
@@ -78,20 +78,27 @@ const Contactinfo = ({ route }: any) => {
             </View>
 
             <View style={styles.profilepic}>
-
-                {Save.Image ? Save.Image &&
-                    <Image style={{ height: 140, width: 140, borderRadius: 100, }} source={{ uri: Save.Image }} /> :
-                    <Icon1 name="account-circle" size={140} color="grey" />
-                }
+                <TouchableOpacity>
+                    {Save.Image ? Save.Image &&
+                        <Image style={{ height: 140, width: 140, borderRadius: 100, }} source={{ uri: Save.Image }} /> :
+                        <Icon1 name="account-circle" size={140} color="grey" />
+                    }</TouchableOpacity>
                 <View style={{ alignSelf: 'flex-end', flexDirection: 'row', marginRight: 20 }}>
                     <TouchableOpacity onPress={() => deleteContact(index)}>
                         <Delete
                             style={{ marginHorizontal: 20 }}
                             name='delete' color='black' size={23}
                         /></TouchableOpacity>
-                    <TouchableOpacity 
-                    onPress={()=>navigation.navigate('AddContact' as never)}
-                    >
+                    <TouchableOpacity
+                    onPress={()=>navigation.navigate('AddContact',{
+                    Name:Save.ContactName,
+                    Surname:Save.SurName,
+                    Number:Save.PhoneNumber,
+                    Image:Save.Image,
+                    index:index
+                    
+                    })
+                }>
                         <Edit
                             name='pen' color='black' size={19}
                         /></TouchableOpacity>

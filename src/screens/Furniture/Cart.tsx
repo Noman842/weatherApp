@@ -48,7 +48,7 @@ const Cart = () => {
           </View></View>
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.add}>
-            <Text style={{ fontSize: 20, color: '#fff', textAlign: 'center' }}>+</Text></View>
+            <Text style={{ fontSize: 20, color: '#fff', textAlign: 'center'}}>+</Text></View>
           <Text style={{ fontSize: 17, color: 'black', textAlign: 'center', marginHorizontal: 10 }}>01</Text>
           <View style={styles.minus}>
             <Text style={{ fontSize: 22, color: 'black', textAlign: 'center' }}>-</Text></View>
@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     width: 20,
     backgroundColor: 'black',
     borderRadius: 5,
-    alignItems: 'center'
+    justifyContent:'center'
+    
   },
   minus: {
 

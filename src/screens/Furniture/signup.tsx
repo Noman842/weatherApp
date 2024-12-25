@@ -1,11 +1,33 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native'
+import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Back from 'react-native-vector-icons/Ionicons'
 import Google from 'react-native-vector-icons/AntDesign'
+import auth from '@react-native-firebase/auth'
 
 const signup = () => {
   const navigation = useNavigation()
+    const [email, setEmail] = useState<any>()
+    const [password, setPassword] = useState<any>()
+
+  const signin = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          Alert.alert('Email is already in use')
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      })
+  }
   return (
     <View style={styles.body}>
       <View style={{ flexDirection: 'row', height: 100, marginTop: 20, marginLeft: 15 }}>
@@ -23,6 +45,8 @@ const signup = () => {
       <View>
         <Text style={styles.email}>Email</Text>
         <TextInput
+             value={email}
+             onChangeText={setEmail}
           style={styles.emailinput}
           placeholder='Text your email'
           placeholderTextColor='gray'
@@ -31,6 +55,8 @@ const signup = () => {
       <View>
         <Text style={styles.password}>Password</Text>
         <TextInput
+             value={password}
+             onChangeText={setPassword}
           style={styles.emailinput}
           placeholder='Text your password'
           placeholderTextColor='gray'
@@ -47,7 +73,7 @@ const signup = () => {
         />
       </View>
       <TouchableOpacity
-      onPress={()=>navigation.navigate('Home' as never)}
+        onPress={signin}
       >
         <View style={styles.button}>
           <Text style={styles.buttontxt}>Signup</Text>

@@ -1,12 +1,39 @@
-import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Alert } from 'react-native'
+import React, { useState } from 'react'
 import Back from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
 import LoginFurniture from '../../components/LoginFurniture'
 import Google from 'react-native-vector-icons/AntDesign'
+import auth from '@react-native-firebase/auth'
 
 const Login = () => {
   const navigaton = useNavigation()
+  const [email, setEmail] = useState<any>()
+  const [password, setPassword] = useState<any>()
+
+
+  const login = () => {
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      })
+  };
+
+  // if(email !== '' && password !==''){
+  //   login
+  // }else(Alert.alert('Please Enter required info..'))
   return (
     <View style={styles.body}>
 
@@ -19,12 +46,14 @@ const Login = () => {
               name='chevron-back-outline' color="black" size={22}
             /></TouchableOpacity>
         </View>
-        
+
         <Text style={styles.logintxt}>Login</Text>
       </View>
       <View>
         <Text style={styles.email}>Email</Text>
         <TextInput
+          value={email}
+          onChangeText={setEmail}
           style={styles.emailinput}
           placeholder='Text your email'
           placeholderTextColor='gray'
@@ -34,6 +63,8 @@ const Login = () => {
       <View>
         <Text style={styles.password}>Password</Text>
         <TextInput
+          value={password}
+          onChangeText={setPassword}
           style={styles.emailinput}
           placeholder='Text your password'
           placeholderTextColor='gray'
@@ -43,10 +74,12 @@ const Login = () => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity>
             <Text style={{ color: 'gray', fontSize: 12, marginLeft: 15, marginTop: 7 }}>Remember me</Text></TouchableOpacity>
-          <TouchableOpacity onPress={()=>navigaton.navigate('Forgetpassword' as never)} ><Text style={{ color: 'gray', fontSize: 12, marginRight: 15, marginTop: 7 }}>Forgot password?</Text>
+          <TouchableOpacity onPress={() => navigaton.navigate('Forgetpassword' as never)} ><Text style={{ color: 'gray', fontSize: 12, marginRight: 15, marginTop: 7 }}>Forgot password?</Text>
           </TouchableOpacity></View>
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity
+        onPress={login}
+        style={styles.button}>
         <View>
           <Text style={styles.buttontxt}>Login</Text>
         </View></TouchableOpacity>
@@ -71,7 +104,7 @@ const Login = () => {
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
         <Text style={{ color: 'gray' }}>Don't have account? </Text>
         <TouchableOpacity
-        onPress={()=>navigaton.navigate('Signup' as never )}
+          onPress={() => navigaton.navigate('Signup' as never)}
         >
           <Text style={{ color: 'blue', }}>Register</Text>
         </TouchableOpacity></View>

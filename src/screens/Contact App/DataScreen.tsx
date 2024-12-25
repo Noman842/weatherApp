@@ -11,8 +11,10 @@ import Profile from 'react-native-vector-icons/MaterialIcons'
 
 
 
-export const DataScreen = () => {
-  const [selectedImage, setSelectedImage] = useState<any>(null)
+export const DataScreen = ({route}:any) => {
+  const Save  =route.params
+  
+  const [selectedImage, setSelectedImage] = useState<any>(Save?.Image?Save.Image:null)
 
 
   const openImagePicker = () => {
@@ -36,12 +38,11 @@ export const DataScreen = () => {
   };
 
 
-  const [name, setName] = useState('')
-  const [surname, setSurname] = useState('')
-  const [number, setNumber] = useState('')
+  const [name, setName] = useState(Save?.Name?Save.Name:'')
+  const [surname, setSurname] = useState(Save?.Surname?Save.Surname:'')
+  const [number, setNumber] = useState(Save?.Number?Save.Number:'')
   const [data, setData] = useState([])
   const navigation = useNavigation()
-
 
   useEffect(() => {
     getStoredObjectValue()
@@ -129,26 +130,36 @@ export const DataScreen = () => {
   //     </View>
   //   )
   // }
+
+const UpdatedContacts =()=>{
+  const OldContactArray=data as any
+  OldContactArray[Save.index] = { ContactName: name, SurName: surname, PhoneNumber: number, Image: selectedImage, }
+  storeObjectValue(OldContactArray)
+  navigation.navigate('AllContacts' as never)
+
+}
+
+
   return (
     <View style={styles.body}>
 
-      <View style={{ flexDirection: 'row', marginTop: 15 ,justifyContent:'center'}}>
-      { selectedImage?
+      <View style={{ flexDirection: 'row', marginTop: 15, justifyContent: 'center' }}>
+        {selectedImage ?
           selectedImage &&
-          <Image style={{ height: 70, width: 70, borderRadius: 35 }} source={{ uri: selectedImage }} />:
-        <Profile
-        name='account-circle' size={80} color='gray'
-        />
+          <Image style={{ height: 70, width: 70, borderRadius: 35 }} source={{ uri: selectedImage }} /> :
+          <Profile
+            name='account-circle' size={80} color='gray'
+          />
         }
         <TouchableOpacity
           style={{ alignSelf: 'flex-end' }}
           onPress={openImagePicker}
         >
-          <Edit 
-          name='image-edit' color='black' size={20}
+          <Edit
+            name='image-edit' color='black' size={20}
           />
         </TouchableOpacity>
-       
+
 
       </View>
       <View style={{ height: 390 }}>
@@ -191,7 +202,7 @@ export const DataScreen = () => {
 
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity
-            onPress={SaveData}
+            onPress={Save?UpdatedContacts:SaveData}
             style={styles.button}
           >
             <Text style={styles.buttontxt}>Save Data</Text>
