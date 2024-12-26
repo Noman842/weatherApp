@@ -43,7 +43,7 @@ const ProfileFurniture = () => {
     return (
         <View style={styles.body}>
             {isloading?
-            <View style={{justifyContent:'center',alignItems:'center',alignSelf:'center'}}>
+            <View style={{justifyContent:'flex-end',alignItems:'center',height:260}}>
             <ActivityIndicator color='blue' size='large'/></View>:
           <>
             <View style={{ flexDirection: 'row', marginVertical: 30, marginLeft: 15, alignItems: 'center' }}>

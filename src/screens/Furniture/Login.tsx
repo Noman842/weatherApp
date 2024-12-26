@@ -5,11 +5,13 @@ import { useNavigation } from '@react-navigation/native'
 import LoginFurniture from '../../components/LoginFurniture'
 import Google from 'react-native-vector-icons/AntDesign'
 import auth from '@react-native-firebase/auth'
+import { ActivityIndicator } from 'react-native'
 
 const Login = () => {
   const navigaton = useNavigation()
   const [email, setEmail] = useState<any>()
   const [password, setPassword] = useState<any>()
+  const [isloading, setIsloading] = useState(false)
 
 
   const login = () => {
@@ -40,18 +42,24 @@ const Login = () => {
     <View style={styles.body}>
 
       <View style={{ flexDirection: 'row', height: 100, marginTop: 20, marginLeft: 15 }}>
-        <View style={styles.Back}>
-          <TouchableOpacity
+      <TouchableOpacity
             onPress={() => navigaton.navigate('LoginSignup' as never)}
           >
+        <View style={styles.Back}>
+       
             <Back
               name='chevron-back-outline' color="black" size={22}
-            /></TouchableOpacity>
+            />
         </View>
+        </TouchableOpacity>
 
         <Text style={styles.logintxt}>Login</Text>
       </View>
       <View>
+        {/* {isloading?
+                <View style={{justifyContent:'flex-end',alignItems:'center',height:260}}>
+                           <ActivityIndicator color='blue' size='large'/></View>:     
+      <> */}
         <Text style={styles.email}>Email</Text>
         <TextInput
           value={email}
@@ -80,12 +88,13 @@ const Login = () => {
           </TouchableOpacity></View>
       </View>
       <TouchableOpacity
-        onPress={login}
+        onPress={()=>{login();setIsloading(true)}}
         style={styles.button}>
         <View>
           <Text style={styles.buttontxt}>Login</Text>
         </View></TouchableOpacity>
       <Text style={{ color: 'gray', textAlign: 'center', marginVertical: 17 }}>Or</Text>
+      
 
       <TouchableOpacity style={styles.button2}>
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -102,7 +111,6 @@ const Login = () => {
           />
           <Text style={styles.buttontxt2}>  Continue with Facebook</Text>
         </View></TouchableOpacity>
-
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
         <Text style={{ color: 'gray' }}>Don't have account? </Text>
         <TouchableOpacity
@@ -110,6 +118,9 @@ const Login = () => {
         >
           <Text style={{ color: 'blue', }}>Register</Text>
         </TouchableOpacity></View>
+
+        
+
     </View>
   )
 }

@@ -1,96 +1,96 @@
-import React from 'react'
-// import Screens
-import HomeScreen from './screens/Shopping app/HomeScreen'
-import ProductDetailScreen from './screens/Shopping app/ProductDetailScreen'
-import Cart from './screens/Furniture/Cart'
-import Settings from './screens/Contact App/Settings'
-import Store from './store/Store'
-// import Navigatiions
-import { createStaticNavigation } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createDrawerNavigator } from '@react-navigation/drawer'
-import CartScreen from './screens/Shopping app/CartScreen'
-import { Screen } from 'react-native-screens'
-// import Icons
-import Home from 'react-native-vector-icons/Entypo'
-import ProfileIcon from 'react-native-vector-icons/FontAwesome6'
-import CartIcon from 'react-native-vector-icons/FontAwesome'
-import DetailIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import ShoppingSetting from './screens/Shopping app/ShoppingSetting'
-import { Provider } from 'react-redux'
+// import React from 'react'
+// // import Screens
+// import HomeScreen from './screens/Shopping app/HomeScreen'
+// import ProductDetailScreen from './screens/Shopping app/ProductDetailScreen'
+// import Cart from './screens/Furniture/Cart'
+// import Settings from './screens/Contact App/Settings'
+// import Store from './store/Store'
+// // import Navigatiions
+// import { createStaticNavigation } from '@react-navigation/native'
+// import { createNativeStackNavigator } from '@react-navigation/native-stack'
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+// import { createDrawerNavigator } from '@react-navigation/drawer'
+// import CartScreen from './screens/Shopping app/CartScreen'
+// import { Screen } from 'react-native-screens'
+// // import Icons
+// import Home from 'react-native-vector-icons/Entypo'
+// import ProfileIcon from 'react-native-vector-icons/FontAwesome6'
+// import CartIcon from 'react-native-vector-icons/FontAwesome'
+// import DetailIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+// import ShoppingSetting from './screens/Shopping app/ShoppingSetting'
+// import { Provider } from 'react-redux'
 
 
 
-const bottomstack = createBottomTabNavigator({
-screens:{
-  HomeScreen:{
-    screen:HomeScreen,
-    options:{headerShown:false,
-      tabBarIcon:({color})=>(
-<Home
-name='home' color={color} size={27}
-/>
-      ),
-      tabBarLabel:''
-    }
+// const bottomstack = createBottomTabNavigator({
+// screens:{
+//   HomeScreen:{
+//     screen:HomeScreen,
+//     options:{headerShown:false,
+//       tabBarIcon:({color})=>(
+// <Home
+// name='home' color={color} size={27}
+// />
+//       ),
+//       tabBarLabel:''
+//     }
     
-  },
-  CartScreen:{
-    screen:CartScreen,
-    options:{headerShown:false,
-      tabBarIcon:({color})=>(
-        <DetailIcon
-        name='reorder-horizontal' color={color} size={25}
-        />
-      ),
-      tabBarLabel:''
-    }
-  },
-  Details:{
-    screen:ProductDetailScreen,
-    options:{headerShown:false,
-      tabBarIcon:({color})=>(
-        <CartIcon
-        name='shopping-cart' color={color} size={25}
-        />
-      ),
-      tabBarLabel:''
-    }
-  },
-  Settings:{
-    screen:ShoppingSetting,
-    options:{
-      headerShown:false,
-      tabBarIcon:({color})=>(
-        <ProfileIcon
-        name='user-large' color={color} size={23}
-        />
-      ),
-      tabBarLabel:''
-    }
-  }
-
-},
-
-screenOptions:{tabBarActiveTintColor:'#ED6767'}
-})
-// const drawer =  createDrawerNavigator({
-//   screens:{
-//     Screen:CartScreen
+//   },
+//   CartScreen:{
+//     screen:CartScreen,
+//     options:{headerShown:false,
+//       tabBarIcon:({color})=>(
+//         <DetailIcon
+//         name='reorder-horizontal' color={color} size={25}
+//         />
+//       ),
+//       tabBarLabel:''
+//     }
+//   },
+//   Details:{
+//     screen:ProductDetailScreen,
+//     options:{headerShown:false,
+//       tabBarIcon:({color})=>(
+//         <CartIcon
+//         name='shopping-cart' color={color} size={25}
+//         />
+//       ),
+//       tabBarLabel:''
+//     }
+//   },
+//   Settings:{
+//     screen:ShoppingSetting,
+//     options:{
+//       headerShown:false,
+//       tabBarIcon:({color})=>(
+//         <ProfileIcon
+//         name='user-large' color={color} size={23}
+//         />
+//       ),
+//       tabBarLabel:''
+//     }
 //   }
+
+// },
+
+// screenOptions:{tabBarActiveTintColor:'#ED6767'}
 // })
- const Navigation = createStaticNavigation(bottomstack);
+// // const drawer =  createDrawerNavigator({
+// //   screens:{
+// //     Screen:CartScreen
+// //   }
+// // })
+//  const Navigation = createStaticNavigation(bottomstack);
 
-const App = () => {
- return( <Provider store={Store}>  
-    <Navigation/>
-    </Provider>
- )
+// const App = () => {
+//  return( <Provider store={Store}>  
+//     <Navigation/>
+//     </Provider>
+//  )
   
-};
+// };
 
-export default App;
+// export default App;
 
 
 
@@ -449,4 +449,17 @@ export default App;
 
 
 
+
+
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import DataInput from './screens/CloudData/DataInput'
+
+const App = () => {
+  return (
+    <DataInput/>
+  )
+}
+
+export default App
 

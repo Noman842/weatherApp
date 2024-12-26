@@ -7,10 +7,11 @@ import auth from '@react-native-firebase/auth'
 
 const signup = () => {
   const navigation = useNavigation()
-    const [email, setEmail] = useState<any>()
-    const [password, setPassword] = useState<any>()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const signin = () => {
+
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
@@ -27,26 +28,31 @@ const signup = () => {
 
         console.error(error);
       })
+    if (email == '' && password == '') {
+      Alert.alert('Please Enter the require info...')
+    }
   }
   return (
     <View style={styles.body}>
       <View style={{ flexDirection: 'row', height: 100, marginTop: 20, marginLeft: 15 }}>
-        <View style={styles.Back}>
-          <TouchableOpacity
+      <TouchableOpacity
             onPress={() => navigation.navigate('LoginSignup' as never)}
           >
+        <View style={styles.Back}>
             <Back
               name='chevron-back-outline' color="black" size={22}
-            /></TouchableOpacity>
+            />
         </View>
+        </TouchableOpacity>
+        
         <Text style={styles.logintxt}>Signup</Text>
       </View>
 
       <View>
         <Text style={styles.email}>Email</Text>
         <TextInput
-             value={email}
-             onChangeText={setEmail}
+          value={email}
+          onChangeText={setEmail}
           style={styles.emailinput}
           placeholder='Text your email'
           placeholderTextColor='gray'
@@ -55,8 +61,8 @@ const signup = () => {
       <View>
         <Text style={styles.password}>Password</Text>
         <TextInput
-             value={password}
-             onChangeText={setPassword}
+          value={password}
+          onChangeText={setPassword}
           style={styles.emailinput}
           placeholder='Text your password'
           placeholderTextColor='gray'
