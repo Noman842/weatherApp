@@ -13,15 +13,15 @@ import { addItem } from '../../store/Slice/Slice'
 
 
 const CartScreen = ({ route }: any) => {
-  console.log('data is parsing', Data)
+  // console.log('data is parsing', Data)
   const navigation = useNavigation()
   const { Data } = route.params || {}
 
   const dispatch = useDispatch();
 
   const addToCart = () => {
-      dispatch(addItem(Data));
-  };
+      dispatch(addItem(Data))
+  }
 
 // console.log('Data=======>', addItem)
   return (
@@ -31,7 +31,9 @@ const CartScreen = ({ route }: any) => {
           <DetailIcon
             name='reorder-horizontal' color='#F38181' size={26}
           /></View>
-        <TouchableOpacity>
+        <TouchableOpacity
+        onPress={()=>navigation.navigate('Details' as never)}
+        >
           <View style={{ backgroundColor: '#fff', borderRadius: 25, height: 42, width: 42, alignItems: 'center', justifyContent: 'center' }}>
             <CartIcon
               name='shopping-cart' color='black' size={24}
@@ -40,7 +42,6 @@ const CartScreen = ({ route }: any) => {
 
 
       {Data ?
-
         <><View style={{ backgroundColor: '#fff', height: 330, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
           <Image resizeMode='contain' style={{ height: 300, width: 200, marginTop: 25, borderRadius: 10 }} source={{ uri: Data?.image }} />
         </View><View>
@@ -48,7 +49,10 @@ const CartScreen = ({ route }: any) => {
               <Text style={{ color: 'black', fontSize: 20, fontWeight: 600, marginTop: 25, width: 250 }}>{Data.title}</Text>
               <Text style={{ color: '#A1A1A1', fontSize: 17, fontWeight: 600, marginTop: 28, }}>$ {Data.price}</Text>
             </View>
-          </View></> : <Text style={{ color: 'black', textAlign: 'center', alignSelf: 'center' }}>Please select an item </Text>
+          </View></> :
+          <View style={{justifyContent:'flex-end',height:250}}>
+          <Text style={{ color: 'black', textAlign: 'center',fontSize:22 }}>Please select an item!</Text>
+          </View>
       }
 
 

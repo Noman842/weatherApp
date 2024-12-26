@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Back from 'react-native-vector-icons/Ionicons'
@@ -11,7 +11,7 @@ import { launchImageLibrary } from 'react-native-image-picker'
 const ProfileFurniture = () => {
     const navigation = useNavigation()
 
-
+    const [isloading, setIsloading] = useState(false)
     const [selectedImage, setSelectedImage] = useState<any>(null)
 
     const openImagePicker = () => {
@@ -38,9 +38,14 @@ const ProfileFurniture = () => {
         auth()
             .signOut()
             .then(() => console.log('User signed out!'))
+        setIsloading(false)
     }
     return (
         <View style={styles.body}>
+            {isloading?
+            <View style={{justifyContent:'center',alignItems:'center',alignSelf:'center'}}>
+            <ActivityIndicator color='blue' size='large'/></View>:
+          <>
             <View style={{ flexDirection: 'row', marginVertical: 30, marginLeft: 15, alignItems: 'center' }}>
                 <View style={styles.back}>
                     <TouchableOpacity
@@ -57,7 +62,7 @@ const ProfileFurniture = () => {
             <View style={styles.profileView}>
                 {selectedImage ?
                     selectedImage &&
-                    <Image style={{ height: 65, width: 70,borderRadius:65 }} source={{ uri: selectedImage }} /> :
+                    <Image style={{ height: 60, width: 60, borderRadius: 65 }} source={{ uri: selectedImage }} /> :
                     <View style={styles.Profilepic}></View>
                 }
 
@@ -68,7 +73,7 @@ const ProfileFurniture = () => {
                         <Text style={styles.gmail}>tonystark911@gmail.com</Text>
 
                         <TouchableOpacity
-                        onPress={openImagePicker}
+                            onPress={openImagePicker}
                         >
                             <Edit
                                 style={{ marginLeft: 50 }}
@@ -81,13 +86,13 @@ const ProfileFurniture = () => {
             <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
             <View style={{ marginVertical: 15, marginLeft: 15, }}>
                 <TouchableOpacity
-                onPress={()=>navigation.navigate('EditProfile' as never)}
-                style={{flexDirection:'row'}}
+                    onPress={() => navigation.navigate('EditProfile' as never)}
+                    style={{ flexDirection: 'row' }}
                 >
-                <User
-                    name='user' color='black' size={20}
-                />
-                <Text style={styles.personal}>Personal information</Text>
+                    <User
+                        name='user' color='black' size={20}
+                    />
+                    <Text style={styles.personal}>Personal information</Text>
                 </TouchableOpacity >
             </View>
             <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
@@ -123,7 +128,7 @@ const ProfileFurniture = () => {
             <View style={{ marginVertical: 15, marginLeft: 15, }}>
                 <TouchableOpacity
                     style={{ flexDirection: 'row' }}
-                    onPress={logout}
+                    onPress={() => { logout(); setIsloading(true) }}
                 >
                     <Edit
                         name='logout' color='red' size={20}
@@ -131,6 +136,8 @@ const ProfileFurniture = () => {
                     <Text style={styles.logout}>Log out</Text>
                 </TouchableOpacity>
             </View>
+            </>
+}
         </View>
     )
 }

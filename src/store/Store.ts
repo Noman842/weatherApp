@@ -8,3 +8,6 @@ const store = configureStore({
 });
 
 export default store;
+store.subscribe(()=>{
+    console.log('item in store' , JSON.stringify(store.getState(),null,2))
+})

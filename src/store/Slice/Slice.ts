@@ -10,7 +10,7 @@ const Stice = createSlice ({
     initialState ,
     reducers:{
   addItem:(state:any,action:any) =>{
-    const existingItem = state.items?.find((item:any)=>item.id === action.payload.id);
+    const existingItem = state.item?.find((item:any)=>item.id === action.payload.id);
     if(existingItem){
         existingItem.quantity += 1;
       }else{
@@ -18,10 +18,10 @@ const Stice = createSlice ({
       }
   },
   removeItem: (state:any, action) => {
-    state.items = state.items.filter((item:any) => item.id !== action.payload.id);
+    state.item = state.item?.filter((item:any) => item.id !== action.payload.id);
 },
 clearCart: (state:any) => {
-    state.items = [];
+    state.item = [];
 },
 
     }

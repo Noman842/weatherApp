@@ -18,10 +18,9 @@ const firstpage = () => {
   useEffect(() => {
     setTimeout(() => {
       if (!initializing) {
-        if (!user) {
-          return (
+        if (!user) { 
             navigation.navigate('Login' as never)
-          );
+
         } else (navigation.navigate('Home' as never))
       }
 
@@ -38,7 +37,6 @@ const firstpage = () => {
 
 
   return (
-
     <View style={styles.body}>
       <TouchableOpacity
         style={{ flexDirection: 'row' }}

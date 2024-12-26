@@ -1,4 +1,4 @@
-import { Image, NativeModules, requireNativeComponent, StyleSheet, Text, View, TextInput, Alert,FlatList,ActivityIndicator,ScrollView } from 'react-native'
+import { Image, NativeModules, requireNativeComponent, StyleSheet, Text, View, TextInput, Alert, FlatList, ActivityIndicator, ScrollView } from 'react-native'
 import React, { useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
@@ -17,7 +17,7 @@ const HomeScreen = ({ route }: any) => {
 
   const SelectedImage = route.param
   // console.log('Data passing', Image)
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
   useEffect(() => {
     getData();
@@ -34,15 +34,15 @@ const HomeScreen = ({ route }: any) => {
       if (response.ok) {
         setproductapi(data);
         setIsLoading(false)
-      }else{
+      } else {
         Alert.alert('Error occur')
-        console.log('API is fatching',error)
-      } 
-     
+        console.log('API is fatching', error)
+      }
+
     } catch (error: any) {
       setError(error.message);
     }
-      
+
   }
 
 
@@ -51,79 +51,83 @@ const HomeScreen = ({ route }: any) => {
       const response = await fetch('https://fakestoreapi.com/products/category/jewelery');
       // console.log('Image' ,JSON.stringify(response))
       const data = await response.json()
-      console.log('data=========>',data)
+      console.log('data=========>', data)
       if (response.ok) {
         setJewelery(data);
         setIsLoading(false)
-      }else{
+      } else {
         Alert.alert('Error occur')
-      } 
-     
+      }
+
     } catch (error: any) {
       setError(error.message);
     }
-      
+
   }
 
 
-// console.log('data===========>',data.)
- const renderdata = ({item}:any)=>{
-  return(
-    <View style={{justifyContent:'space-between',marginHorizontal:15}}>
-       {
-                 isLoading ? 
-                 
-                 <ActivityIndicator style={{ backgroundColor: 'red',height:20, alignSelf:'center'}} size='large' color='black' /> :
-                <>
-      <View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('CartScreen' as never,
-                {Data:item}
-            )}
-          >
+  // console.log('data===========>',data.)
+  const renderdata = ({ item }: any) => {
+    return (
+      <View style={{ justifyContent: 'space-between', marginHorizontal: 15 }}>
+        {
+          isLoading ?
+
+            <ActivityIndicator style={{ backgroundColor: 'red', height: 20, alignSelf: 'center' }} size='large' color='black' /> :
+            <>
               <View>
-                <View style={{height:220,width:170,backgroundColor:'#fff',alignItems:'center'}}>
-            <Image resizeMode='contain' style={{ height: 207, width: 147, borderRadius: 20 }}
-              source={{uri:item?.image}} />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('CartScreen' as never,
+                    { Data: item }
+                  )}
+                >
+                  <View>
+                    <View style={{ height: 220, width: 170, backgroundColor: '#fff', alignItems: 'center' }}>
+                      <Image resizeMode='contain' style={{ height: 207, width: 147, borderRadius: 20 }}
+                        source={{ uri: item?.image }} />
+                    </View>
+                    <Text style={styles.titalname}>{item?.title}</Text>
+                    <Text style={styles.price}>$ {item?.price}</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-            <Text style={styles.titalname}>{item?.title}</Text>
-            <Text style={styles.price}>$ {item?.price}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        </>
- }
- 
-    </View>
-  )}
+            </>
+        }
 
-
-  const renderjewlery = ({item}:any)=>{
-    return(
-      <View style={{justifyContent:'space-between',marginHorizontal:15}}>
-         {
-                  isLoading ? <ActivityIndicator style={{ backgroundColor: 'red',height:20,alignSelf:'center' }} size='large' color='blue' /> :
-                  <>
-        <View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('CartScreen' as never,
-                  {Data:item}
-              )}
-            >
-                <View>
-                <View style={{height:220,width:170,backgroundColor:'#fff',alignItems:'center'}}>
-              <Image resizeMode='contain' style={{ height: 207, width: 147, borderRadius: 20 }}
-                source={{uri:item?.image}} /></View>
-              <Text style={styles.titalname}>{item?.title}</Text>
-              <Text style={styles.price}>$ {item?.price}</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          </>
-   }
-   
       </View>
-    )}
+    )
+  }
+
+
+  const renderjewlery = ({ item }: any) => {
+    return (
+      <View style={{ justifyContent: 'space-between', marginHorizontal: 15 }}>
+        {
+          isLoading ?
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 20 }}>
+              <ActivityIndicator style={{ height: 20, alignSelf: 'center' }} size='large' color='blue' /></View> :
+            <>
+              <View>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('CartScreen' as never,
+                    { Data: item }
+                  )}
+                >
+                  <View>
+                    <View style={{ height: 220, width: 170, backgroundColor: '#fff', alignItems: 'center' }}>
+                      <Image resizeMode='contain' style={{ height: 207, width: 147, borderRadius: 20 }}
+                        source={{ uri: item?.image }} /></View>
+                    <Text style={styles.titalname}>{item?.title}</Text>
+                    <Text style={styles.price}>$ {item?.price}</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </>
+        }
+
+      </View>
+    )
+  }
 
   return (
     <View style={{ backgroundColor: '#fdeff3', flex: 1 }}>
@@ -149,7 +153,7 @@ const HomeScreen = ({ route }: any) => {
       </View>
 
       <View style={{ marginLeft: 25 }}>
-        
+
         <Text style={{ color: 'black', fontSize: 30, marginLeft: 5, marginTop: 18, fontWeight: 400 }}>Match your style</Text>
         <TextInput
           style={styles.Textinput}
@@ -163,18 +167,18 @@ const HomeScreen = ({ route }: any) => {
         </View>
       </View>
 
-        <ScrollView>
-       <FlatList
-    data={Productapi}
-    renderItem={renderdata}
-    horizontal={true}
-    /> 
-    <FlatList
-    style={{marginTop:10}}
-    data={jewelery}
-    renderItem={renderjewlery}
-    horizontal={true}
-    /></ScrollView>
+      <ScrollView>
+        <FlatList
+          data={Productapi}
+          renderItem={renderdata}
+          horizontal={true}
+        />
+        <FlatList
+          style={{ marginTop: 10 }}
+          data={jewelery}
+          renderItem={renderjewlery}
+          horizontal={true}
+        /></ScrollView>
 
     </View>
   )
@@ -188,7 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "500",
     marginVertical: 7,
-    width:150,
+    width: 150,
   },
   price: {
     color: 'gray',

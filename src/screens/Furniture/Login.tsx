@@ -13,6 +13,10 @@ const Login = () => {
 
 
   const login = () => {
+    if(!email || !password ){
+      return Alert.alert('Please Enter required info..')
+       
+    }
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
@@ -31,9 +35,7 @@ const Login = () => {
       })
   };
 
-  // if(email !== '' && password !==''){
-  //   login
-  // }else(Alert.alert('Please Enter required info..'))
+
   return (
     <View style={styles.body}>
 
