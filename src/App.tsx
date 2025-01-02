@@ -34,7 +34,7 @@
 //       ),
 //       tabBarLabel:''
 //     }
-    
+
 //   },
 //   CartScreen:{
 //     screen:CartScreen,
@@ -87,7 +87,7 @@
 //     <Navigation/>
 //     </Provider>
 //  )
-  
+
 // };
 
 // export default App;
@@ -216,6 +216,7 @@
 // import { Screen } from 'react-native-screens'
 // import firstpage from './screens/Furniture/firstpage'
 // import EditProfile from './screens/Furniture/EditProfile'
+// import { LogLevel, OneSignal } from 'react-native-onesignal';
 
 
 
@@ -229,7 +230,7 @@
 //     home: {
 //       screen: Home, options: {
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <Icon
 //             name='home' color={color} size={23}
 //           />
@@ -240,9 +241,8 @@
 //     BooksFurniture: {
 //       screen: BooksFurniture,
 //       options: {
-//         // tabBarStyle:{display:'none'},
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <BooksIcon
 //             name='bookshelf' color={color} size={23}
 //           />
@@ -255,7 +255,7 @@
 //       screen: Save,
 //       options: {
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <BookMark
 //             name='bookmark' color={color} size={23}
 //           />
@@ -267,7 +267,7 @@
 //       screen: Message,
 //       options: {
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <MessageIcon
 //             name='message-square' color={color} size={23}
 //           />
@@ -280,7 +280,7 @@
 //       screen: ProfileFurniture,
 //       options: {
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <ProfileIcon
 //             name='user-o' color={color} size={23}
 //           />
@@ -290,15 +290,15 @@
 //     },
 
 //   },
-//   screenOptions:{tabBarActiveTintColor:'black'}
+//   screenOptions: { tabBarActiveTintColor: 'black' }
 // })
 
 // const Stack = createNativeStackNavigator({
 //   screens: {
 
-//     firstpage:{
-//       screen:firstpage,options:{
-//        headerShown:false,
+//     firstpage: {
+//       screen: firstpage, options: {
+//         headerShown: false,
 //       }
 //     },
 //     Intro: {
@@ -307,7 +307,9 @@
 //       },
 //     },
 //     Cart: {
-//       screen: Cart, options: { headerShown: false }
+//       screen: Cart, options: {
+//         headerShown: false
+//       }
 //     },
 
 //     BooksFurniture: {
@@ -325,10 +327,10 @@
 //         headerShown: false,
 //       },
 //     },
-//     EditProfile:{
-//      screen:EditProfile,
-//      options:{
-//        headerShown:false,
+//     EditProfile: {
+//       screen: EditProfile,
+//       options: {
+//         headerShown: false,
 //       }
 //     },
 //     Message: {
@@ -348,7 +350,7 @@
 //         headerShown: false,
 //       }
 //     },
-    
+
 //     Signup: {
 //       screen: signup, options: {
 //         headerShown: false,
@@ -381,6 +383,22 @@
 
 // const Navigation = createStaticNavigation(Stack)
 // const App = () => {
+
+//   // Remove this method to stop OneSignal Debugging
+//   OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+
+//   // OneSignal Initialization
+//   OneSignal.initialize("999f2278-f73d-4918-9e29-8a40b903585c");
+
+//   // requestPermission will show the native iOS or Android notification permission prompt.
+//   // We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+//   OneSignal.Notifications.requestPermission(true);
+
+//   // Method for listening for notification clicks
+//   OneSignal.Notifications.addEventListener('click', (event) => {
+//     console.log('OneSignal: notification clicked:', event);
+//   });
+
 //   return <Navigation />
 // }
 // export default App
@@ -433,7 +451,7 @@
 //     },
 //   }
 // })
- 
+
 // const Navigation = createStaticNavigation(Stack)
 // const App = () => {
 //   return <Navigation />
@@ -451,15 +469,308 @@
 
 
 
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import DataInput from './screens/CloudData/DataInput'
+// import React from 'react'
+// import DataInput from './screens/CloudData/DataInput'
+// import ImagePicker from './ImagePicker'
 
+// const App = () => {
+//   return (
+//     <DataInput/>
+//   )
+// }
+
+// export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { View } from 'react-native'
+import React from 'react'
+// Screens
+import SplashScreen from './screens/Threads/SplashScreen'
+import SettingsThreads from './screens/Threads/SettingsThreads'
+import ProfileThread from './screens/Threads/ProfileThread'
+import HomeThreads from './screens/Threads/HomeThreads'
+import PrivacyScreenThreads from './screens/Threads/PrivacyScreenThreads'
+import EditProfileThread from './screens/Threads/EditProfileThread'
+import LoginThread from './screens/Threads/LoginThread'
+import SignupThread from './screens/Threads/SignupThread'
+import HelpScreenThread from './screens/Threads/HelpScreenThread'
+import AboutThread from './screens/Threads/AboutThread'
+import SearchThread from './screens/Threads/SearchThread'
+import AddPostThread from './screens/Threads/AddPostThread'
+import LikeScreenThread from './screens/Threads/LikeScreenThread'
+import InviteFriendsThread from './screens/Threads/InviteFriendsThread'
+import { Provider } from 'react-redux'
+import Store from './store/Store'
+import AccountThread from './screens/Threads/AccountThread'
+import LikedPostThread from './screens/Threads/LikedPostThread'
+import PostDetailThread from './screens/Threads/PostDetailThread'
+import ForgetPasswordThread from './screens/Threads/ForgetPasswordThread'
+
+
+// Navigations
+import { createStaticNavigation } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+// Icons
+import HomeIcon from 'react-native-vector-icons/Octicons'
+import SearchIcon from 'react-native-vector-icons/Feather'
+import AddIcon from 'react-native-vector-icons/MaterialIcons'
+import LikeIcon from 'react-native-vector-icons/AntDesign'
+import ProfileIcon from 'react-native-vector-icons/Feather'
+
+
+const Stack2 = createNativeStackNavigator({
+  screens: {
+    ProfileThread1: {
+      screen: ProfileThread,
+      options: {
+        headerShown: false,
+      }
+    },
+    EditProfile: {
+      screen: EditProfileThread,
+      options: {
+        headerShown: false,
+        animation: 'slide_from_bottom'
+      }
+    },
+  }
+})
+
+const bottomnavigation = createBottomTabNavigator({
+
+  screens: {
+    HomeThreads: {
+      screen: HomeThreads,
+      options: {
+        headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <HomeIcon
+            style={{ marginTop: 4 }}
+            name='home' color={color} size={27}
+          />
+        ),
+        tabBarLabel: '',
+        tabBarStyle: {
+          backgroundColor: '#101010',
+          borderColor: '#101010'
+        }
+
+      },
+    },
+    SearchThread: {
+      screen: SearchThread,
+      options: {
+        headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <SearchIcon
+            style={{ marginTop: 4 }}
+            name='search' color={color} size={27}
+          />
+        ),
+        tabBarLabel: '',
+        tabBarStyle: {
+          backgroundColor: '#101010',
+          borderColor: '#101010'
+        }
+      }
+    },
+    AddPostThread: {
+      screen: AddPostThread,
+      options: {
+        headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <View style={{
+            height: 40, width: 55, backgroundColor: '#1E1E1E',
+            borderRadius: 15, marginTop: 10, alignItems: 'center', justifyContent: 'center'
+          }}>
+            <AddIcon
+
+              name='add' color={color} size={27}
+            />
+          </View>
+        ),
+        tabBarLabel: '',
+        tabBarStyle: {
+          backgroundColor: '#101010',
+          borderColor: '#101010'
+        }
+      },
+    },
+    LikeScreenThread: {
+      screen: LikeScreenThread,
+      options: {
+        headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <LikeIcon
+            style={{ marginTop: 4 }}
+            name='hearto' color={color} size={26}
+          />
+        ),
+        tabBarLabel: '',
+        tabBarStyle: {
+          backgroundColor: '#101010',
+          borderColor: '#101010'
+        }
+      },
+    },
+    ProfileThread: {
+      screen: Stack2,
+      options: {
+        headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <ProfileIcon
+            style={{ marginTop: 4 }}
+            name='user' color={color} size={27}
+          />
+        ),
+        tabBarLabel: '',
+        tabBarStyle: {
+          backgroundColor: '#101010',
+          borderColor: '#101010'
+        }
+      },
+    },
+  },
+  screenOptions: { tabBarActiveTintColor: '#fff' }
+
+})
+const Stack = createNativeStackNavigator({
+  screens: {
+    SplashScreen: {
+      screen: SplashScreen,
+      options: {
+        headerShown: false,
+
+      }
+    },
+    LoginThread: {
+      screen: LoginThread,
+      options: {
+        headerShown: false,
+      }
+    },
+    SignupThread: {
+      screen: SignupThread,
+      options: {
+        headerShown: false,
+      }
+    },
+    HomeThread: {
+      screen: bottomnavigation,
+      options: {
+        headerShown: false,
+      },
+    },
+
+    PostDetailThread: {
+      screen: PostDetailThread,
+      options: {
+        headerShown: false,
+        animation: 'slide_from_bottom',
+      }
+    },
+    // ProfileThread: {
+    //   screen: bottomnavigation,
+    //   options: {
+    //     headerShown: false,
+    //   }
+    // },
+    SettingsThreads: {
+      screen: SettingsThreads,
+      options: {
+        headerShown: false,
+      }
+    },
+    PrivacyScreenThreads: {
+      screen: PrivacyScreenThreads,
+      options: {
+        headerShown: false,
+      }
+    },
+    // EditProfile: {
+    //   screen: EditProfileThread,
+    //   options: {
+    //     headerShown: false,
+    //   }
+    // },
+    HelpScreenThread: {
+      screen: HelpScreenThread,
+      options: {
+        headerShown: false,
+      }
+    },
+    AboutThread: {
+      screen: AboutThread,
+      options: {
+        headerShown: false,
+      }
+    },
+    AddPostThread: {
+      screen: AddPostThread,
+      options: {
+
+      }
+    },
+    InviteFriendsThread: {
+      screen: InviteFriendsThread,
+      options: {
+        headerShown: false,
+      }
+    },
+    AccountThread: {
+      screen: AccountThread,
+      options: {
+        headerShown: false,
+      }
+    },
+    LikedPostThread: {
+      screen: LikedPostThread,
+      options: {
+        headerShown: false,
+      }
+    },
+    ForgetPasswordThread: {
+      screen: ForgetPasswordThread,
+      options: {
+        headerShown: false,
+      }
+    }
+  }
+})
+
+
+
+const Navigation = createStaticNavigation(Stack)
 const App = () => {
-  return (
-    <DataInput/>
+  return (<Provider store={Store}>
+    <Navigation />
+  </Provider>
   )
 }
-
 export default App
+
 

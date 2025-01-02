@@ -3,50 +3,23 @@ import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Search from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
-import firestore from '@react-native-firebase/firestore';
 
 
 export const home = () => {
-    const [name, setname] = useState('')
     const navigation = useNavigation()
 
-
-    useEffect(() => {
-        getData()
-    }, [])
-
-    const getData = async () => {
-        const usersData = await firestore().collection('users').where('age', '>=', 18).get();
-        console.log('Users Data ==>', usersData)
-    }
-
-
-    const storeToFirebase = () => {
-        firestore()
-            .collection('users')
-            .add({
-                name: name,
-                age: 24
-            })
-            .then(
-                () => console.log('Data Stored')
-            )
-            setname('')
-    }
 
     return (
         <View style={styles.body}>
             <View style={styles.head}>
                 <TextInput
                     style={styles.searchInput}
-                    value={name}
-                    onChangeText={setname}
                     placeholder='Search here'
                     placeholderTextColor='gray'
                 />
                 <View style={styles.cartIcon}>
                     <TouchableOpacity
-                        onPress={() => storeToFirebase()}>
+                        onPress={() => navigation.navigate('Cart' as never)}>
                         <Icon
 
                             style={{ alignSelf: 'center' }}
@@ -68,18 +41,22 @@ export const home = () => {
                 </View>
 
                 <View>
-                    <View style={styles.container2}></View><Text style={styles.txt2}>Fresh space with plants</Text>
+                    <View style={styles.container2}></View>
+                    <Text style={styles.txt2}>Fresh space with plants</Text>
                 </View>
             </View>
             <View style={styles.main1}>
                 <View>
-                    <View style={styles.container1}></View><Text style={styles.txt1}>Fresh space with plants</Text>
+                    <View style={styles.container1}></View>
+                    <Text style={styles.txt1}>Fresh space with plants</Text>
                 </View>
                 <View>
-                    <View style={styles.container1}></View><Text style={styles.txt1}>Fresh space with plants</Text>
+                    <View style={styles.container1}></View>
+                    <Text style={styles.txt1}>Fresh space with plants</Text>
                 </View>
                 <View>
-                    <View style={styles.container1}></View><Text style={styles.txt1}>Fresh space with plants</Text>
+                    <View style={styles.container1}></View>
+                    <Text style={styles.txt1}>Fresh space with plants</Text>
                 </View>
             </View>
         </View>

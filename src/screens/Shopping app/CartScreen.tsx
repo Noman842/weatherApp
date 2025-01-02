@@ -58,7 +58,7 @@ const CartScreen = ({ route }: any) => {
 
       <View style={{ height: 55, width: 360, backgroundColor: '#C85959', marginTop: 27, justifyContent: 'center', position: 'absolute', bottom: 0 }}>
         <TouchableOpacity
-          onPress={addToCart}
+          onPress={()=>{addToCart();Alert.alert('Item added ✔')}}
         >
           <Text style={{ textAlign: 'center', fontSize: 22, fontWeight: 700, color: 'white', }}>Add to cart</Text>
         </TouchableOpacity>

@@ -1,10 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { createSlice } from '@reduxjs/toolkit'
-import { launchImageLibrary } from 'react-native-image-picker';
 import { useState } from 'react'
 
 
-  const [selectedImage, setSelectedImage] = useState<any>(null)
 
 const initialState ={
     item:[],
@@ -39,22 +37,13 @@ clearCart: (state:any) => {
       maxWidth: 2000,
     };
 
-    launchImageLibrary(options, (response: any) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('Image picker error: ', response.error);
-      } else {
-        let imageUri = response.uri || response.assets?.[0]?.uri;
-        setSelectedImage(imageUri);
-      }
-    });
+
   };
  },
 
     }
 })
 
-export const { addItem, removeItem, clearCart,Imageupdate } = Stice.actions;
+export const { addItem, removeItem, clearCart } = Stice.actions;
 export default Stice.reducer
 

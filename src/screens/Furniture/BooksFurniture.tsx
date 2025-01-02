@@ -3,8 +3,11 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Stars from 'react-native-vector-icons/FontAwesome'
 import InputText from '../../components/InputText'
+import { TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const BooksFurniture = () => {
+    const navigation = useNavigation()
     return (
         <View style={styles.body}>
             <View style={styles.head}>
@@ -14,10 +17,14 @@ const BooksFurniture = () => {
                     placeholderTextColor='gray'
                 />
                 <View style={styles.cartIcon}>
+                    <TouchableOpacity
+                    onPress={()=> navigation.navigate('Cart' as never)}
+                    >
                     <Icon
                         style={{ alignSelf: 'center' }}
                         name='shoppingcart' color='black' size={20}
                     />
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={{ flexDirection: 'row', marginVertical: 25, }}>

@@ -136,7 +136,6 @@ const UpdatedContacts =()=>{
   OldContactArray[Save.index] = { ContactName: name, SurName: surname, PhoneNumber: number, Image: selectedImage, }
   storeObjectValue(OldContactArray)
   navigation.navigate('AllContacts' as never)
-
 }
 
 

@@ -24,8 +24,6 @@ const ProductDetailScreen = () => {
   return (
     <View style={{ backgroundColor: '#fdeff3', flex: 1, }}>
 
-
-
       <View style={{ flexDirection: 'row' }}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
