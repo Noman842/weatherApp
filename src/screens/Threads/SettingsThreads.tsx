@@ -80,11 +80,15 @@ const SettingsThreads = () => {
                             </TouchableOpacity>
                         </View>
 
-                        <View style={{ flexDirection: 'row', marginVertical: 12 }}>
+                        <View style={{  marginVertical: 12 }}>
+                            <TouchableOpacity style={{flexDirection: 'row',}}
+                            onPress={()=>navigation.navigate('SavedPostThread' as never)}
+                            >
                             <Save
                                 name='bookmark' color='#fff' size={23}
                             />
                             <Text style={styles.Text}>Saved</Text>
+                            </TouchableOpacity>
                         </View>
 
                         <View style={{ flexDirection: 'row', marginVertical: 12 }}>

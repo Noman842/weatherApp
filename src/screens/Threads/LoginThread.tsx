@@ -4,16 +4,20 @@ import { useNavigation } from '@react-navigation/native'
 import Eye from 'react-native-vector-icons/Entypo'
 import auth from '@react-native-firebase/auth'
 import { Image } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { addEmail } from '../../store/Slice/EmailandData'
 
 
 
 const LoginThread = () => {
   const [hide, setHide] = useState<any>(true)
   const navigation = useNavigation()
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState<any>('')
   const [password, setPassword] = useState('')
   const [isloading, setIsloading] = useState(false)
 
+  const Dispatch = useDispatch()
+  const username = ''
 
   const Login = () => {
     if (email == '' && password == '') {
@@ -33,7 +37,7 @@ const LoginThread = () => {
           if (error.code === 'auth/invalid-email') {
             console.log('That email address is invalid!');
           }
-          if(error.code === 'auth/invalid-credential'){
+          if (error.code === 'auth/invalid-credential') {
             setIsloading(false)
             Alert.alert('Email and password does not match')
           }
@@ -46,7 +50,7 @@ const LoginThread = () => {
     <View style={styles.body}>
       {isloading ?
         <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: 260 }}>
-          <ActivityIndicator color='blue' size='large' /></View> :
+          <ActivityIndicator color='#fff' size='large' /></View> :
         <>
           <TouchableOpacity style={{ flex: 0.06, justifyContent: 'flex-end', alignItems: "center" }}>
             <Text style={{ color: '#fff' }}>English(US)</Text>
@@ -82,17 +86,22 @@ const LoginThread = () => {
                 onPress={() => setHide(!hide)}
               >
                 <Eye
-                  name='eye' color='#fff' size={19}
+                  name={hide === false ? 'eye' : 'eye-with-line'} color='#fff' size={19}
                 />
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-            onPress={()=>navigation.navigate('ForgetPasswordThread' as never)}
+              onPress={() => navigation.navigate('ForgetPasswordThread' as never)}
             >
               <Text style={{ color: 'gray', fontSize: 13, fontStyle: 'italic' }}>Forget Password ?</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => { setIsloading(true); Login() }}
+              onPress={() => {
+                setIsloading(true); Dispatch(addEmail(email));
+                console.log('Eail from Login',Dispatch(addEmail(email)))
+
+                Login()
+              }}
             >
               <View style={styles.button}>
 

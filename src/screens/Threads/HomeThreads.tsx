@@ -17,6 +17,9 @@ import LikeIcon from 'react-native-vector-icons/AntDesign'
 import MessageIcon from 'react-native-vector-icons/Ionicons'
 import Save from 'react-native-vector-icons/Feather'
 import Share from 'react-native-vector-icons/Feather'
+import { ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { adduserdata } from '../../store/Slice/EmailandData';
 
 
 
@@ -25,9 +28,15 @@ const HomeThreads = () => {
   const navigation = useNavigation<any>()
 
 
-  const [data, setData] = useState('')
+
+  const [data, setData] = useState<any>([])
   const [post, setPost] = useState<any>('')
   const [selectedImage, setSelectedImage] = useState(null)
+  const [isloading, setIsloading] = useState(true)
+  const [isrefresh, setIsRefresh] = useState(false)
+  const GetUser = useSelector((state: any) => state.Email.email)
+  const Dispatch = useDispatch()
+
 
   if (post) {
     console.log('Data+++++', post)
@@ -54,105 +63,118 @@ const HomeThreads = () => {
 
 
 
-  // useEffect(() => {
-  //   getData()
-  // }, [])
 
-  // const getData = async () => {
-  //   const usersPost = await Store().collection('users').doc('Post').get();
-  //   const Info: any = usersPost.data()
-  //   const Info2 = Info.Post
-  //   setData(Info2)
-  //   console.log('Users Data ====>', Info2)
-  // }
-
-  // const DataA = () => {
-  //   const dataArray = [...data, { post: post }]
-  //   setData(dataArray as any)
-  //   console.log('Data====>', data)
-  // }
+  const getdatafromfirestore = () => {
+    try {
+      const subs =
+        Store()
+          .collection('Post')
+          .orderBy('createdAt', 'desc')
+          .onSnapshot(documentSnapshot => {
+            console.log('User data: ', documentSnapshot.docs);
+            const Data = documentSnapshot.docs.map(item => item.data())
+            if (Data) {
+              console.log('Get Posts')
+              setData(Data)
+            } else { 'error' }
+          });
+      setIsloading(false);
+      return () => subs();
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      setIsloading(false);
+    }
+  }
 
   useEffect(() => {
-    const Subs = Store()
-      .collection('users')
-      .doc('Post')
-      .onSnapshot(Post => {
-        console.log('User exists: ', Post.exists);
-        if (Post.exists) {
-          console.log('User data: ', Post.data());
-          const Posts: any = Post.data()
-          const Post2 = Posts.Post
-          setData(Post2)
-          console.log('True', Posts)
+    getdatafromfirestore()
+    getDataFromFirebase()
+
+  }, []);
 
 
-        }
-      });
-    return () => Subs()
-  }, [])
+  const getDataFromFirebase = () => {
+    try {
+      if (GetUser) {
+        const subscriber = Store()
+          .collection('users')
+          .where('email', '==', GetUser)
+          .onSnapshot(documentSnapshot => {
+            console.log('Threads  at profile: ', documentSnapshot.docs)
+            const threadsArray:any = documentSnapshot.docs.map(item => item.data())
+            if (threadsArray) {
+              console.log('userData is being Transferred to redux ', threadsArray)
+              Dispatch(adduserdata(threadsArray[0]))
+            }
+          })
+        return () => subscriber();
+      } else {
+        console.log('from Homescreen. There is no value in Email: ', GetUser)
+      }
 
-
-  const Delete = () => {
-    Store()
-      .collection('users')
-      .doc('Post')
-      .delete()
-      .then(() => {
-        console.log('User deleted!');
-      })
+    } catch (error) {
+      console.log('Err fetching Email from redux-persist', error)
+    }
   }
+
 
   const renderlist = ({ item }: any) => {
     return (
       <View style={{ backgroundColor: '#101010', }}>
-        <View style={{ marginHorizontal: 5, marginRight: 10, }}>
-          <View style={{ flexDirection: 'row', marginRight: 25, }}>
-            <Image style={{ height: 50, width: 50, }} source={require('./../../images/Sun.png')} />
-            <View style={{ marginRight: 20, alignSelf: 'center' }}>
-              <Text style={{ color: '#fff', fontSize: 16, marginBottom: 3 }}>nomanejaz01</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('PostDetailThread' as never,
-                  { item },
-
-                )}
-              >
-                <Text style={{ color: '#fff' }}>{item.post}</Text>
-                <View style={{height:180,width:280,backgroundColor:'#A1A1A1',alignItems:'center',justifyContent:'center'}}>
-                <Image resizeMode='contain' style={{height:160,width:250}} source={{ uri: item?.selectedImage }} />
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={{ flexDirection: 'row', marginTop: 15, marginLeft: 15 }}>
-            <TouchableOpacity>
-              <LikeIcon
-                style={{ marginHorizontal: 30 }}
-                name='hearto' color='#fff' size={18}
-              />
-            </TouchableOpacity>
+        {isloading ?
+          <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: 260 }}>
+            <ActivityIndicator color='#fff' size='large' /></View> :
+          <>
             <TouchableOpacity
-              onPress={() => Delete}
+              onPress={() => navigation.navigate('PostDetailThread' as never,
+                { user: item },
+
+              )}
             >
-              <MessageIcon
-                name='chatbubble-outline' color='#fff' size={18}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Save
-                style={{ marginHorizontal: 30 }}
+              <View style={{ marginHorizontal: 5, marginRight: 10, }}>
+                <View style={{ flexDirection: "row", marginLeft: 10, }}>
+                  <Image
+                    style={{
+                      height: 30,
+                      width: 30,
+                    }}
+                    source={require('./../../images/Instalogo.png')}
+                  />
+                  <Text style={styles.username}>{item?.name}</Text>
+                </View>
+                <View style={{ marginLeft: '15%', marginRight: '5%' }}>
+                  <Text style={styles.post}>{item?.post}</Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginTop: 15, marginLeft: 25 }}>
+                  <TouchableOpacity>
+                    <LikeIcon
+                      style={{ marginHorizontal: 30 }}
+                      name='hearto' color='#fff' size={18}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <MessageIcon
+                      name='chatbubble-outline' color='#fff' size={18}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Save
+                      style={{ marginHorizontal: 30 }}
 
-                name='bookmark' color='#fff' size={18}
-              />
+                      name='bookmark' color='#fff' size={18}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Share
+                      name='send' color='#fff' size={17}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={styles.line}></View>
             </TouchableOpacity>
-            <TouchableOpacity>
-              <Share
-                name='send' color='#fff' size={17}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.line}></View>
-
+          </>
+        }
       </View>
     )
   }
@@ -175,7 +197,7 @@ const HomeThreads = () => {
                 name='user-circle' color='#fff' size={35}
               />
               <View style={{ marginLeft: 10 }}>
-                <Text style={styles.username}>nomanejaz01</Text>
+                <Text style={{ color: '#fff', fontSize: 16 }}>nomanejaz01</Text>
                 <Text style={{ color: 'gray' }}>What's new</Text>
               </View>
             </View>
@@ -227,6 +249,9 @@ const HomeThreads = () => {
       <FlatList
         data={data}
         renderItem={renderlist}
+        showsVerticalScrollIndicator={false}
+        refreshing={isrefresh}
+        onRefresh={getdatafromfirestore}
       />
     </View>
   )
@@ -240,6 +265,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#101010'
   },
   username: {
+    color: '#fff',
+    fontSize: 19,
+    marginLeft: '4%',
+    fontWeight: '500',
+  },
+  post: {
     color: '#fff',
     fontSize: 16,
   },

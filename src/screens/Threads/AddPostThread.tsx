@@ -14,6 +14,7 @@ import Location from 'react-native-vector-icons/Octicons'
 import Store from '@react-native-firebase/firestore'
 import Profile from 'react-native-vector-icons/FontAwesome'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
+import { useSelector } from 'react-redux'
 
 
 
@@ -26,45 +27,40 @@ const AddPostThread = ({ route }: any) => {
   const [post, setPost] = useState<any>('')
   const [data, setData] = useState('')
   const [selectedImage, setSelectedImage] = useState<any>(null)
-
+  const [email, setEmail] = useState('')
   const [button, setButton] = useState('gray')
+  const GetUser = useSelector((state: any) => state.Email.email)
+  const GetUsername = useSelector((state: any) => state.Email.userdata)
+  console.log('GetUserdata',GetUsername)
 
-  if (post) {
-    console.log('Data is coming', post)
-  }
 
-  useEffect(() => {
-    getData()
-  }, [])
+  // if (GetUser) {
+  //   console.log('UserData ++++++', GetUser)
+  // } else {
+  //   console.log('UserData ------')
+  // }
 
-  const getData = async () => {
-    const usersPost = await Store().collection('users').doc('Post').get();
-    const Info: any = usersPost.data()
-    const Info2 = Info.Post
-    setData(Info2)
-    console.log('Users Post ====>', Info2)
-  }
 
-  const DataA = () => {
-    const Array = [...data, { post: post, selectedImage: selectedImage }]
-    storeToFirebase(Array)
-    setData(Array as any)
-    console.log('Data====>', data)
-  }
-
-  const storeToFirebase = (Array: any) => {
-    Store()
-      .collection('users')
-      .doc('Post')
-      .set({
-        Post: Array,
-      })
-      .then(
-        () => console.log('Data Stored')
-      )
-    setPost('')
-    setSelectedImage('')
-
+  const storeToFirebase = () => {
+    if (post == '') {
+      Alert.alert('Post cannot be empty')
+    } else {
+      Store()
+        .collection('Post')
+        .add({
+          post: post,
+          email: GetUser,
+          name: GetUsername?.name,
+          bio:GetUsername?.bio,
+          createdAt: Store.FieldValue.serverTimestamp()
+        })
+        .then(
+          () => console.log('Data Stored')
+        )
+      setPost('')
+      setSelectedImage('')
+      Alert.alert('Post added ✔')
+    }
   }
 
   const openImagePicker = () => {
@@ -88,26 +84,28 @@ const AddPostThread = ({ route }: any) => {
   };
 
 
-   const handleCameraLaunch = () => {
-        const options:any = {
-          mediaType: 'photo',
-          includeBase64: false,
-          maxHeight: 2000,
-          maxWidth: 2000,
-        };
-      
-        launchCamera(options, (response : any) => {
-          if (response.didCancel) {
-            console.log('User cancelled camera');
-          } else if (response.error) {
-            console.log('Camera Error: ', response.error);
-          } else {
-            let imageUri = response.uri || response.assets?.[0]?.uri;
-            setSelectedImage(imageUri);
-            console.log(imageUri);
-          }
-        });
+  const handleCameraLaunch = () => {
+    const options: any = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchCamera(options, (response: any) => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.error) {
+        console.log('Camera Error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setSelectedImage(imageUri);
+        console.log(imageUri);
       }
+    });
+  }
+
+
 
   return (
     <View style={styles.body}>
@@ -139,7 +137,7 @@ const AddPostThread = ({ route }: any) => {
           />
 
           <View style={{ marginLeft: 10 }}>
-            <Text style={styles.username}>nomanejaz01</Text>
+            <Text style={styles.username}>{GetUser?.name}</Text>
             <TextInput
               style={{ marginRight: 25 }}
               value={post}
@@ -161,7 +159,7 @@ const AddPostThread = ({ route }: any) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
-          onPress={handleCameraLaunch}
+            onPress={handleCameraLaunch}
           >
             <Camera
               name='camera' color='gray' size={22}
@@ -196,13 +194,13 @@ const AddPostThread = ({ route }: any) => {
 
         {
           selectedImage &&
-          <Image style={{ height: 210, width:'100%',alignSelf:'center'}} source={{ uri: selectedImage }} />
+          <Image style={{ height: 210, width: '100%', alignSelf: 'center' }} source={{ uri: selectedImage }} />
         }
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', bottom: 2, position: "absolute", marginHorizontal: 16, }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', bottom: 15, position: "absolute", marginHorizontal: 16, }}>
         <Text style={{ color: 'gray', fontSize: 16, alignSelf: 'center' }} >Your followers can reply & quote</Text>
         <TouchableOpacity
-          onPress={() => { DataA(); Alert.alert('Post added ✔') }}
+          onPress={() => { storeToFirebase(); }}
           style={styles.bottonbutton}
         >
           <Text style={{ fontSize: 16, color: 'black', fontWeight: '500' }}>Post</Text>
@@ -231,8 +229,8 @@ const styles = StyleSheet.create({
   },
   bottonbutton: {
     height: 40,
-    width: 70,
-    borderRadius: 15,
+    width: 67,
+    borderRadius: 20,
     backgroundColor: "#fff",
     color: 'black',
     justifyContent: 'center',

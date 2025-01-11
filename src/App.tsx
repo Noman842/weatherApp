@@ -505,272 +505,477 @@
 
 
 
+// import { View } from 'react-native'
+// import React from 'react'
+// // Screens
+// import SplashScreen from './screens/Threads/SplashScreen'
+// import SettingsThreads from './screens/Threads/SettingsThreads'
+// import ProfileThread from './screens/Threads/ProfileThread'
+// import HomeThreads from './screens/Threads/HomeThreads'
+// import PrivacyScreenThreads from './screens/Threads/PrivacyScreenThreads'
+// import EditProfileThread from './screens/Threads/EditProfileThread'
+// import LoginThread from './screens/Threads/LoginThread'
+// import SignupThread from './screens/Threads/SignupThread'
+// import HelpScreenThread from './screens/Threads/HelpScreenThread'
+// import AboutThread from './screens/Threads/AboutThread'
+// import SearchThread from './screens/Threads/SearchThread'
+// import AddPostThread from './screens/Threads/AddPostThread'
+// import LikeScreenThread from './screens/Threads/LikeScreenThread'
+// import InviteFriendsThread from './screens/Threads/InviteFriendsThread'
+// import { Provider } from 'react-redux'
+// import Store, { persistor } from './store/Store'
+// import AccountThread from './screens/Threads/AccountThread'
+// import LikedPostThread from './screens/Threads/LikedPostThread'
+// import PostDetailThread from './screens/Threads/PostDetailThread'
+// import ForgetPasswordThread from './screens/Threads/ForgetPasswordThread'
+
+
+// // Navigations
+// import { createStaticNavigation } from '@react-navigation/native'
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+// import { createNativeStackNavigator } from '@react-navigation/native-stack'
+// // Icons
+// import HomeIcon from 'react-native-vector-icons/Octicons'
+// import SearchIcon from 'react-native-vector-icons/Feather'
+// import AddIcon from 'react-native-vector-icons/MaterialIcons'
+// import LikeIcon from 'react-native-vector-icons/AntDesign'
+// import ProfileIcon from 'react-native-vector-icons/Feather'
+// import SavedPostThread from './screens/Threads/SavedPostThread'
+// import { PersistGate } from 'redux-persist/es/integration/react'
+
+
+// const Stack2 = createNativeStackNavigator({
+//   screens: {
+//     ProfileThread1: {
+//       screen: ProfileThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     EditProfile: {
+//       screen: EditProfileThread,
+//       options: {
+//         headerShown: false,
+//         animation: 'slide_from_bottom'
+//       }
+//     },
+//   }
+// })
+
+// const bottomnavigation = createBottomTabNavigator({
+
+//   screens: {
+//     HomeThreads: {
+//       screen: HomeThreads,
+//       options: {
+//         headerShown: false,
+//         animation: 'shift',
+//         tabBarIcon: ({ color }) => (
+//           <HomeIcon
+//             style={{ marginTop: 4 }}
+//             name='home' color={color} size={27}
+//           />
+//         ),
+//         tabBarLabel: '',
+//         tabBarStyle: {
+//           backgroundColor: '#101010',
+//           borderColor: '#101010'
+//         }
+
+//       },
+//     },
+//     SearchThread: {
+//       screen: SearchThread,
+//       options: {
+//         headerShown: false,
+//         tabBarIcon: ({ color }) => (
+//           <SearchIcon
+//             style={{ marginTop: 4 }}
+//             name='search' color={color} size={27}
+//           />
+//         ),
+//         tabBarLabel: '',
+//         tabBarStyle: {
+//           backgroundColor: '#101010',
+//           borderColor: '#101010'
+//         }
+//       }
+//     },
+//     AddPostThread: {
+//       screen: AddPostThread,
+//       options: {
+//         headerShown: false,
+//         tabBarIcon: ({ color }) => (
+//           <View style={{
+//             height: 40, width: 55, backgroundColor: '#1E1E1E',
+//             borderRadius: 15, marginTop: 10, alignItems: 'center', justifyContent: 'center'
+//           }}>
+//             <AddIcon
+
+//               name='add' color={color} size={27}
+//             />
+//           </View>
+//         ),
+//         tabBarLabel: '',
+//         tabBarStyle: {
+//           display: 'none',
+//           backgroundColor: '#101010',
+//           borderColor: '#101010'
+//         }
+//       },
+//     },
+//     LikeScreenThread: {
+//       screen: LikeScreenThread,
+//       options: {
+//         headerShown: false,
+//         tabBarIcon: ({ color }) => (
+//           <LikeIcon
+//             style={{ marginTop: 4 }}
+//             name='hearto' color={color} size={26}
+//           />
+//         ),
+//         tabBarLabel: '',
+//         tabBarStyle: {
+//           backgroundColor: '#101010',
+//           borderColor: '#101010'
+//         }
+//       },
+//     },
+//     ProfileThread: {
+//       screen: Stack2,
+//       options: {
+//         headerShown: false,
+//         tabBarIcon: ({ color }) => (
+//           <ProfileIcon
+//             style={{ marginTop: 4 }}
+//             name='user' color={color} size={27}
+//           />
+//         ),
+//         tabBarLabel: '',
+//         tabBarStyle: {
+//           backgroundColor: '#101010',
+//           borderColor: '#101010'
+//         }
+//       },
+//     },
+//   },
+//   screenOptions: { tabBarActiveTintColor: '#fff' }
+
+// })
+// const Stack = createNativeStackNavigator({
+//   screens: {
+//     SplashScreen: {
+//       screen: SplashScreen,
+//       options: {
+//         headerShown: false,
+
+//       }
+//     },
+//     LoginThread: {
+//       screen: LoginThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     SignupThread: {
+//       screen: SignupThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     HomeThread: {
+//       screen: bottomnavigation,
+//       options: {
+//         headerShown: false,
+//       },
+//     },
+
+//     PostDetailThread: {
+//       screen: PostDetailThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     // ProfileThread: {
+//     //   screen: bottomnavigation,
+//     //   options: {
+//     //     headerShown: false,
+//     //   }
+//     // },
+//     SettingsThreads: {
+//       screen: SettingsThreads,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     PrivacyScreenThreads: {
+//       screen: PrivacyScreenThreads,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     // EditProfile: {
+//     //   screen: EditProfileThread,
+//     //   options: {
+//     //     headerShown: false,
+//     //   }
+//     // },
+//     HelpScreenThread: {
+//       screen: HelpScreenThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     AboutThread: {
+//       screen: AboutThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     AddPostThread: {
+//       screen: AddPostThread,
+//       options: {
+
+//       }
+//     },
+//     InviteFriendsThread: {
+//       screen: InviteFriendsThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     AccountThread: {
+//       screen: AccountThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     LikedPostThread: {
+//       screen: LikedPostThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     SavedPostThread: {
+//       screen: SavedPostThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     },
+//     ForgetPasswordThread: {
+//       screen: ForgetPasswordThread,
+//       options: {
+//         headerShown: false,
+//       }
+//     }
+//   }
+// })
+
+
+
+// const Navigation = createStaticNavigation(Stack)
+// const App = () => {
+//   return (
+//     <Provider store={Store}>
+//       <PersistGate persistor={persistor}>
+//         <Navigation />
+//       </PersistGate>
+
+//     </Provider>
+//   )
+// }
+// export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { View } from 'react-native'
 import React from 'react'
-// Screens
-import SplashScreen from './screens/Threads/SplashScreen'
-import SettingsThreads from './screens/Threads/SettingsThreads'
-import ProfileThread from './screens/Threads/ProfileThread'
-import HomeThreads from './screens/Threads/HomeThreads'
-import PrivacyScreenThreads from './screens/Threads/PrivacyScreenThreads'
-import EditProfileThread from './screens/Threads/EditProfileThread'
-import LoginThread from './screens/Threads/LoginThread'
-import SignupThread from './screens/Threads/SignupThread'
-import HelpScreenThread from './screens/Threads/HelpScreenThread'
-import AboutThread from './screens/Threads/AboutThread'
-import SearchThread from './screens/Threads/SearchThread'
-import AddPostThread from './screens/Threads/AddPostThread'
-import LikeScreenThread from './screens/Threads/LikeScreenThread'
-import InviteFriendsThread from './screens/Threads/InviteFriendsThread'
-import { Provider } from 'react-redux'
-import Store from './store/Store'
-import AccountThread from './screens/Threads/AccountThread'
-import LikedPostThread from './screens/Threads/LikedPostThread'
-import PostDetailThread from './screens/Threads/PostDetailThread'
-import ForgetPasswordThread from './screens/Threads/ForgetPasswordThread'
-
-
 // Navigations
 import { createStaticNavigation } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-// Icons
-import HomeIcon from 'react-native-vector-icons/Octicons'
-import SearchIcon from 'react-native-vector-icons/Feather'
-import AddIcon from 'react-native-vector-icons/MaterialIcons'
-import LikeIcon from 'react-native-vector-icons/AntDesign'
-import ProfileIcon from 'react-native-vector-icons/Feather'
+//Icons
+import Home from 'react-native-vector-icons/Feather'
+import Find from 'react-native-vector-icons/MaterialCommunityIcons'
+import Donation from 'react-native-vector-icons/Octicons'
+import Profile from 'react-native-vector-icons/FontAwesome5'
+//Screens
+import BloodSplash from './screens/Bloodapp/BloodSplash'
+import BloodLoginSignup from './screens/Bloodapp/BloodLoginSignup'
+import BloodLogin from './screens/Bloodapp/BloodLogin'
+import BloodSignup from './screens/Bloodapp/BloodSignup'
+import BloodHome from './screens/Bloodapp/BloodHome'
+import BloodProfile from './screens/Bloodapp/BloodProfile'
+import BloodDonate from './screens/Bloodapp/BloodDonate'
+import BloodDonor from './screens/Bloodapp/BloodDonor'
+import { Provider } from 'react-redux'
+import store, { persistor } from './store/Store'
+import BloodDetail from './screens/Bloodapp/BloodDetail'
+import BloodMyDonations from './screens/Bloodapp/BloodMyDonations'
+import BloodForget from './screens/Bloodapp/BloodForget'
+import { PersistGate } from 'redux-persist/integration/react'
+import BloodEdit from './screens/Bloodapp/BloodEdit'
 
-
-const Stack2 = createNativeStackNavigator({
-  screens: {
-    ProfileThread1: {
-      screen: ProfileThread,
-      options: {
-        headerShown: false,
-      }
-    },
-    EditProfile: {
-      screen: EditProfileThread,
-      options: {
-        headerShown: false,
-        animation: 'slide_from_bottom'
-      }
-    },
-  }
-})
 
 const bottomnavigation = createBottomTabNavigator({
-
   screens: {
-    HomeThreads: {
-      screen: HomeThreads,
+    Home: {
+      screen: BloodHome,
       options: {
         headerShown: false,
         tabBarIcon: ({ color }) => (
-          <HomeIcon
-            style={{ marginTop: 4 }}
+          <Home
             name='home' color={color} size={27}
           />
-        ),
-        tabBarLabel: '',
-        tabBarStyle: {
-          backgroundColor: '#101010',
-          borderColor: '#101010'
-        }
-
-      },
-    },
-    SearchThread: {
-      screen: SearchThread,
-      options: {
-        headerShown: false,
-        tabBarIcon: ({ color }) => (
-          <SearchIcon
-            style={{ marginTop: 4 }}
-            name='search' color={color} size={27}
-          />
-        ),
-        tabBarLabel: '',
-        tabBarStyle: {
-          backgroundColor: '#101010',
-          borderColor: '#101010'
-        }
+        )
       }
     },
-    AddPostThread: {
-      screen: AddPostThread,
+    FindDonor: {
+      screen: BloodDonor,
       options: {
         headerShown: false,
+        animation: 'shift',
         tabBarIcon: ({ color }) => (
-          <View style={{
-            height: 40, width: 55, backgroundColor: '#1E1E1E',
-            borderRadius: 15, marginTop: 10, alignItems: 'center', justifyContent: 'center'
-          }}>
-            <AddIcon
-
-              name='add' color={color} size={27}
-            />
-          </View>
-        ),
-        tabBarLabel: '',
-        tabBarStyle: {
-          backgroundColor: '#101010',
-          borderColor: '#101010'
-        }
-      },
-    },
-    LikeScreenThread: {
-      screen: LikeScreenThread,
-      options: {
-        headerShown: false,
-        tabBarIcon: ({ color }) => (
-          <LikeIcon
-            style={{ marginTop: 4 }}
-            name='hearto' color={color} size={26}
+          <Find
+            name='account-search-outline' color={color} size={28}
           />
-        ),
-        tabBarLabel: '',
-        tabBarStyle: {
-          backgroundColor: '#101010',
-          borderColor: '#101010'
-        }
-      },
+        )
+      }
     },
-    ProfileThread: {
-      screen: Stack2,
+    Donation: {
+      screen: BloodDonate,
       options: {
         headerShown: false,
+        animation: 'shift',
         tabBarIcon: ({ color }) => (
-          <ProfileIcon
-            style={{ marginTop: 4 }}
-            name='user' color={color} size={27}
+          <Donation
+            name='checklist' color={color} size={23}
           />
-        ),
-        tabBarLabel: '',
-        tabBarStyle: {
-          backgroundColor: '#101010',
-          borderColor: '#101010'
-        }
-      },
+        )
+      }
+    },
+    Profile: {
+      screen: BloodProfile,
+      options: {
+        headerShown: false,
+        animation: 'shift',
+        tabBarIcon: ({ color }) => (
+          <Profile
+            name='user-circle' color={color} size={26}
+          />
+        )
+      }
     },
   },
-  screenOptions: { tabBarActiveTintColor: '#fff' }
-
+  screenOptions: { tabBarActiveTintColor: '#D80032' }
 })
+
 const Stack = createNativeStackNavigator({
   screens: {
-    SplashScreen: {
-      screen: SplashScreen,
+    BloodSplash: {
+      screen: BloodSplash,
       options: {
-        headerShown: false,
-
+        headerShown: false
       }
     },
-    LoginThread: {
-      screen: LoginThread,
-      options: {
-        headerShown: false,
-      }
-    },
-    SignupThread: {
-      screen: SignupThread,
+    BloodLoginSignup: {
+      screen: BloodLoginSignup,
       options: {
         headerShown: false,
       }
     },
-    HomeThread: {
+    BloodLogin: {
+      screen: BloodLogin,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodSignup: {
+      screen: BloodSignup,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodHome: {
       screen: bottomnavigation,
       options: {
         headerShown: false,
-      },
-    },
-
-    PostDetailThread: {
-      screen: PostDetailThread,
-      options: {
-        headerShown: false,
-        animation: 'slide_from_bottom',
       }
     },
-    // ProfileThread: {
-    //   screen: bottomnavigation,
-    //   options: {
-    //     headerShown: false,
-    //   }
-    // },
-    SettingsThreads: {
-      screen: SettingsThreads,
+    BloodDonate:{
+      screen:BloodDonate,
+      options:{
+        headerShown:false,
+      }
+    },
+    BloodProfile:{
+      screen:BloodProfile,
+      options:{
+        headerShown:false,
+      }
+    },
+    BloodDetail: {
+      screen: BloodDetail,
       options: {
         headerShown: false,
       }
     },
-    PrivacyScreenThreads: {
-      screen: PrivacyScreenThreads,
+    BloodMyDonations: {
+      screen: BloodMyDonations,
       options: {
         headerShown: false,
       }
     },
-    // EditProfile: {
-    //   screen: EditProfileThread,
-    //   options: {
-    //     headerShown: false,
-    //   }
-    // },
-    HelpScreenThread: {
-      screen: HelpScreenThread,
+    BloodForget: {
+      screen: BloodForget,
       options: {
         headerShown: false,
       }
     },
-    AboutThread: {
-      screen: AboutThread,
-      options: {
-        headerShown: false,
-      }
-    },
-    AddPostThread: {
-      screen: AddPostThread,
-      options: {
-
-      }
-    },
-    InviteFriendsThread: {
-      screen: InviteFriendsThread,
-      options: {
-        headerShown: false,
-      }
-    },
-    AccountThread: {
-      screen: AccountThread,
-      options: {
-        headerShown: false,
-      }
-    },
-    LikedPostThread: {
-      screen: LikedPostThread,
-      options: {
-        headerShown: false,
-      }
-    },
-    ForgetPasswordThread: {
-      screen: ForgetPasswordThread,
-      options: {
-        headerShown: false,
+    BloodEdit:{
+      screen:BloodEdit,
+      options:{
+        headerShown:false,
       }
     }
   }
-})
-
-
+});
 
 const Navigation = createStaticNavigation(Stack)
 const App = () => {
-  return (<Provider store={Store}>
-    <Navigation />
-  </Provider>
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Navigation />
+      </PersistGate>
+    </Provider>
+
   )
 }
 export default App
-
 

@@ -7,10 +7,12 @@ const LikeScreenThread = () => {
       <View style={{ margin: 16, }}>
         <Text style={styles.title}>Activity</Text>
       </View>
-      <ScrollView
+     
+        <View style={{ flexDirection: "row", justifyContent: "space-between", marginHorizontal: 15 }}>
+        <ScrollView
+      showsHorizontalScrollIndicator={false}
         horizontal={true}
       >
-        <View style={{ flexDirection: "row", justifyContent: "space-between", marginHorizontal: 15 }}>
           <TouchableOpacity style={styles.scrollview1}>
             <Text style={{ color: 'black', fontSize: 15 }}>All</Text>
           </TouchableOpacity>
@@ -34,9 +36,10 @@ const LikeScreenThread = () => {
           <TouchableOpacity style={styles.scrollview}>     
               <Text style={{ color: '#fff', fontWeight: '500', fontSize: 15 }}>Reposts</Text>
           </TouchableOpacity>
+          </ScrollView>
+
 
         </View>
-      </ScrollView>
     </View>
   )
 }

@@ -1,21 +1,25 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Cross from 'react-native-vector-icons/Entypo'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import Profile from 'react-native-vector-icons/FontAwesome'
 import Store from '@react-native-firebase/firestore'
 import { launchImageLibrary, launchCamera } from 'react-native-image-picker'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useSelector } from 'react-redux'
 
 
 
 
 const EditProfileThread = ({ route }: any) => {
-    const { Data, index } = route.params || {}
-    const [name, setName] = useState(Data?.name ? Data.name : '')
-    const [username, setUsername] = useState(Data?.username ? Data.username : '')
-    const [bio, setBio] = useState('')
+    const { userdata } = route.params || {}
+    const [name, setName] = useState(userdata?.name ? userdata.name : '')
+    const [username, setUsername] = useState(userdata?.username ? userdata.username : '')
+    const [bio, setBio] = useState(userdata?.bio ? userdata.bio:'')
     const [data, setData] = useState('')
+    const GetUser = useSelector((state: any) => state.Email.email)
+      const GetUsername = useSelector((state: any) => state.Email.userdata)
+    
 
     const [selectedImage, setSelectedImage] = useState<any>(null)
 
@@ -38,76 +42,39 @@ const EditProfileThread = ({ route }: any) => {
             }
         });
     };
-
-
     const navigation = useNavigation<any>()
-    useEffect(() => {
-        getData()
-      }, [])
-    
-      const getData = async () => {
-        const usersData = await Store().collection('users').doc('Data').get();
-        const Info: any = usersData.data()
-        const Info2 = Info.Data
-        setData(Info2)
-        console.log('Users Post ====>', Info2)
-      }
-    
-      const DataA = () => {
-        const Array = [...data, {name:name,username:username,bio:bio }]
-        storeToFirebase(Array)
-        setData(Array as any)
-        console.log('Data====>', data)
-      }
-    
-      const storeToFirebase = (Array: any) => {
+
+    const updateProfile = async () => {
         Store()
-          .collection('users')
-          .doc('Data')
-          .set({
-            Data: Array,
-          })
-          .then(
-            () => console.log('Name,Username,bio stored')
-          )
-    
-      }
+            .collection('users')
+            .doc(GetUsername)
+            .update({
+                name: userdata?.name,
+                bio: userdata?.bio,
+            })
+            .then(() => {
+                console.log(`User with Email:  ${GetUsername}  updated on    F I R E S T O R E   and   R E D U X  !`);
+            })
+        const filteredData = await Store()
+            .collection('Post')
+            .where('email', '==', GetUser)
+            .get()
 
-    const SaveData = () => {
-        if (selectedImage !== '') {
-            const dataArray = [...data, { Image: selectedImage, }]
-            console.log('Data', dataArray)
-            storeObjectValue(dataArray)
-            setData(dataArray as any)
-            setSelectedImage(null)
-            navigation.navigate('ProfileThread1' as never)
-        }
-        else {
-            Alert.alert('Please fill the required info.')
-        }
-    }
-    const storeObjectValue = async (dataList: any) => {
-        try {
-            const jsonValue = JSON.stringify(dataList)
-            console.log('Contact LIst', dataList)
-            await AsyncStorage.setItem('CONTACTS', jsonValue)
-            console.log('Your value stored')
-        } catch (error) {
-            console.log('Error', error)
-        }
-    }
+        const batch = Store().batch()
 
 
-    const getStoredObjectValue = async () => {
-        try {
-            const jsonValue = await AsyncStorage.getItem('CONTACTS')
-            const storeddataList = JSON.parse(jsonValue as any)
-            setData(storeddataList as any)
-            console.log('Got Stored Value', storeddataList)
-        } catch (error) {
-            console.log('Error', error)
+        const updateFields = {
+            name: userdata?.name,
+            bio: userdata?.bio
         }
+        filteredData.forEach((document) => {
+            const currentDocId = Store().collection('Post').doc(document.id)
+            batch.update(currentDocId, updateFields)
+        })
+        console.log('Updating the profile on Threads Collection pls wait...')
+        batch.commit()
     }
+
 
     return (
         <View style={styles.body}>
@@ -124,8 +91,8 @@ const EditProfileThread = ({ route }: any) => {
                         <Text style={styles.titletxt}>Edit Profile</Text>
                     </View>
                     <TouchableOpacity
-                        onPress={() => {DataA();
-                            SaveData();
+                        onPress={() => {
+                            updateProfile();
                             navigation.navigate('ProfileThread1' as never,
 
                                 { username: username, name: name, Image: selectedImage }
@@ -145,6 +112,8 @@ const EditProfileThread = ({ route }: any) => {
                                 onChangeText={setUsername}
                                 style={styles.Input}
                                 placeholder='Username'
+                                keyboardType='default'
+                                maxLength={10}
                             />
                         </View>
                         <TouchableOpacity
@@ -169,6 +138,7 @@ const EditProfileThread = ({ route }: any) => {
                             onChangeText={setName}
                             style={styles.Inputname}
                             placeholder='Name'
+                            maxLength={10}
                         />
                     </View>
                     <Text style={styles.containertxt}>Bio</Text>
@@ -176,7 +146,9 @@ const EditProfileThread = ({ route }: any) => {
                         value={bio}
                         onChangeText={setBio}
                         style={styles.Inputname}
-                        placeholder='+ Write bio'
+                        placeholder='+ Write bio (100 words)'
+                        multiline={true}
+                        maxLength={100}
                     />
                     <View style={{ marginTop: 15 }}>
                         <Text style={styles.containertxt}>Private profile</Text>
@@ -219,7 +191,7 @@ const styles = StyleSheet.create({
     Input: {
         borderBottomWidth: 1,
         borderBottomColor: 'gray',
-        width: '270%'
+        width: 220
     },
     Inputname: {
         borderBottomWidth: 1,

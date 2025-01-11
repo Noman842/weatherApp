@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native'
 import React, { useState } from 'react'
 import Back from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
@@ -6,14 +6,16 @@ import { confirmPasswordReset, sendPasswordResetEmail } from '@react-native-fire
 import auth from '@react-native-firebase/auth'
 
 
-const ForgetPasswordThread = () => {
+const BloodForget = () => {
     const navigation = useNavigation()
     const [email, setEmail] = useState<any>('')
-    const [newpassword, setNewpassword] = useState('')
 
     const Forget = () => {
-        auth()
-            .sendPasswordResetEmail(email)
+        return (
+            auth()
+                .sendPasswordResetEmail(email)
+               
+        )
     }
 
     return (
@@ -23,7 +25,7 @@ const ForgetPasswordThread = () => {
                     onPress={() => navigation.goBack()}
                 >
                     <Back
-                        name='arrowleft' color='#fff' size={23}
+                        name='arrowleft' color='black' size={23}
                     />
                 </TouchableOpacity>
                 <Text style={styles.title}>Forget Password</Text>
@@ -43,7 +45,8 @@ const ForgetPasswordThread = () => {
                     />
 
                     <TouchableOpacity
-                        onPress={() => Forget}
+                        onPress={() => { Forget(); setEmail(''); Alert.alert('Check Your Mail box')
+                        }}
                     >
                         <View style={styles.button}>
 
@@ -56,35 +59,34 @@ const ForgetPasswordThread = () => {
     )
 }
 
-export default ForgetPasswordThread
+export default BloodForget
 
 const styles = StyleSheet.create({
     body: {
         flex: 1,
-        backgroundColor: '#1A313F',
+        backgroundColor: '#fff',
 
     },
     title: {
-        color: '#fff',
+        color: 'black',
         fontSize: 20,
         marginLeft: 10,
         fontWeight: '500'
     },
     Input: {
         height: 60,
-        backgroundColor: '#1C2A33',
+        backgroundColor: '#fff',
         width: 320,
-        borderWidth: 1,
+        borderBottomWidth: 1,
         borderColor: 'gray',
-        borderRadius: 10,
         padding: 10,
-        color: '#fff',
+        color: 'gray',
         marginVertical: 7,
     },
     button: {
         marginTop: 10,
         height: 50,
-        backgroundColor: '#0064E0',
+        backgroundColor: '#D80032',
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',

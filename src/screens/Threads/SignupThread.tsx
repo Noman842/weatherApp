@@ -4,92 +4,104 @@ import Meta from 'react-native-vector-icons/Entypo'
 import Eye from 'react-native-vector-icons/Entypo'
 import auth from '@react-native-firebase/auth'
 import { Image } from 'react-native'
-import Store from '@react-native-firebase/firestore'
+import firestore from '@react-native-firebase/firestore';
+import { useDispatch } from 'react-redux'
+import { addEmail } from '../../store/Slice/EmailandData'
+import { adduserdata } from '../../store/Slice/EmailandData'
+
+
 
 
 
 
 const SignupThread = () => {
   const [hide, setHide] = useState<any>(true)
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
+  const [name, setName] = useState<any>('')
+  const [email, setEmail] = useState<any>('')
   const [password, setPassword] = useState('')
   const [isloading, setIsloading] = useState(false)
-    const [data, setData] = useState('')
-  
+  const bio: any = ''
+  const Dispatch = useDispatch()
+
+
+
 
 
   const Signup = () => {
-    if (username == '' || email == '' || password == '') {
+    setIsloading(true)
+    if (name == '' || email == '' || password == '') {
       setIsloading(false)
       Alert.alert('Please Enter required info..')
     } else (
-      console.log('Email', email),
+      console.log('Email', email, name),
       auth()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
           console.log('User account created & signed in!');
+          Dispatch(addEmail(email));
+          console.log('Redux Email', Dispatch(addEmail(email)))
+
+          StoreEmail();
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
             setIsloading(false)
             Alert.alert('Email is already in use')
             console.log('That email address is already in use!');
+            setIsloading(false)
+
           }
 
           if (error.code === 'auth/invalid-email') {
             console.log('That email address is invalid!');
           }
-          if(error.code === 'auth/weak-password'){
-            setIsloading(false)
+          if (error.code === 'auth/weak-password') {
             Alert.alert('Password is weak')
+            setIsloading(false)
+
           }
+          if (error.code === 'auth/network-request-failed') {
+            Alert.alert('Please check your network connection')
+            setIsloading(false)
+
+          }
+          console.error(error);
           console.error(error);
 
         })
     )
   }
-  const DataA = () => {
-    const Array = [...data, { username: username }]
-    storeToFirebase(Array)
-    setData(Array as any)
-    console.log('Data====>', data)
-  }
-
-  const storeToFirebase = (Array: any) => {
-    Store()
+  const StoreEmail = () => {
+    firestore()
       .collection('users')
-      .doc('Data')
+      .doc(email)
       .set({
-        Data: Array,
+        email: email,
+        name: name,
+        bio: bio,
+        createdAt: firestore.FieldValue.serverTimestamp()
       })
-      .then(
-        () => console.log('Data Stored')
-      )
-    setUsername('')
-
+      .then(() => {
+        console.log('User added!');
+      });
   }
-  const condition = (plate: any) => {
-    const re = /(^[A-Z]{2}[0-9]{2}\s?[A-Z]{3}$)/
 
-    return re.test(plate);
 
-  }
 
   return (
     <View style={styles.body}>
       {isloading ?
         <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: 260 }}>
-          <ActivityIndicator color='blue' size='large' /></View> :
+          <ActivityIndicator color='#fff' size='large' /></View> :
         <>
           <TouchableOpacity style={{ flex: 0.06, justifyContent: 'flex-end' }}>
             <Text style={{ color: '#fff' }}>English(US)</Text>
           </TouchableOpacity>
           <View style={{ flex: 0.8, justifyContent: "center" }}>
             <TextInput
-              value={username}
-              onChangeText={setUsername}
-              placeholder='Enter Username'
+              value={name}
+              onChangeText={setName}
+              placeholder='Enter Name'
               placeholderTextColor='#A1A1A1'
               style={styles.Input}
             />
@@ -103,8 +115,6 @@ const SignupThread = () => {
             <View style={{ flexDirection: 'row', }}>
               <TextInput
                 value={password}
-                onChange={condition}
-                editable={true}
                 onChangeText={setPassword}
                 placeholder='Password'
                 placeholderTextColor='#A1A1A1'
@@ -117,14 +127,17 @@ const SignupThread = () => {
                 onPress={() => setHide(!hide)}
               >
                 <Eye
-                  name='eye' color='#fff' size={19}
+                  name={hide === false ? 'eye' : 'eye-with-line'} color='#fff' size={19}
                 />
               </TouchableOpacity>
             </View>
 
 
             <TouchableOpacity
-              onPress={() => { DataA();setIsloading(true); Signup() }}
+              onPress={() => {
+                Signup()
+
+              }}
             >
               <View style={styles.button}>
 
