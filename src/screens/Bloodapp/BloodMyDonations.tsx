@@ -35,7 +35,7 @@ const BloodMyDonations = () => {
                 setData(threadsArray)
             }
 
-            console.log('Data ======>', data)
+            console.log('Data =>', data)
 
         } catch (error) {
             console.log('Err fetching Email from redux-persist', error)
@@ -59,6 +59,27 @@ const BloodMyDonations = () => {
         }
     }
 
+    const EmptyList = () => {
+        return (
+
+            data.length !== 0 ?
+
+                <FlatList
+                    data={data}
+                    renderItem={renderlist}
+                    showsVerticalScrollIndicator={false}
+                    refreshing={isrefresh}
+                    onRefresh={GetDatafromfirestore}
+                /> :
+                <Text style={{
+                    color: 'gray',
+                    margin: '10%',
+                    alignSelf: 'center',
+                    fontSize: 18,
+                }}>No donations yet</Text>
+
+        )
+    }
 
     const renderlist = ({ item }: any) => {
         return (
@@ -95,7 +116,7 @@ const BloodMyDonations = () => {
                 }}>
                     <TouchableOpacity
                         style={{ alignSelf: 'flex-end', marginRight: 7, }}
-                        onPress={() => navigation.goBack()}
+                        onPress={() => navigation.navigate('BloodProfile1' as never)}
                     >
                         <Back
                             name='arrowleft' color='#fff' size={25}
@@ -106,17 +127,7 @@ const BloodMyDonations = () => {
 
             </View>
 
-            {FlatList.length !== 0 ?
-
-                <FlatList
-                    data={data}
-                    renderItem={renderlist}
-                    showsVerticalScrollIndicator={false}
-                    refreshing={isrefresh}
-                    onRefresh={GetDatafromfirestore}
-                />:
-              <Text style={{color:'gray',margin:'10%'}}>No donations yet</Text>
-            }
+            <EmptyList />
         </SafeAreaView>
     )
 }

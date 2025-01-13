@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Modal } from 'react-native'
 import React, { useState } from 'react'
 import Back from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
@@ -9,12 +9,13 @@ import auth from '@react-native-firebase/auth'
 const BloodForget = () => {
     const navigation = useNavigation()
     const [email, setEmail] = useState<any>('')
+    const [modelvisible, setModelVisible] = useState(false)
 
     const Forget = () => {
         return (
             auth()
                 .sendPasswordResetEmail(email)
-               
+
         )
     }
 
@@ -44,11 +45,51 @@ const BloodForget = () => {
                         style={styles.Input}
                     />
 
+                    <Modal
+                        visible={modelvisible}
+                        animationType='slide'
+                        transparent={true}
+                    >
+                        <View style={{
+                            flex: 1,
+                            backgroundColor: 'transparent',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <View style={{
+                                height: '20%',
+                                width: '90%',
+                                backgroundColor: '#E8315B',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: 1,
+                                borderColor: '#E8315B',
+                                borderRadius: 20,
+                            }}>
+
+                                <Text style={{ color: '#fff', fontSize: 19, fontWeight: '500' }}>
+                                    Check Your mail box
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => setModelVisible(false)}
+                                >
+                                    <Text style={{
+                                        color: '#fff',
+                                        marginTop: 15,
+                                        fontSize: 16,
+                                        fontWeight: '500',
+                                    }}>Ok</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
                     <TouchableOpacity
-                        onPress={() => { Forget(); setEmail(''); Alert.alert('Check Your Mail box')
+                        disabled={email == ''}
+                        onPress={() => {
+                            Forget(); setEmail(''); setModelVisible(true)
                         }}
                     >
-                        <View style={styles.button}>
+                        <View style={[styles.button, { backgroundColor: email == 0 ? 'gray' : '#D80032' }]}>
 
                             <Text style={styles.buttontxt}>Done</Text>
                         </View>
@@ -86,7 +127,6 @@ const styles = StyleSheet.create({
     button: {
         marginTop: 10,
         height: 50,
-        backgroundColor: '#D80032',
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',

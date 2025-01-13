@@ -1,15 +1,24 @@
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native'
-import React, { useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import Back from 'react-native-vector-icons/AntDesign'
 import User from 'react-native-vector-icons/FontAwesome6'
 import Edit from 'react-native-vector-icons/MaterialIcons'
 import { launchImageLibrary } from 'react-native-image-picker'
+import { useSelector } from 'react-redux'
+import Store from '@react-native-firebase/firestore'
 
 
 const BloodEdit = () => {
     const navigation = useNavigation()
     const [selectedImage, setSelectedImage] = useState(null)
+    const [dataa, setData] = useState<any>(null)
+    const GetUser = useSelector((state: any) => state.Blood.UserEmail)
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [isloading, setIsloading] = useState(false)
+    // console.log('gggggg',data.email)
+
 
     const openImagePicker = () => {
         const options: any = {
@@ -30,6 +39,70 @@ const BloodEdit = () => {
             }
         });
     };
+
+
+    const GetDatafromfirestore = async () => {
+        try {
+            // if (Email) {
+            const data = await Store()
+                .collection('BloodUsers')
+                .where('email', '==', GetUser)
+                .orderBy('createdAt', 'desc')
+                .get()
+
+            const threadsArray: any = data.docs.map(item => ({
+                id: item.id,
+                ...item.data()
+            })
+            )
+            console.log("Array ===>", threadsArray)
+
+            setTimeout(() => {
+                if (threadsArray) {
+                    console.log('my array', threadsArray)
+                    setData(threadsArray[0])
+                    setName(dataa?.Name)
+                    setEmail(dataa?.email)
+                }
+            }, 2000);
+
+
+            console.log('Data ======>', data)
+
+        } catch (error) {
+            console.log('Err fetching Email from redux-persist', error)
+        }
+    }
+
+    useFocusEffect(useCallback(
+        () => {
+            GetDatafromfirestore()
+            console.log('usefocus')
+        },
+        [],
+    )
+    )
+
+    const updatePost = async () => {
+        try {
+            await Store()
+                .collection('BloodUsers')
+                .doc(GetUser)
+                .update({
+                    Name: dataa?.Name,
+                    email: dataa?.email,
+                    selectedImage: selectedImage,
+                })
+            console.log("Post deleted successfuly")
+            GetDatafromfirestore()
+            navigation.navigate('BloodMyDonations' as never)
+        } catch (error) {
+            console.log("Error", error)
+        }
+        setName(dataa.Name)
+        setEmail(dataa.email)
+    }
+
 
 
     return (
@@ -66,19 +139,24 @@ const BloodEdit = () => {
 
             <TextInput
                 style={styles.input}
+                value={name}
+                onChangeText={setName}
                 placeholder='Name'
                 placeholderTextColor='#877E7F'
             />
 
             <TextInput
                 style={styles.input}
+                value={email}
+                onChangeText={setEmail}
                 placeholder='Email'
                 placeholderTextColor='#877E7F'
             />
 
             <TouchableOpacity
-                onPress={() => navigation.navigate('BloodProfile' as never)}
-                style={styles.Loginbutton}
+                disabled={name == '' || email == ''}
+                onPress={() => updatePost()}
+                style={[styles.Loginbutton, { backgroundColor: name == '' || email == '' ? 'gray' : '#D80032' }]}
             >
                 <Text style={styles.Loginbuttontxt}>Save Changes</Text>
 
@@ -113,7 +191,6 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 30,
         marginTop: '4%',
-        backgroundColor: '#D80032',
         justifyContent: 'center',
         alignSelf: 'center',
     },

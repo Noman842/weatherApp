@@ -16,6 +16,9 @@ const BloodDetail = ({ route }: any) => {
     const navigation = useNavigation<any>()
     const [dataa, setData] = useState<any>('')
     const GetUser = useSelector((state: any) => state.Blood.UserEmail)
+
+
+
     const GetDatafromfirestore = async () => {
         try {
             // if (Email) {
@@ -33,10 +36,10 @@ const BloodDetail = ({ route }: any) => {
             console.log("Array ===>", threadsArray)
             if (threadsArray) {
                 console.log('my array', threadsArray)
-                setData(threadsArray)
+                setData(threadsArray[0])
             }
 
-            console.log('Data ======>', data)
+            console.log('Data ====>', data)
 
         } catch (error) {
             console.log('Err fetching Email from redux-persist', error)

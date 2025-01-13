@@ -122,7 +122,7 @@ const BloodSignup = () => {
                             secureTextEntry={hide}
                         />
                         <TouchableOpacity
-                            style={{ alignSelf: 'center', marginRight: 15, position: "absolute", right: 10, top: 30, }}
+                            style={{ alignSelf: 'center', marginRight: 15, position: "absolute", right: 10, top: 40, }}
                             onPress={() => setHide(!hide)}
                         >
                             <Eye

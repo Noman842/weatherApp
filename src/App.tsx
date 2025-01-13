@@ -840,8 +840,24 @@ import BloodMyDonations from './screens/Bloodapp/BloodMyDonations'
 import BloodForget from './screens/Bloodapp/BloodForget'
 import { PersistGate } from 'redux-persist/integration/react'
 import BloodEdit from './screens/Bloodapp/BloodEdit'
+import BloodSearch from './screens/Bloodapp/BloodSearch'
 
-
+const stack2 = createNativeStackNavigator({
+  screens: {
+    BloodProfile1: {
+      screen: BloodProfile,
+      options: {
+        headerShown: false,
+      }
+    },
+   BloodEdit:{
+    screen:BloodEdit,
+    options:{
+      headerShown:false,
+    }
+   }
+  }
+})
 const bottomnavigation = createBottomTabNavigator({
   screens: {
     Home: {
@@ -880,7 +896,7 @@ const bottomnavigation = createBottomTabNavigator({
       }
     },
     Profile: {
-      screen: BloodProfile,
+      screen: stack2,
       options: {
         headerShown: false,
         animation: 'shift',
@@ -927,18 +943,18 @@ const Stack = createNativeStackNavigator({
         headerShown: false,
       }
     },
-    BloodDonate:{
-      screen:BloodDonate,
-      options:{
-        headerShown:false,
+    BloodDonate: {
+      screen: BloodDonate,
+      options: {
+        headerShown: false,
       }
     },
-    BloodProfile:{
-      screen:BloodProfile,
-      options:{
-        headerShown:false,
-      }
-    },
+    // BloodProfile: {
+    //   screen: BloodProfile,
+    //   options: {
+    //     headerShown: false,
+    //   }
+    // },
     BloodDetail: {
       screen: BloodDetail,
       options: {
@@ -957,12 +973,18 @@ const Stack = createNativeStackNavigator({
         headerShown: false,
       }
     },
-    BloodEdit:{
-      screen:BloodEdit,
+    BloodSearch:{
+      screen:BloodSearch,
       options:{
         headerShown:false,
       }
     }
+    // BloodEdit: {
+    //   screen: BloodEdit,
+    //   options: {
+    //     headerShown: false,
+    //   }
+    // }
   }
 });
 

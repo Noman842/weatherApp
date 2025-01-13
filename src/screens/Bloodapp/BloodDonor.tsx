@@ -6,6 +6,7 @@ import Right from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { adduserBlood } from '../../store/Slice/BloodSlice'
+import Search from 'react-native-vector-icons/Feather'
 
 const BloodDonor = () => {
     const [data, setData] = useState('')
@@ -65,6 +66,29 @@ const BloodDonor = () => {
     //     }
     // }
 
+    const EmptyList = () => {
+        return (
+
+            data.length !== 0 ?
+
+                <FlatList
+                    data={data}
+                    renderItem={renderlist}
+                    showsVerticalScrollIndicator={false}
+                    refreshing={isrefresh}
+                    onRefresh={getdatafromfirestore}
+                /> :
+                <Text style={{
+                    color: 'gray',
+                    margin: '10%',
+                    alignSelf: 'center',
+                    fontSize: 18,
+                }}>No donations yet</Text>
+
+        )
+    }
+
+
     const renderlist = ({ item }: any) => {
         return (
             <TouchableOpacity
@@ -97,23 +121,18 @@ const BloodDonor = () => {
                 <Text style={styles.titletxt}>Find Donations</Text>
             </View>
 
-            {FlatList.length !== 0 ?
+            <TouchableOpacity
+            onPress={()=>navigation.navigate('BloodSearch' as never)}
+            style={styles.search}>
+                <View style={{flexDirection:'row'}}>
+                    <Search
+                        name='search' color='rgb(225, 58, 97)' size={25}
+                    />
+                    <Text style={{fontSize:19,color:'black'}}>  search</Text>
+                </View>
+            </TouchableOpacity>
 
-                <FlatList
-                    data={data}
-                    renderItem={renderlist}
-                    showsVerticalScrollIndicator={false}
-                    refreshing={isrefresh}
-                    onRefresh={getdatafromfirestore}
-                /> :
-                <Text style={{
-                    color: 'gray',
-                    alignSelf: 'center',
-                    fontSize: 18,
-                    fontWeight: '500',
-                    marginTop: '10%'
-                }}>No Donations yet</Text>
-            }
+            <EmptyList />
         </SafeAreaView>
     )
 }
@@ -135,13 +154,13 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         borderRadius: 25,
-        backgroundColor: '#C52147',
+        backgroundColor: ' #C52147',
     },
     circle2: {
         height: 30,
         width: 30,
         borderRadius: 15,
-        backgroundColor: '#D34B6A',
+        backgroundColor: ' #D34B6A',
         position: 'absolute',
         right: 10,
         top: 10,
@@ -183,5 +202,15 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         alignSelf: 'center',
         marginLeft: 10,
+    },
+    search: {
+        height: 45,
+        width: '90%',
+        marginVertical: 10,
+        alignSelf: 'center',
+        borderRadius: 15,
+        padding: 10,
+        borderWidth:1,
+        borderColor:'#E8315B'
     }
 })
