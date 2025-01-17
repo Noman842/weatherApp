@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Google from 'react-native-vector-icons/AntDesign'
 import { CommonActions, useNavigation } from '@react-navigation/native'
-import auth from '@react-native-firebase/auth'
+import auth, { firebase, onAuthStateChanged } from '@react-native-firebase/auth'
 import Eye from 'react-native-vector-icons/Entypo'
 import { useDispatch } from 'react-redux'
 import { addUserEmail } from '../../store/Slice/BloodSlice'
@@ -16,6 +16,27 @@ const BloodLogin = () => {
     const [isloading, setIsloading] = useState(false)
     const [hide, setHide] = useState<any>(true)
     const Dispatch = useDispatch()
+    const [user, setUser] = useState<any>()
+
+    // useEffect(() => {
+    //     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    //     return subscriber;
+    // }, []);
+
+
+
+
+
+    // function onAuthStateChanged(user: any) {
+    //     if (user?.emailVerified) {
+
+    //         console.log('Verifynihng user  --------')
+    //         setUser(user);
+    //         //   if (initializing) setInitializing(false);
+    //     }
+    // }
+
+
 
     const Login = () => {
         setIsloading(true)
@@ -27,11 +48,20 @@ const BloodLogin = () => {
                 .signInWithEmailAndPassword(email, password)
                 .then(() => {
                     console.log('User account created & signed in!');
-                    Dispatch(addUserEmail(email))
+                    // if (user?.emailVerified) {
+                    //     Dispatch(addUserEmail(email))
+                    //     navigation.dispatch(CommonActions.reset({
+                    //         index: 0,
+                    //         routes: [{ name: 'BloodHome' }],
+                    //     }));
+                    // } else {
+                    //     setIsloading(false)
+                    //  return Alert.alert('Please Verify your account')
+                    // }
                     navigation.dispatch(CommonActions.reset({
-                        index:0,
-                        routes:[{name:'BloodHome'}]
-                    }))
+                        index: 0,
+                        routes: [{ name: 'BloodHome' }],
+                    }));
                 })
                 .catch(error => {
                     if (error.code === 'auth/email-already-in-use') {
@@ -90,7 +120,7 @@ const BloodLogin = () => {
                     </View>
 
                     <TouchableOpacity
-                    onPress={()=>navigation.navigate('BloodForget' as never)}
+                        onPress={() => navigation.navigate('BloodForget' as never)}
                     >
                         <Text style={styles.forget}>Forgot password?</Text>
                     </TouchableOpacity>

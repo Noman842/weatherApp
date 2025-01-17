@@ -14,7 +14,7 @@ import Dots from 'react-native-vector-icons/Entypo'
 
 
 const BloodDetail = ({ route }: any) => {
-    const { mydata, data } = route.params
+    const { mydata, data } = route.params || {}
     console.log('Data=====>', data)
     const navigation = useNavigation<any>()
     const [dataa, setData] = useState<any>('')
@@ -178,9 +178,9 @@ const BloodDetail = ({ route }: any) => {
                 </View>
 
 
-                <Text style={styles.name0}>{data ? data?.Name : mydata.Name}</Text>
+                <Text style={styles.name0}>{data ? data?.Name : mydata?.Name}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                    <Text style={styles.name1}>{data ? data?.Email : mydata.Email}</Text>
+                    <Text style={styles.name1}>{data ? data?.Email : mydata?.Email}</Text>
                     {mydata?
                     <TouchableOpacity
                         onPress={() => navigation.navigate('BloodDonate' as never,
@@ -233,17 +233,17 @@ const BloodDetail = ({ route }: any) => {
 
             <View style={{ flexDirection: 'row', justifyContent: "space-evenly" }}>
                 <View style={styles.views}>
-                    <Text style={styles.userdata}> {data ? data?.BloodGroup : mydata.BloodGroup}</Text>
+                    <Text style={styles.userdata}> {data ? data?.BloodGroup : mydata?.BloodGroup}</Text>
                     <Text style={styles.userdata2}>Blood Type</Text>
                 </View>
 
                 <View style={styles.views}>
-                    <Text style={styles.userdata}>{data ? data?.BloodQuantity : mydata.BloodQuantity}</Text>
+                    <Text style={styles.userdata}>{data ? data?.BloodQuantity : mydata?.BloodQuantity}</Text>
                     <Text style={styles.userdata2}>Quantity</Text>
                 </View>
 
                 <View style={styles.views}>
-                    <Text style={styles.userdata}>{data ? data?.Gender : mydata.Gender}</Text>
+                    <Text style={styles.userdata}>{data ? data?.Gender : mydata?.Gender}</Text>
                     <Text style={styles.userdata2}>Gender</Text>
                 </View>
 
@@ -251,17 +251,17 @@ const BloodDetail = ({ route }: any) => {
 
             <View style={styles.views2}>
                 <Text style={styles.nextinfo}>Age: </Text>
-                <Text style={styles.nextinfo2}>{data ? data?.Age : mydata.Age}</Text>
+                <Text style={styles.nextinfo2}>{data ? data?.Age : mydata?.Age}</Text>
             </View>
 
             <View style={styles.views2}>
                 <Text style={styles.nextinfo}>Contact Number: </Text>
-                <Text style={styles.nextinfo2}> {data ? data?.Number : mydata.Number}</Text>
+                <Text style={styles.nextinfo2}> {data ? data?.Number : mydata?.Number}</Text>
             </View>
 
             <View style={styles.views2}>
                 <Text style={styles.nextinfo}>Location: </Text>
-                <Text style={styles.nextinfo2}>{data ? data?.Location : mydata.Location}</Text></View>
+                <Text style={styles.nextinfo2}>{data ? data?.Location : mydata?.Location}</Text></View>
 
 
 

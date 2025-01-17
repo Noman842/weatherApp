@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import auth from '@react-native-firebase/auth'
+import auth, { firebase } from '@react-native-firebase/auth'
 
 
 const BloodSplash = () => {
@@ -12,8 +12,10 @@ const BloodSplash = () => {
 
 
   function onAuthStateChanged(user: any) {
-    setUser(user);
-    if (initializing) setInitializing(false);
+    if (user?.emailVerified) {
+      setUser(user);
+      if (initializing) setInitializing(false);
+    }
   }
 
   useEffect(() => {

@@ -8,6 +8,8 @@ import Eye from 'react-native-vector-icons/Entypo'
 import { useDispatch } from 'react-redux'
 import { addUserEmail } from '../../store/Slice/BloodSlice'
 import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/auth'
+import Snackbar from 'react-native-snackbar'
 
 
 const BloodSignup = () => {
@@ -20,7 +22,7 @@ const BloodSignup = () => {
     const [city, setCity] = useState<any>()
     const Dispatch = useDispatch()
 
-    const Signup = () => {
+    const Signup = async () => {
         setIsloading(true)
         if (name === '' || email === '' || password === '') {
             setIsloading(false);
@@ -32,17 +34,31 @@ const BloodSignup = () => {
         }
         else {
             console.log('Email', email);
-            auth()
+            const { user } = await auth()
                 .createUserWithEmailAndPassword(email, password)
+            await user.sendEmailVerification()
                 .then(() => {
                     Dispatch(addUserEmail(email));
                     console.log('User Data email ---', Dispatch(addUserEmail(email)));
                     console.log('User account created & signed in!');
                     StoreEmail();
+                    // const user = firebase.auth().currentUser;
                     navigation.dispatch(CommonActions.reset({
                         index: 0,
-                        routes: [{ name: 'BloodHome' }],
+                        routes: [{ name: 'BloodLogin' }],
                     }));
+                    //   if(user?.emailVerified){
+                    //     navigation.dispatch(CommonActions.reset({
+                    //         index: 0,
+                    //         routes: [{ name: 'BloodHome' }],
+                    //     }));
+                    //   }else{
+                    //     navigation.dispatch(CommonActions.reset({
+                    //         index: 0,
+                    //         routes: [{ name: 'BloodLogin' }],
+                    //     }));
+                    //   }
+
                 })
                 .catch(error => {
                     if (error.code === 'auth/email-already-in-use') {
@@ -69,6 +85,21 @@ const BloodSignup = () => {
 
     // }
 
+
+        const Snack = () => {
+        Snackbar.show({
+            text: 'Check Your Mail box',
+            textColor:'#fff',
+            backgroundColor:'#E8315B',
+            duration: Snackbar.LENGTH_INDEFINITE,
+            // action: {
+
+            //     text: 'UNDO',
+            //     textColor: 'green',
+            //     onPress: () => { /* Do something. */ },
+            // },
+        });
+    }
     const StoreEmail = () => {
         firestore()
             .collection('BloodUsers')
@@ -77,7 +108,7 @@ const BloodSignup = () => {
                 email: email,
                 Name: name,
                 city: city,
-                password:password,
+                password: password,
                 createdAt: firestore.FieldValue.serverTimestamp()
             })
             .then(() => {

@@ -12,7 +12,7 @@ const BloodDonate = ({ route }: any) => {
     // if (useredit) {
     //     console.log('value is coming',useredit)
     // }
-   
+
     const [quantity, setQuantity] = useState(useredit ? useredit.BloodQuantity : '')
     const [age, setAge] = useState(useredit ? useredit.Age : '')
     const [number, setNumber] = useState(useredit ? useredit.Number : '+92')
@@ -28,7 +28,7 @@ const BloodDonate = ({ route }: any) => {
     const [data, setData] = useState<any>()
     const [name, setName] = useState(data?.Name)
     if (data) {
-        console.log('value is coming',data?.Name)
+        console.log('value is coming', data?.Name)
     }
 
     const items = [
@@ -123,7 +123,7 @@ const BloodDonate = ({ route }: any) => {
                 })
                 .then(() => {
                     console.log("Post updated successfuly")
-                    navigation.navigate('BloodMyDonations' as never)
+                    navigation.goBack()
                 })
 
         } catch (error) {
@@ -298,7 +298,7 @@ const BloodDonate = ({ route }: any) => {
                                     Thanks for Donating
                                 </Text>
                             }
-                            {useredit ? null :
+                           
                                 <TouchableOpacity
                                     onPress={() => {
                                         setModelVisible(false);
@@ -311,7 +311,7 @@ const BloodDonate = ({ route }: any) => {
                                         fontWeight: '500',
                                     }}>Ok</Text>
                                 </TouchableOpacity>
-                            }
+                            
                         </View>
                     </View>
                 </Modal>

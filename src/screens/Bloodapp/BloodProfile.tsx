@@ -88,7 +88,7 @@ const BloodProfile = () => {
                             {data?.selectedImage ?
                                 data?.selectedImage &&
                                 <Image style={{ height: 60, width: 60, borderRadius: 65 }} source={{ uri: data?.selectedImage }} /> :
-                                <View style={styles.Profilepic}></View>
+                              <View style={styles.Profilepic}></View> 
                             }
 
 
@@ -108,7 +108,7 @@ const BloodProfile = () => {
                                     { Data: data },
                                     console.log('Datatttttttt', data)
                                 )}
-                                style={{ flexDirection: 'row' }}
+                                style={{ flexDirection: 'row',width:'100%',height:25 }}
                             >
                                 <User
                                     name='user' color='black' size={20}
@@ -120,7 +120,7 @@ const BloodProfile = () => {
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
                             <TouchableOpacity
                             onPress={()=>navigation.navigate('BloodLanguage' as never)}
-                            style={{flexDirection:'row'}}
+                            style={{flexDirection:'row',width:'100%',height:25}}
                             >
                             <Edit
                                 name='language' color='black' size={20}
@@ -133,7 +133,7 @@ const BloodProfile = () => {
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
                         <TouchableOpacity
                             onPress={()=>navigation.navigate('BloodPrivacy' as never)}
-                            style={{flexDirection:'row'}}
+                            style={{flexDirection:'row',width:'100%',height:25}}
                             >
                             <Edit
                                 name='privacy-tip' color='black' size={20}
@@ -145,7 +145,7 @@ const BloodProfile = () => {
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
                             <TouchableOpacity
                             onPress={makeEmail}
-                            style={{flexDirection:'row'}}
+                            style={{flexDirection:'row',width:'100%',height:25}}
                             >
                             <Edit
                                 name='help-outline' color='black' size={20}
@@ -157,7 +157,7 @@ const BloodProfile = () => {
 
                         <View style={{ marginVertical: 15, marginLeft: 15 }}>
                             <TouchableOpacity
-                                style={{ flexDirection: 'row' }}
+                                style={{ flexDirection: 'row',width:'100%',height:25 }}
                                 onPress={() => navigation.navigate('BloodMyDonations' as never)}
                             >
                                 <Donate
@@ -169,7 +169,7 @@ const BloodProfile = () => {
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ marginVertical: 15, marginLeft: 15, }}>
                             <TouchableOpacity
-                                style={{ flexDirection: 'row' }}
+                                style={{ flexDirection: 'row',width:'100%',height:25 }}
                                 onPress={() => { logout(); setIsloading(true) }}
                             >
                                 <Edit
@@ -220,7 +220,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightgray'
     },
     Profilenameview: {
-        marginLeft: 10,
+        marginLeft: 7,
+        marginTop:10,
     },
     Profilename: {
         color: 'black',
