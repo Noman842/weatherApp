@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { FlatList, StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Store from '@react-native-firebase/firestore'
@@ -16,6 +16,7 @@ const BloodMyDonations = () => {
 
 
     const GetDatafromfirestore = async () => {
+        setIsloading(true)
         try {
             // if (Email) {
             const data = await Store()
@@ -36,7 +37,7 @@ const BloodMyDonations = () => {
             }
 
             console.log('Data =>', data)
-
+            setIsloading(false)
         } catch (error) {
             console.log('Err fetching Email from redux-persist', error)
         }
@@ -46,24 +47,12 @@ const BloodMyDonations = () => {
         GetDatafromfirestore();
     }, []);
 
-    const deletePost = async (id: any) => {
-        try {
-            await Store()
-                .collection('BloodDonate')
-                .doc(id)
-                .delete()
-            console.log("Post deleted successfuly")
-            GetDatafromfirestore()
-        } catch (error) {
-            console.log("Error", error)
-        }
-    }
 
     const EmptyList = () => {
         return (
-
+            
             data.length !== 0 ?
-
+              
                 <FlatList
                     data={data}
                     renderItem={renderlist}
@@ -81,27 +70,34 @@ const BloodMyDonations = () => {
         )
     }
 
+    
     const renderlist = ({ item }: any) => {
         return (
-            <TouchableOpacity
-                onPress={() => navigation.navigate('BloodDetail' as never,
-                    { mydata: item },
-                    console.log('Routing data', data)
-                )}
-                style={styles.flatlistview}>
-                <View
-                    style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row' }}>
+            <View>
+                {isloading ?
+                    <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: 260 }}>
+                        <ActivityIndicator color='#D80032' size='large' /></View> :
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('BloodDetail' as never,
+                            { mydata: item },
+                            console.log('Routing data', data)
+                        )}
+                        style={styles.flatlistview}>
+                        <View
+                            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row' }}>
 
-                        <Text style={styles.bloodgroup}>{item?.BloodGroup}</Text>
-                        <Text style={styles.name}>{item?.Name}</Text>
-                    </View>
-                    <Right
-                        style={{ alignSelf: 'center' }}
-                        name='right' color='gray' size={28}
-                    />
-                </View>
-            </TouchableOpacity>
+                                <Text style={styles.bloodgroup}>{item?.BloodGroup}</Text>
+                                <Text style={styles.name}>{item?.Name}</Text>
+                            </View>
+                            <Right
+                                style={{ alignSelf: 'center' }}
+                                name='right' color='gray' size={28}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                }
+            </View>
         )
     }
 

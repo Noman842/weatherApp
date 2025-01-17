@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { FlatList, StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Store from '@react-native-firebase/firestore'
@@ -91,24 +91,30 @@ const BloodDonor = () => {
 
     const renderlist = ({ item }: any) => {
         return (
-            <TouchableOpacity
-                onPress={() => navigation.navigate('BloodDetail' as never,
-                    { data: item },
-                    console.log('Routing data', data)
-                )}
-                style={styles.flatlistview}>
-                <View
-                    style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.bloodgroup}>{item?.BloodGroup}</Text>
-                        <Text style={styles.name}>{item?.Name}</Text>
-                    </View>
-                    <Right
-                        style={{ alignSelf: 'center' }}
-                        name='right' color='gray' size={28}
-                    />
-                </View>
-            </TouchableOpacity>
+            <View>
+                {isloading ? <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: 260 }}>
+                    <ActivityIndicator color='#D80032' size='large' /></View> :
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('BloodDetail' as never,
+                            { data: item },
+                            console.log('Routing data', data)
+                        )}
+                        style={styles.flatlistview}>
+                        <View
+                            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={styles.bloodgroup}>{item?.BloodGroup}</Text>
+                                <Text style={styles.name}>{item?.Name}</Text>
+                            </View>
+                            <Right
+                                style={{ alignSelf: 'center' }}
+                                name='right' color='gray' size={28}
+                            />
+                        </View>
+                        {/* <Text style={styles.namelocation}>{item.Location}</Text> */}
+                    </TouchableOpacity>
+                }
+            </View>
         )
     }
 
@@ -118,20 +124,18 @@ const BloodDonor = () => {
                 <View style={styles.circle1}></View>
                 <View style={styles.circle2}></View>
                 <View style={styles.circle3}></View>
+                <View style={{justifyContent:'space-between',flexDirection:'row',marginHorizontal:'8%'}}>
                 <Text style={styles.titletxt}>Find Donations</Text>
-            </View>
-
-            <TouchableOpacity
-            onPress={()=>navigation.navigate('BloodSearch' as never)}
-            style={styles.search}>
-                <View style={{flexDirection:'row'}}>
-                    <Search
-                        name='search' color='rgb(225, 58, 97)' size={25}
+                <TouchableOpacity
+                onPress={()=>navigation.navigate('BloodSearch' as never)}
+                style={{alignSelf:'flex-end',marginRight:15}}
+                >
+                <Search
+                        name='search' color= '#fff' size={25}
                     />
-                    <Text style={{fontSize:19,color:'black'}}>  search</Text>
+                </TouchableOpacity>
                 </View>
-            </TouchableOpacity>
-
+            </View>
             <EmptyList />
         </SafeAreaView>
     )
@@ -153,16 +157,17 @@ const styles = StyleSheet.create({
     circle1: {
         height: 50,
         width: 50,
-        borderRadius: 25,
-        backgroundColor: ' #C52147',
+        borderRadius: 26,
+        backgroundColor: '#C52147',
     },
     circle2: {
         height: 30,
         width: 30,
-        borderRadius: 15,
-        backgroundColor: ' #D34B6A',
+        borderRadius: 19,
+        backgroundColor: '#D34B6A',
         position: 'absolute',
         right: 10,
+        zIndex:1,
         top: 10,
     },
     circle3: {
@@ -171,14 +176,13 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: '#D34B6A',
         position: 'absolute',
-        right: 50,
-        top: 40,
+        right: 35,
+        top: 57,
     },
     titletxt: {
         fontSize: 24,
         color: '#fff',
         fontWeight: '600',
-        marginLeft: '8%',
         marginTop: 10,
     },
     flatlistview: {
@@ -203,6 +207,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginLeft: 10,
     },
+    namelocation: {
+        fontSize: 15,
+        color: '#212121',
+        fontWeight: '500',
+    },
     search: {
         height: 45,
         width: '90%',
@@ -210,7 +219,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 15,
         padding: 10,
-        borderWidth:1,
-        borderColor:'#E8315B'
+        borderWidth: 1,
+        borderColor: '#E8315B'
     }
 })

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, TextInput, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Store from '@react-native-firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
@@ -24,14 +24,16 @@ const BloodSearch = () => {
                         console.log('My array on Search screen', documentSnapshot.docs)
                         const regex = new RegExp(search, 'i')
                         const data: any = documentSnapshot?.docs?.map((item: any) => item.data()).filter((item) => regex.test(item?.BloodGroup))
-
-                        console.log('d:', data)
+                        if (!data[0]) {
+                            Alert.alert('No Donations Found')
+                        }
+                        console.log('search showing', data)
                         setSearchUser(data)
 
                     })
                 return () => subscriber();
             } else {
-                console.log('Search is empty---->', search)
+                console.log('Search is empty>', search)
             }
 
         }
@@ -86,8 +88,8 @@ const BloodSearch = () => {
                 </View>
             </View>
 
-         <Text style={{color:'gray',fontWeight:'500',marginLeft:'6%',marginTop:'3%',fontSize:13}}>Search by 
-              <Text style={{color:'rgb(225, 58, 97)',fontWeight:'500',fontSize:13}}> BloodGroup</Text> eg.A+</Text>
+            <Text style={{ color: 'gray', fontWeight: '500', marginLeft: '6%', marginTop: '3%', fontSize: 13 }}>Search by
+                <Text style={{ color: 'rgb(225, 58, 97)', fontWeight: '500', fontSize: 13 }}> BloodGroup</Text> eg.A+</Text>
 
             <View style={styles.search}>
                 <Search
@@ -99,6 +101,7 @@ const BloodSearch = () => {
                     placeholderTextColor='gray'
                     value={search}
                     onChangeText={setSearch}
+                    maxLength={3}
                 />
             </View>
 
@@ -194,6 +197,7 @@ const styles = StyleSheet.create({
     searchinput: {
         height: 40,
         marginLeft: 3,
-        color: 'black'
+        color: 'black',
+        width: '80%'
     }
 })

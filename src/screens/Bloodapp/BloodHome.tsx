@@ -1,15 +1,19 @@
 import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Bell from 'react-native-vector-icons/Feather'
 import Location from 'react-native-vector-icons/Entypo'
 import Check from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
 import Store from '@react-native-firebase/firestore'
 import { LogLevel, OneSignal } from 'react-native-onesignal';
+import { useSelector } from 'react-redux'
 
 
 const BloodHome = () => {
     const navigation = useNavigation()
+    const [data, setData] = useState<any>()
+    const GetUser = useSelector((state: any) => state.Blood.UserEmail)
+    console.log('Dtattttt', data)
 
     // Remove this method to stop OneSignal Debugging
     OneSignal.Debug.setLogLevel(LogLevel.Verbose);
@@ -26,6 +30,33 @@ const BloodHome = () => {
         console.log('OneSignal: notification clicked:', event);
     });
 
+
+    const getdatafromfirestore = () => {
+        try {
+            const subs =
+                Store()
+                    .collection('BloodUsers')
+                    .where('email', '==', GetUser)
+                    .onSnapshot(documentSnapshot => {
+                        console.log('User data: ', documentSnapshot.docs);
+                        const Data = documentSnapshot.docs.map(item => item.data())
+                        if (Data) {
+                            console.log('Get Posts')
+                            setData(Data[0])
+                        } else { 'error' }
+                    });
+            // setIsloading(false);
+            return () => subs();
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+            // setIsloading(false);
+        }
+    }
+    useEffect(() => {
+        getdatafromfirestore()
+    }, [])
+
+
     return (
         <SafeAreaView style={styles.body}>
             <View style={styles.titleview}>
@@ -41,10 +72,14 @@ const BloodHome = () => {
                 />
             </View>
 
-            <Location
-                style={styles.location}
-                name='location-pin' color='#490008' size={34}
-            />
+            <View style={{ flexDirection: 'row' }}>
+                <Location
+                    style={styles.location}
+                    name='location-pin' color='#490008' size={34}
+                />
+                <Text style={styles.locationname}>{data?.city ||null}</Text>
+            </View>
+
 
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row' }}>
@@ -120,7 +155,14 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     location: {
-        margin: '5%'
+        marginVertical: '5%',
+        marginLeft: '5%'
+    },
+    locationname: {
+        fontSize: 22,
+        color: '#490008',
+        alignSelf: 'center',
+        fontWeight: '500'
     },
     container: {
         backgroundColor: '#f7f5f5',

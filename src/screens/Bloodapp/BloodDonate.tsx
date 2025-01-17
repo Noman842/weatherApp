@@ -4,6 +4,7 @@ import Store from '@react-native-firebase/firestore'
 import { useSelector } from 'react-redux'
 import { useNavigation, CommonActions } from '@react-navigation/native'
 import DropDown from 'react-native-dropdown-picker'
+import Geolocation from '@react-native-community/geolocation'
 
 
 const BloodDonate = ({ route }: any) => {
@@ -11,7 +12,7 @@ const BloodDonate = ({ route }: any) => {
     // if (useredit) {
     //     console.log('value is coming',useredit)
     // }
-    const [name, setName] = useState(useredit ? useredit.Name : '')
+   
     const [quantity, setQuantity] = useState(useredit ? useredit.BloodQuantity : '')
     const [age, setAge] = useState(useredit ? useredit.Age : '')
     const [number, setNumber] = useState(useredit ? useredit.Number : '+92')
@@ -24,8 +25,11 @@ const BloodDonate = ({ route }: any) => {
     const [bloodtype, setBloodType] = useState(false)
     const [currenttype, setCurrentType] = useState<any>(useredit ? useredit.BloodGroup : '')
     const navigation = useNavigation()
-    const [data, setData] = useState<any>('')
-
+    const [data, setData] = useState<any>()
+    const [name, setName] = useState(data?.Name)
+    if (data) {
+        console.log('value is coming',data?.Name)
+    }
 
     const items = [
         { label: 'Male', value: 'Male' },
@@ -61,7 +65,7 @@ const BloodDonate = ({ route }: any) => {
             .then(
                 () => console.log('Data Stored')
             )
-        setName('')
+        setName(data?.Name)
         setQuantity('')
         setAge('')
         setNumber('+92')
@@ -71,36 +75,35 @@ const BloodDonate = ({ route }: any) => {
     }
 
 
-    // const GetDatafromfirestore = async () => {
-    //     try {
-    //         // if (Email) {
-    //         const data = await Store()
-    //             .collection('BloodDonate')
-    //             .where('Email', '==', GetUser)
-    //             .orderBy('createdAt', 'desc')
-    //             .get()
+    const GetDatafromfirestore = async () => {
+        try {
+            // if (Email) {
+            const data = await Store()
+                .collection('BloodUsers')
+                .where('email', '==', GetUser)
+                .orderBy('createdAt', 'desc')
+                .get()
 
-    //         const threadsArray: any = data.docs.map(item => ({
-    //             id: item.id,
-    //             ...item.data()
-    //         })
-    //         )
-    //         console.log("Array ===>", threadsArray)
-    //         if (threadsArray) {
-    //             console.log('my array', threadsArray)
-    //             setData(threadsArray)
-    //         }
+            const threadsArray: any = data.docs.map(item => ({
+                id: item.id,
+                ...item.data()
+            })
+            )
+            console.log("Array ===>", threadsArray)
+            if (threadsArray) {
+                console.log('my array', threadsArray)
+                setData(threadsArray[0])
+            }
 
-    //         console.log('Data ===>', data)
+            console.log('Data ======>', data)
 
-    //     } catch (error) {
-    //         console.log('Err fetching Email from redux-persist', error)
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     GetDatafromfirestore();
-    // }, []);
+        } catch (error) {
+            console.log('Err fetching Email from redux-persist', error)
+        }
+    }
+    useEffect(() => {
+        GetDatafromfirestore()
+    }, [])
 
     const updatePost = async (id: any) => {
         setModelVisible(true)
@@ -135,7 +138,22 @@ const BloodDonate = ({ route }: any) => {
         setCurrentType('')
     }
 
-
+    // const getLocation = () => {
+    //     Geolocation.getCurrentPosition(
+    //         (position) => {
+    //             const { latitude, longitude, altitude } = position.coords;
+    //             console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Altitude: ${altitude}`);
+    //         },
+    //         (error) => {
+    //             console.error('Geolocation Error: ', error);
+    //         },
+    //         {
+    //             enableHighAccuracy: true,
+    //             timeout: 1000,
+    //             maximumAge: 0,
+    //         }
+    //     );
+    // };
 
     return (
         <SafeAreaView style={styles.body}>
@@ -156,7 +174,7 @@ const BloodDonate = ({ route }: any) => {
                         style={styles.input}
                         value={name}
                         onChangeText={setName}
-                        maxLength={10}
+                        maxLength={20}
                         placeholder='Name'
                         placeholderTextColor='gray'
                     />
@@ -165,7 +183,7 @@ const BloodDonate = ({ route }: any) => {
                 <View style={styles.mainview}>
                     <Text style={styles.name}>Gender</Text>
                     <DropDown
-                        style={{ height: 60 }}
+                        style={{ height: 60, borderColor: "gray" }}
                         items={items}
                         open={isopen}
                         setOpen={() => setIsopen(!isopen)}
@@ -175,14 +193,14 @@ const BloodDonate = ({ route }: any) => {
                         placeholderStyle={{ color: 'gray', fontSize: 15, }}
                         dropDownDirection='TOP'
                         modalAnimationType='slide'
-                        textStyle={{ fontSize: 17 }}
+                        textStyle={{ fontSize: 15 }}
                     />
                 </View>
 
                 <View style={styles.mainview}>
                     <Text style={styles.name}>Blood Group</Text>
                     <DropDown
-                        style={{ height: 60 }}
+                        style={{ height: 60, borderColor: 'gray' }}
                         items={Bloodtypes}
                         open={bloodtype}
                         setOpen={() => setBloodType(!bloodtype)}
@@ -192,7 +210,7 @@ const BloodDonate = ({ route }: any) => {
                         placeholderStyle={{ color: 'gray', fontSize: 15 }}
                         modalAnimationType='slide'
                         maxHeight={320}
-                        textStyle={{ fontSize: 17 }}
+                        textStyle={{ fontSize: 15 }}
                     />
                 </View>
 
@@ -239,13 +257,13 @@ const BloodDonate = ({ route }: any) => {
                     <TextInput
                         style={styles.input}
                         value={location}
-                        maxLength={12}
+                        maxLength={20}
                         onChangeText={setLocation}
                         placeholder='City name'
                         placeholderTextColor='gray'
                     />
                 </View>
-
+                {/* <TouchableOpacity onPress={getLocation}><Text style={{ color: 'black' }}>Location</Text></TouchableOpacity> */}
 
                 <Modal
                     visible={modelvisible}
@@ -447,7 +465,5 @@ const styles = StyleSheet.create({
         right: 50,
         top: 40,
     }
-
-
 
 })

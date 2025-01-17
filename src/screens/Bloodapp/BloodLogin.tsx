@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityInd
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Google from 'react-native-vector-icons/AntDesign'
-import { useNavigation } from '@react-navigation/native'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 import auth from '@react-native-firebase/auth'
 import Eye from 'react-native-vector-icons/Entypo'
 import { useDispatch } from 'react-redux'
@@ -18,6 +18,7 @@ const BloodLogin = () => {
     const Dispatch = useDispatch()
 
     const Login = () => {
+        setIsloading(true)
         if (email == '' && password == '') {
             setIsloading(false)
             Alert.alert('Please Enter required info..')
@@ -27,6 +28,10 @@ const BloodLogin = () => {
                 .then(() => {
                     console.log('User account created & signed in!');
                     Dispatch(addUserEmail(email))
+                    navigation.dispatch(CommonActions.reset({
+                        index:0,
+                        routes:[{name:'BloodHome'}]
+                    }))
                 })
                 .catch(error => {
                     if (error.code === 'auth/email-already-in-use') {
@@ -41,7 +46,6 @@ const BloodLogin = () => {
                         Alert.alert('Email and password does not match or Email does not exist')
                     }
                     console.error(error);
-
                 })
         )
     }
@@ -91,7 +95,7 @@ const BloodLogin = () => {
                         <Text style={styles.forget}>Forgot password?</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => { setIsloading(true); Login() }}
+                        onPress={() => { Login() }}
                         style={styles.Loginbutton}
                     >
                         <Text style={styles.Loginbuttontxt}>Login</Text>

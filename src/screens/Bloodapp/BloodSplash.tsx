@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import auth from '@react-native-firebase/auth'
 
@@ -8,7 +8,7 @@ import auth from '@react-native-firebase/auth'
 const BloodSplash = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
 
 
   function onAuthStateChanged(user: any) {
@@ -20,9 +20,15 @@ const BloodSplash = () => {
     setTimeout(() => {
       if (!initializing) {
         if (!user) {
-          navigation.navigate('BloodLogin' as never)
+          navigation.dispatch(CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'BloodLogin' }]
+          }))
 
-        } else (navigation.navigate('BloodHome' as never))
+        } else (navigation.dispatch(CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'BloodHome' }]
+        })))
       }
 
     }, 2000);

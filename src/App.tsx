@@ -841,6 +841,8 @@ import BloodForget from './screens/Bloodapp/BloodForget'
 import { PersistGate } from 'redux-persist/integration/react'
 import BloodEdit from './screens/Bloodapp/BloodEdit'
 import BloodSearch from './screens/Bloodapp/BloodSearch'
+import BloodLanguage from './screens/Bloodapp/BloodLanguage'
+import BloodPrivacy from './screens/Bloodapp/BloodPrivacy'
 
 const stack2 = createNativeStackNavigator({
   screens: {
@@ -850,12 +852,18 @@ const stack2 = createNativeStackNavigator({
         headerShown: false,
       }
     },
-   BloodEdit:{
-    screen:BloodEdit,
-    options:{
-      headerShown:false,
-    }
-   }
+    BloodEdit: {
+      screen: BloodEdit,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodMyDonations: {
+      screen: BloodMyDonations,
+      options: {
+        headerShown: false,
+      }
+    },
   }
 })
 const bottomnavigation = createBottomTabNavigator({
@@ -863,6 +871,7 @@ const bottomnavigation = createBottomTabNavigator({
     Home: {
       screen: BloodHome,
       options: {
+        animation: 'shift',
         headerShown: false,
         tabBarIcon: ({ color }) => (
           <Home
@@ -876,6 +885,8 @@ const bottomnavigation = createBottomTabNavigator({
       options: {
         headerShown: false,
         animation: 'shift',
+
+
         tabBarIcon: ({ color }) => (
           <Find
             name='account-search-outline' color={color} size={28}
@@ -908,7 +919,9 @@ const bottomnavigation = createBottomTabNavigator({
       }
     },
   },
-  screenOptions: { tabBarActiveTintColor: '#D80032' }
+  screenOptions: {
+    tabBarActiveTintColor: '#D80032',
+  }
 })
 
 const Stack = createNativeStackNavigator({
@@ -916,6 +929,7 @@ const Stack = createNativeStackNavigator({
     BloodSplash: {
       screen: BloodSplash,
       options: {
+        animation: 'slide_from_right',
         headerShown: false
       }
     },
@@ -949,42 +963,38 @@ const Stack = createNativeStackNavigator({
         headerShown: false,
       }
     },
-    // BloodProfile: {
-    //   screen: BloodProfile,
-    //   options: {
-    //     headerShown: false,
-    //   }
-    // },
+
     BloodDetail: {
       screen: BloodDetail,
       options: {
         headerShown: false,
       }
     },
-    BloodMyDonations: {
-      screen: BloodMyDonations,
-      options: {
-        headerShown: false,
-      }
-    },
+
     BloodForget: {
       screen: BloodForget,
       options: {
         headerShown: false,
       }
     },
-    BloodSearch:{
-      screen:BloodSearch,
+    BloodSearch: {
+      screen: BloodSearch,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodLanguage:{
+      screen:BloodLanguage,
       options:{
-        headerShown:false,
+        headerShown:false
+      }
+    },
+    BloodPrivacy:{
+      screen:BloodPrivacy,
+      options:{
+        headerShown:false
       }
     }
-    // BloodEdit: {
-    //   screen: BloodEdit,
-    //   options: {
-    //     headerShown: false,
-    //   }
-    // }
   }
 });
 

@@ -1,6 +1,6 @@
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Image, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 import Back from 'react-native-vector-icons/Ionicons'
 import Edit from 'react-native-vector-icons/MaterialIcons'
 import User from 'react-native-vector-icons/AntDesign'
@@ -16,21 +16,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const BloodProfile = () => {
-    const navigation = useNavigation()
+    const navigation = useNavigation<any>()
     const [isloading, setIsloading] = useState(false)
-    const [selectedImage, setSelectedImage] = useState<any>(null)
     const [data, setData] = useState<any>('')
     const GetUser = useSelector((state: any) => state.Blood.UserEmail)
     console.log('bvvvvvvv', GetUser)
     const [userdata, setUserData] = useState('')
 
 
- 
+
 
     const logout = () => {
         auth()
             .signOut()
-            .then(() => console.log('User signed out!'))
+            .then(() => {
+                console.log('User signed out!')
+                navigation.dispatch(CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: 'BloodLogin' }]
+                }))
+            })
         setIsloading(false)
     }
 
@@ -62,7 +67,14 @@ const BloodProfile = () => {
         Getnamefromfirestore();
     }, []);
 
+  const makeEmail = () => {
+        if (Platform.OS === 'android') {
+            Linking.openURL('mailto:nomanejaz0334@gmail.com')
+        } else {
+            Linking.openURL('mailtoprompt:nomanejaz0334@gmail.com')
 
+        }
+    }
 
     return (
         <SafeAreaView style={styles.body}>
@@ -73,9 +85,9 @@ const BloodProfile = () => {
                     <>
                         <Text style={styles.Account}>Account</Text>
                         <View style={styles.profileView}>
-                            {selectedImage ?
-                                selectedImage &&
-                                <Image style={{ height: 60, width: 60, borderRadius: 65 }} source={{ uri: selectedImage }} /> :
+                            {data?.selectedImage ?
+                                data?.selectedImage &&
+                                <Image style={{ height: 60, width: 60, borderRadius: 65 }} source={{ uri: data?.selectedImage }} /> :
                                 <View style={styles.Profilepic}></View>
                             }
 
@@ -85,14 +97,17 @@ const BloodProfile = () => {
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={styles.gmail}>{data?.email}</Text>
 
-                                 
+
                                 </View>
                             </View>
                         </View>
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ marginVertical: 15, marginLeft: 15, }}>
                             <TouchableOpacity
-                            onPress={()=>navigation.navigate('BloodEdit' as never)}
+                                onPress={() => navigation.navigate('BloodEdit' as never,
+                                    { Data: data },
+                                    console.log('Datatttttttt', data)
+                                )}
                                 style={{ flexDirection: 'row' }}
                             >
                                 <User
@@ -103,24 +118,40 @@ const BloodProfile = () => {
                         </View>
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
+                            <TouchableOpacity
+                            onPress={()=>navigation.navigate('BloodLanguage' as never)}
+                            style={{flexDirection:'row'}}
+                            >
                             <Edit
                                 name='language' color='black' size={20}
                             />
                             <Text style={styles.personal}>Language</Text>
+                            </TouchableOpacity>
                         </View>
+
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
+                        <TouchableOpacity
+                            onPress={()=>navigation.navigate('BloodPrivacy' as never)}
+                            style={{flexDirection:'row'}}
+                            >
                             <Edit
                                 name='privacy-tip' color='black' size={20}
                             />
                             <Text style={styles.personal}>Privacy Policy</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
+                            <TouchableOpacity
+                            onPress={makeEmail}
+                            style={{flexDirection:'row'}}
+                            >
                             <Edit
                                 name='help-outline' color='black' size={20}
                             />
                             <Text style={styles.personal}>Help Center</Text>
+                            </TouchableOpacity>
                         </View>
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
 

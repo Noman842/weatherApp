@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator,
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Google from 'react-native-vector-icons/AntDesign'
-import { useNavigation } from '@react-navigation/native'
+import { CommonActions, useNavigation } from '@react-navigation/native'
 import auth, { checkActionCode } from '@react-native-firebase/auth'
 import Eye from 'react-native-vector-icons/Entypo'
 import { useDispatch } from 'react-redux'
@@ -14,61 +14,60 @@ const BloodSignup = () => {
     const navigation = useNavigation()
     const [hide, setHide] = useState<any>(true)
     const [email, setEmail] = useState<any>('')
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState<any>('')
     const [isloading, setIsloading] = useState(false)
     const [name, setName] = useState<any>('')
-
+    const [city, setCity] = useState<any>()
     const Dispatch = useDispatch()
 
     const Signup = () => {
         setIsloading(true)
-        if (name == '' || email == '' || password == '') {
-            setIsloading(false)
-            Alert.alert('Please Enter required info..')
-        } else (
-            console.log('Email', email),
+        if (name === '' || email === '' || password === '') {
+            setIsloading(false);
+            Alert.alert('Please fill in all required fields (Name, Email, Password).');
+        } if (!city || city.trim() === '') {
+            setIsloading(false);
+            Alert.alert('City cannot be empty.');
+            return;
+        }
+        else {
+            console.log('Email', email);
             auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => {
                     Dispatch(addUserEmail(email));
-                    console.log('User Data email ---', Dispatch(addUserEmail(email)))
+                    console.log('User Data email ---', Dispatch(addUserEmail(email)));
                     console.log('User account created & signed in!');
                     StoreEmail();
-                    confirm()
-
+                    navigation.dispatch(CommonActions.reset({
+                        index: 0,
+                        routes: [{ name: 'BloodHome' }],
+                    }));
                 })
                 .catch(error => {
                     if (error.code === 'auth/email-already-in-use') {
-                        setIsloading(false)
-                        Alert.alert('Email is already in use')
+                        Alert.alert('Email is already in use');
                         console.log('That email address is already in use!');
-                        setIsloading(false)
-                    }
-                    if (error.code === 'auth/invalid-email') {
+                    } else if (error.code === 'auth/invalid-email') {
+                        Alert.alert('Invalid email address.');
                         console.log('That email address is invalid!');
+                    } else if (error.code === 'auth/weak-password') {
+                        Alert.alert('Password is too weak.');
+                    } else if (error.code === 'auth/network-request-failed') {
+                        Alert.alert('Please check your network connection.');
+                    } else {
+                        console.error(error);
                     }
-                    if (error.code === 'auth/weak-password') {
-                        Alert.alert('Password is weak')
-                        setIsloading(false)
+                    setIsloading(false);
+                });
+        }
+    };
 
-                    }
-                    if (error.code === 'auth/network-request-failed') {
-                        Alert.alert('Please check your network connection')
-                        setIsloading(false)
+    // const confirm = () => {
+    //     auth()
+    //     checkActionCode(email, email)
 
-                    }
-                    console.error(error);
-                    console.error(error);
-
-                })
-        )
-    }
-
-    const confirm = () => {
-        auth()
-        checkActionCode(email, email)
-
-    }
+    // }
 
     const StoreEmail = () => {
         firestore()
@@ -77,6 +76,8 @@ const BloodSignup = () => {
             .set({
                 email: email,
                 Name: name,
+                city: city,
+                password:password,
                 createdAt: firestore.FieldValue.serverTimestamp()
             })
             .then(() => {
@@ -129,10 +130,23 @@ const BloodSignup = () => {
                                 name={hide === false ? 'eye' : 'eye-with-line'} color='gray' size={19}
                             />
                         </TouchableOpacity>
+                        <TextInput
+                            style={styles.TextInput2}
+                            value={city}
+                            onChangeText={setCity}
+                            placeholder='City'
+                            placeholderTextColor='#877E7F'
+                            textContentType='password'
+
+                        />
                     </View>
                     <TouchableOpacity
+                        disabled={name === 0 || email === 0 || password === 0}
                         onPress={() => Signup()}
-                        style={styles.Loginbutton}
+                        style={[styles.Loginbutton, {
+                            backgroundColor: name
+                                == '' || email === '' || password === '' ? 'gray' : '#D80032'
+                        }]}
                     >
                         <Text style={styles.Loginbuttontxt}>Create Account</Text>
                     </TouchableOpacity>
@@ -191,7 +205,6 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 30,
         marginTop: '4%',
-        backgroundColor: '#D80032',
         justifyContent: 'center',
         alignSelf: 'center',
 
