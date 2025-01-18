@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ActivityIndicator, Modal } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Google from 'react-native-vector-icons/AntDesign'
@@ -17,15 +17,12 @@ const BloodLogin = () => {
     const [hide, setHide] = useState<any>(true)
     const Dispatch = useDispatch()
     const [user, setUser] = useState<any>()
-
+    const [modelvisible, setModelVisible] = useState(false)
+    const [isopen, setIsopen] = useState(false)
     // useEffect(() => {
     //     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     //     return subscriber;
     // }, []);
-
-
-
-
 
     // function onAuthStateChanged(user: any) {
     //     if (user?.emailVerified) {
@@ -42,7 +39,7 @@ const BloodLogin = () => {
         setIsloading(true)
         if (email == '' && password == '') {
             setIsloading(false)
-            Alert.alert('Please Enter required info..')
+            Alert.alert('Please Enter Email and Password')
         } else (
             auth()
                 .signInWithEmailAndPassword(email, password)
@@ -65,11 +62,17 @@ const BloodLogin = () => {
                 })
                 .catch(error => {
                     if (error.code === 'auth/email-already-in-use') {
+                        setIsloading(false)
                         console.log('That email address is already in use!');
+
                     }
 
                     if (error.code === 'auth/invalid-email') {
+                        setIsloading(false)
                         console.log('That email address is invalid!');
+                        // return Alert.alert('Invalid Email')
+
+                        return setModelVisible(true)
                     }
                     if (error.code === 'auth/invalid-credential') {
                         setIsloading(false)
@@ -80,8 +83,60 @@ const BloodLogin = () => {
         )
     }
 
+
+
     return (
         <SafeAreaView style={styles.body}>
+            <Modal
+                visible={modelvisible}
+                animationType='slide'
+                transparent={true}
+
+            >
+                <View style={{
+                    flex: 1,
+                    backgroundColor: 'transparent',
+
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <View style={{
+                        height: '17%',
+                        width: '90%',
+                        backgroundColor: '#E8315B',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        borderColor: '#E8315B',
+                        borderRadius: 20,
+                    }}>
+                        {/* <View style={styles.modelcircle1}></View>
+                        <View style={styles.modelcircle2}></View>
+                        <View style={styles.modelcircle3}></View> */}
+
+                        <Text style={{ color: '#fff', fontSize: 20, fontFamily: 'Poppins-Medium' }}>
+                            Invalid Email
+                        </Text>
+
+
+                        <TouchableOpacity
+                            onPress={() => {
+                                setModelVisible(false);
+                            }}
+                        >
+                            <Text style={{
+                                color: '#fff',
+                                marginTop: 15,
+                                fontSize: 17,
+                                fontWeight: '500',
+
+                            }}>Ok</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </View>
+            </Modal>
+
             {isloading ?
                 <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: 260 }}>
                     <ActivityIndicator color='#D80032' size='large' /></View> :
@@ -137,7 +192,7 @@ const BloodLogin = () => {
                         <View style={styles.line1}></View>
                     </View>
 
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.Google}
                     >
                         <View style={{ flexDirection: 'row' }}>
@@ -146,7 +201,7 @@ const BloodLogin = () => {
                             />
                             <Text style={styles.Googletxt}>Sign in with Google</Text>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <View style={styles.asksignupview}>
                         <Text style={styles.asksignuptxt1}>Don't have account?</Text>

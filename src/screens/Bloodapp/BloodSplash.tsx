@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Animated, Easing } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -9,14 +9,18 @@ const BloodSplash = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const navigation = useNavigation<any>()
-
+  // const animated1 = new Animated.Value(0)
+  // const animated2 = new Animated.Value(0)
+  // const [delay, setDelay] = useState(1000)
+  // const [inAnimationA, setinAnimationA] = useState(true)
+  // const [buf1, setBuf1] = useState(0)
+  // const [buf2, setBuf2] = useState(1)
 
   function onAuthStateChanged(user: any) {
-    if (user?.emailVerified) {
-      setUser(user);
-      if (initializing) setInitializing(false);
-    }
+    setUser(user);
+    if (initializing) setInitializing(false);
   }
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -41,13 +45,38 @@ const BloodSplash = () => {
       return subscriber;
     }, []);
 
+
+
+  // useEffect(() => {
+  //   Animated.sequence([
+  //     Animated.timing(animated1, {
+  //       toValue: 300,
+  //       duration: 2000,
+  //       useNativeDriver: true,
+  //       easing: Easing.linear,
+  //     }),
+  //   ]).start(() => {
+  //     setinAnimationA(true)
+  //     if (inAnimationA) {
+  //       setinAnimationA(false)
+  //       setBuf1(buf1 => buf1 + 1)
+  //       if (delay > 0) { setDelay(0) }
+  //     }
+  //   })
+  // }, [animated1])
+
+
+
   return (
     <SafeAreaView style={styles.body}>
 
       <View style={styles.body}>
+
         <Image
+          style={{ height: 250, width: 250 }}
           source={require('./../../images/Blooddrop.png')}
         />
+
         <Text style={styles.text}>Blood</Text>
         <Text style={styles.text}>Bestow</Text>
       </View>

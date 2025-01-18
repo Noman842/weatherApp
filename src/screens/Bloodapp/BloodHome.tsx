@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native'
 import Store from '@react-native-firebase/firestore'
 import { LogLevel, OneSignal } from 'react-native-onesignal';
 import { useSelector } from 'react-redux'
+import { ScrollView } from 'react-native'
 
 
 const BloodHome = () => {
@@ -62,7 +63,8 @@ const BloodHome = () => {
             <View style={styles.titleview}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
                     <Image
-                        source={require('./../../images/Blooddrop1.png')}
+                    style={{height:40,width:40}}
+                        source={require('./../../images/Blooddrop.png')}
                     />
                     <Text style={styles.title}>Blood Bestow</Text>
                 </View>
@@ -77,21 +79,47 @@ const BloodHome = () => {
                     style={styles.location}
                     name='location-pin' color='#490008' size={34}
                 />
-                <Text style={styles.locationname}>{data?.city ||null}</Text>
+                <Text style={styles.locationname}>{data?.city || null}</Text>
             </View>
 
-
-            <View style={styles.container}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Image
-                        style={{ height: 150, width: 150, }}
-                        source={require('./../../images/Blooddonation.png')}
-                    />
-                    <Text numberOfLines={3} style={styles.containertxt}>
-                        "The measure of life is not its DURATION but its DONATION"
-                    </Text>
+            <ScrollView
+                style={{maxHeight:'30%'}}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+            >
+                <View style={styles.container}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Image
+                            style={{ height: 150, width: 150, }}
+                            source={require('./../../images/Blooddonation.png')}
+                        />
+                        <Text numberOfLines={3} style={styles.containertxt}>
+                            "The measure of life is not its DURATION but its DONATION"
+                        </Text>
+                    </View>
                 </View>
-            </View>
+                <View style={styles.container}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Image
+                            style={{ height: 150, width: 150, }}
+                            source={require('./../../images/Blooddonation.png')}
+                        />
+                        <Text numberOfLines={3} style={styles.containertxt}>
+                            "Your BLOOD can make someone’s HEART BEAT again."
+                        </Text>
+                    </View>
+                </View><View style={styles.container}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Image
+                            style={{ height: 150, width: 150, }}
+                            source={require('./../../images/Blooddonation.png')}
+                        />
+                        <Text numberOfLines={4} style={styles.containertxt}>
+                            "BLOOD donation is not just about giving blood; it’s about giving someone a tomorrow."
+                        </Text>
+                    </View>
+                </View>
+            </ScrollView>
 
             <View style={styles.checkview}>
                 <Text style={styles.check}>
@@ -166,12 +194,12 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: '#f7f5f5',
-        width: '90%',
-        height: '30%',
-        alignSelf: 'center',
+        width: '30.5%',
+        height: '100%',
         borderRadius: 15,
         padding: 15,
         elevation: 2,
+        marginHorizontal: 15,
     },
     containertxt: {
         fontSize: 13,

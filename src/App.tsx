@@ -843,6 +843,7 @@ import BloodEdit from './screens/Bloodapp/BloodEdit'
 import BloodSearch from './screens/Bloodapp/BloodSearch'
 import BloodLanguage from './screens/Bloodapp/BloodLanguage'
 import BloodPrivacy from './screens/Bloodapp/BloodPrivacy'
+import BloodTerms from './screens/Bloodapp/BloodTerms'
 
 const stack2 = createNativeStackNavigator({
   screens: {
@@ -949,6 +950,13 @@ const Stack = createNativeStackNavigator({
       screen: BloodSignup,
       options: {
         headerShown: false,
+      }
+    },
+    BloodTerms:{
+      screen:BloodTerms,
+      options:{
+        headerShown:false,
+
       }
     },
     BloodHome: {

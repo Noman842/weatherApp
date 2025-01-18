@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, Alert, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Google from 'react-native-vector-icons/AntDesign'
@@ -10,7 +10,9 @@ import { addUserEmail } from '../../store/Slice/BloodSlice'
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/auth'
 import Snackbar from 'react-native-snackbar'
-
+import CheckBox from '@react-native-community/checkbox'
+import Toast from 'react-native-toast-message'
+import { Button } from 'react-native'
 
 const BloodSignup = () => {
     const navigation = useNavigation()
@@ -21,6 +23,10 @@ const BloodSignup = () => {
     const [name, setName] = useState<any>('')
     const [city, setCity] = useState<any>()
     const Dispatch = useDispatch()
+    const [checked, setChecked] = React.useState<any>(false);
+
+
+
 
     const Signup = async () => {
         setIsloading(true)
@@ -34,9 +40,10 @@ const BloodSignup = () => {
         }
         else {
             console.log('Email', email);
-            const { user } = await auth()
+            // const { user } = await 
+            auth()
                 .createUserWithEmailAndPassword(email, password)
-            await user.sendEmailVerification()
+                // await user.sendEmailVerification()
                 .then(() => {
                     Dispatch(addUserEmail(email));
                     console.log('User Data email ---', Dispatch(addUserEmail(email)));
@@ -45,7 +52,7 @@ const BloodSignup = () => {
                     // const user = firebase.auth().currentUser;
                     navigation.dispatch(CommonActions.reset({
                         index: 0,
-                        routes: [{ name: 'BloodLogin' }],
+                        routes: [{ name: 'BloodHome' }],
                     }));
                     //   if(user?.emailVerified){
                     //     navigation.dispatch(CommonActions.reset({
@@ -62,15 +69,16 @@ const BloodSignup = () => {
                 })
                 .catch(error => {
                     if (error.code === 'auth/email-already-in-use') {
-                        Alert.alert('Email is already in use');
+                        setIsloading(false)
+                        showToast()
                         console.log('That email address is already in use!');
                     } else if (error.code === 'auth/invalid-email') {
-                        Alert.alert('Invalid email address.');
-                        console.log('That email address is invalid!');
+                        ToastInvalid()
+                        console.log('That email address is invalid!')
                     } else if (error.code === 'auth/weak-password') {
-                        Alert.alert('Password is too weak.');
+                        Toastweak()
                     } else if (error.code === 'auth/network-request-failed') {
-                        Alert.alert('Please check your network connection.');
+                        Toastnetcheck()
                     } else {
                         console.error(error);
                     }
@@ -79,27 +87,24 @@ const BloodSignup = () => {
         }
     };
 
-    // const confirm = () => {
-    //     auth()
-    //     checkActionCode(email, email)
 
+
+    // const Snack = () => {
+    //     Snackbar.show({
+
+    //         text: 'Email Already in use',
+    //         textColor: '#fff',
+    //         backgroundColor: '#E8315B',
+    //         duration: Snackbar.LENGTH_SHORT,
+    //         marginBottom:10,
+    //         // action: {
+
+    //         //     text: 'UNDO',
+    //         //     textColor: 'green',
+    //         //     onPress: () => { /* Do something. */ },
+    //         // },
+    //     });
     // }
-
-
-        const Snack = () => {
-        Snackbar.show({
-            text: 'Check Your Mail box',
-            textColor:'#fff',
-            backgroundColor:'#E8315B',
-            duration: Snackbar.LENGTH_INDEFINITE,
-            // action: {
-
-            //     text: 'UNDO',
-            //     textColor: 'green',
-            //     onPress: () => { /* Do something. */ },
-            // },
-        });
-    }
     const StoreEmail = () => {
         firestore()
             .collection('BloodUsers')
@@ -116,12 +121,28 @@ const BloodSignup = () => {
             });
     }
 
+
+    // JUST FOR ANDROID
+    const showToast = () => {
+        ToastAndroid.show('Email is Already in use', ToastAndroid.SHORT,);
+    };
+    const ToastInvalid = () => {
+        ToastAndroid.show('Invalid Email', ToastAndroid.SHORT,);
+    }; const Toastweak = () => {
+        ToastAndroid.show('Password is too weak', ToastAndroid.SHORT,);
+    }; const Toastnetcheck = () => {
+        ToastAndroid.show('Email is Already in use', ToastAndroid.SHORT,);
+    };
+
+
+
     return (
         <SafeAreaView style={styles.body}>
             {isloading ?
                 <View style={{ justifyContent: 'flex-end', alignItems: 'center', height: 260 }}>
                     <ActivityIndicator color='#D80032' size='large' /></View> :
                 <>
+
                     <Text style={styles.tilttxt}>Create An Account</Text>
 
                     <TextInput
@@ -171,12 +192,45 @@ const BloodSignup = () => {
 
                         />
                     </View>
+
+
+
+                    <View style={{ flexDirection: 'row', marginVertical: '4%', marginLeft: '5%' }}>
+                        <CheckBox
+                            value={checked}
+                            onValueChange={setChecked}
+                            tintColors={{ true: '#D80032', false: 'gray', }}
+                        />
+                        <View style={{
+                            alignSelf: 'center',
+                            flexDirection: 'row'
+                        }}>
+                            <Text style={{
+                                color: 'black',
+                                fontSize: 15,
+                                fontWeight: '500',
+                                alignSelf: 'center'
+                            }}>Agree with</Text>
+
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('BloodTerms' as never)}
+                            ><Text
+                                style={{
+                                    color: '#D80032',
+                                    fontSize: 15,
+                                    fontWeight: '500',
+                                }}
+                            > Terms & Conditions</Text></TouchableOpacity>
+                        </View>
+
+                    </View>
+
+
+
                     <TouchableOpacity
-                        disabled={name === 0 || email === 0 || password === 0}
+                        disabled={name === 0 || email === 0 || password === 0 || checked == 0}
                         onPress={() => Signup()}
-                        style={[styles.Loginbutton, {
-                            backgroundColor: name
-                                == '' || email === '' || password === '' ? 'gray' : '#D80032'
+                        style={[styles.Loginbutton, { backgroundColor: name=='' ||email =='' || password =='' || checked =='' ?'gray': '#D80032'
                         }]}
                     >
                         <Text style={styles.Loginbuttontxt}>Create Account</Text>
@@ -188,7 +242,7 @@ const BloodSignup = () => {
                         <View style={styles.line1}></View>
                     </View>
 
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.Google}
                     >
                         <View style={{ flexDirection: 'row' }}>
@@ -197,7 +251,7 @@ const BloodSignup = () => {
                             />
                             <Text style={styles.Googletxt}>Sign in with Google</Text>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </>
             }
         </SafeAreaView>

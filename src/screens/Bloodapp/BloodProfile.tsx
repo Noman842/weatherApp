@@ -67,7 +67,7 @@ const BloodProfile = () => {
         Getnamefromfirestore();
     }, []);
 
-  const makeEmail = () => {
+    const makeEmail = () => {
         if (Platform.OS === 'android') {
             Linking.openURL('mailto:nomanejaz0334@gmail.com')
         } else {
@@ -88,7 +88,7 @@ const BloodProfile = () => {
                             {data?.selectedImage ?
                                 data?.selectedImage &&
                                 <Image style={{ height: 60, width: 60, borderRadius: 65 }} source={{ uri: data?.selectedImage }} /> :
-                              <View style={styles.Profilepic}></View> 
+                                <View style={styles.Profilepic}></View>
                             }
 
 
@@ -108,7 +108,7 @@ const BloodProfile = () => {
                                     { Data: data },
                                     console.log('Datatttttttt', data)
                                 )}
-                                style={{ flexDirection: 'row',width:'100%',height:25 }}
+                                style={{ flexDirection: 'row', width: '100%', height: 25 }}
                             >
                                 <User
                                     name='user' color='black' size={20}
@@ -119,45 +119,45 @@ const BloodProfile = () => {
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
                             <TouchableOpacity
-                            onPress={()=>navigation.navigate('BloodLanguage' as never)}
-                            style={{flexDirection:'row',width:'100%',height:25}}
+                                onPress={() => navigation.navigate('BloodLanguage' as never)}
+                                style={{ flexDirection: 'row', width: '100%', height: 25 }}
                             >
-                            <Edit
-                                name='language' color='black' size={20}
-                            />
-                            <Text style={styles.personal}>Language</Text>
+                                <Edit
+                                    name='language' color='black' size={20}
+                                />
+                                <Text style={styles.personal}>Language</Text>
                             </TouchableOpacity>
                         </View>
 
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
-                        <TouchableOpacity
-                            onPress={()=>navigation.navigate('BloodPrivacy' as never)}
-                            style={{flexDirection:'row',width:'100%',height:25}}
+                            <TouchableOpacity
+                                onPress={() => navigation.navigate('BloodPrivacy' as never)}
+                                style={{ flexDirection: 'row', width: '100%', height: 25 }}
                             >
-                            <Edit
-                                name='privacy-tip' color='black' size={20}
-                            />
-                            <Text style={styles.personal}>Privacy Policy</Text>
+                                <Edit
+                                    name='privacy-tip' color='black' size={20}
+                                />
+                                <Text style={styles.personal}>Privacy Policy</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ flexDirection: 'row', marginVertical: 15, marginLeft: 15, }}>
                             <TouchableOpacity
-                            onPress={makeEmail}
-                            style={{flexDirection:'row',width:'100%',height:25}}
+                                onPress={makeEmail}
+                                style={{ flexDirection: 'row', width: '100%', height: 25 }}
                             >
-                            <Edit
-                                name='help-outline' color='black' size={20}
-                            />
-                            <Text style={styles.personal}>Help Center</Text>
+                                <Edit
+                                    name='help-outline' color='black' size={20}
+                                />
+                                <Text style={styles.personal}>Help Center</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
 
                         <View style={{ marginVertical: 15, marginLeft: 15 }}>
                             <TouchableOpacity
-                                style={{ flexDirection: 'row',width:'100%',height:25 }}
+                                style={{ flexDirection: 'row', width: '100%', height: 25 }}
                                 onPress={() => navigation.navigate('BloodMyDonations' as never)}
                             >
                                 <Donate
@@ -169,7 +169,7 @@ const BloodProfile = () => {
                         <View style={{ borderBottomWidth: 1, borderColor: 'lightgray' }}></View>
                         <View style={{ marginVertical: 15, marginLeft: 15, }}>
                             <TouchableOpacity
-                                style={{ flexDirection: 'row',width:'100%',height:25 }}
+                                style={{ flexDirection: 'row', width: '100%', height: 25 }}
                                 onPress={() => { logout(); setIsloading(true) }}
                             >
                                 <Edit
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     },
     Profilenameview: {
         marginLeft: 7,
-        marginTop:10,
+        marginTop: 10,
     },
     Profilename: {
         color: 'black',

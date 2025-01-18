@@ -205,15 +205,16 @@ const BloodEdit = ({ route }: any) => {
                 />
 
                 <TextInput
-                    style={styles.input}
+                    style={styles.inputEmail}
                     value={email}
+                    editable={false}
                     onChangeText={setEmail}
                     placeholder='Email'
                     placeholderTextColor='#877E7F'
                 />
 
                 <TouchableOpacity
-                    onPress={() => { updatePost(); navigation.goBack() }}
+                    onPress={() => { updatePost(); navigation.navigate('BloodProfile1' as never) }}
                     style={[styles.Loginbutton, { backgroundColor: '#D80032' }]}
                 >
                     <Text style={styles.Loginbuttontxt}>Save Changes</Text>
@@ -243,6 +244,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 15,
         marginVertical: '6%',
         color: 'black',
+    },
+    inputEmail: {
+        borderBottomWidth: 1,
+        borderColor: '#877E7F',
+        marginHorizontal: 15,
+        marginVertical: '6%',
+        color: 'gray',
     },
 
     Loginbutton: {
