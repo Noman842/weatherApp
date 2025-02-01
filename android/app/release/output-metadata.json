@@ -4,7 +4,11 @@
     "type": "APK",
     "kind": "Directory"
   },
+<<<<<<< HEAD
   "applicationId": "ZONIX.app",
+=======
+  "applicationId": "com.awesomeproject",
+>>>>>>> master
   "variantName": "release",
   "elements": [
     {

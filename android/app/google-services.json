@@ -1,21 +1,37 @@
 {
   "project_info": {
+<<<<<<< HEAD
     "project_number": "414684792557",
     "project_id": "zonix-4b325",
     "storage_bucket": "zonix-4b325.firebasestorage.app"
+=======
+    "project_number": "689345118569",
+    "project_id": "fakestore-80c2f",
+    "storage_bucket": "fakestore-80c2f.firebasestorage.app"
+>>>>>>> master
   },
   "client": [
     {
       "client_info": {
+<<<<<<< HEAD
         "mobilesdk_app_id": "1:414684792557:android:04233a1b1ba0ef5d59eee4",
         "android_client_info": {
           "package_name": "ZONIX.app"
+=======
+        "mobilesdk_app_id": "1:689345118569:android:6f6ce44e7cff02f5283df8",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+>>>>>>> master
         }
       },
       "oauth_client": [],
       "api_key": [
         {
+<<<<<<< HEAD
           "current_key": "AIzaSyC5KxbRJMfKu8T3DTqORS2y4MS3WuObFB4"
+=======
+          "current_key": "AIzaSyA-j5fA7kuRp3KCpdNcF5sS4vzlm7BrbR8"
+>>>>>>> master
         }
       ],
       "services": {

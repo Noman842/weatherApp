@@ -3,7 +3,7 @@ import React from 'react'
 import Stars from 'react-native-vector-icons/FontAwesome'
 
 const InputText = (props:any) => {
-    const {value, setValue,placeholder,keyboardType,star,color,size}=props
+    const {value, setValue,placeholder,keyboardType}=props
   return (
     <View>
          <TextInput
@@ -12,11 +12,12 @@ const InputText = (props:any) => {
             onChangeText={setValue}
             placeholder={placeholder}
             placeholderTextColor={'gray'}
+            keyboardType={keyboardType}
           
           />
-            <Stars 
+            {/* <Stars 
             style={{ alignSelf: 'center' }}
-            name={'star'} color='yellow' size={20}/>
+            name={'star'} color='yellow' size={20}/> */}
     </View>
   )
 }

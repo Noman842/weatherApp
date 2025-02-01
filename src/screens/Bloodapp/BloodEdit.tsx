@@ -97,10 +97,17 @@ const BloodEdit = ({ route }: any) => {
             console.log("Post updated successfuly")
             GetDatafromfirestore()
             // Snack()
+<<<<<<< HEAD
         } catch (error) {
             console.log("Error", error)
         }
         navigation.goBack()
+=======
+            navigation.goBack()
+        } catch (error) {
+            console.log("Error", error)
+        }
+>>>>>>> master
         setName(dataa.Name)
         setEmail(dataa.email)
         setSelectedImage(selectedImage)
@@ -214,7 +221,11 @@ const BloodEdit = ({ route }: any) => {
                 />
 
                 <TouchableOpacity
+<<<<<<< HEAD
                     onPress={() => { updatePost()}}
+=======
+                    onPress={() => { updatePost(); navigation.navigate('BloodProfile1' as never) }}
+>>>>>>> master
                     style={[styles.Loginbutton, { backgroundColor: '#D80032' }]}
                 >
                     <Text style={styles.Loginbuttontxt}>Save Changes</Text>

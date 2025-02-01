@@ -1,4 +1,116 @@
 // import React from 'react'
+// // import Screens
+// import HomeScreen from './screens/Shopping app/HomeScreen'
+// import ProductDetailScreen from './screens/Shopping app/ProductDetailScreen'
+// import Cart from './screens/Furniture/Cart'
+// import Settings from './screens/Contact App/Settings'
+// import Store from './store/Store'
+// // import Navigatiions
+// import { createStaticNavigation } from '@react-navigation/native'
+// import { createNativeStackNavigator } from '@react-navigation/native-stack'
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+// import { createDrawerNavigator } from '@react-navigation/drawer'
+// import CartScreen from './screens/Shopping app/CartScreen'
+// import { Screen } from 'react-native-screens'
+// // import Icons
+// import Home from 'react-native-vector-icons/Entypo'
+// import ProfileIcon from 'react-native-vector-icons/FontAwesome6'
+// import CartIcon from 'react-native-vector-icons/FontAwesome'
+// import DetailIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+// import ShoppingSetting from './screens/Shopping app/ShoppingSetting'
+// import { Provider } from 'react-redux'
+
+
+
+// const bottomstack = createBottomTabNavigator({
+// screens:{
+//   HomeScreen:{
+//     screen:HomeScreen,
+//     options:{headerShown:false,
+//       tabBarIcon:({color})=>(
+// <Home
+// name='home' color={color} size={27}
+// />
+//       ),
+//       tabBarLabel:''
+//     }
+
+//   },
+//   CartScreen:{
+//     screen:CartScreen,
+//     options:{headerShown:false,
+//       tabBarIcon:({color})=>(
+//         <DetailIcon
+//         name='reorder-horizontal' color={color} size={25}
+//         />
+//       ),
+//       tabBarLabel:''
+//     }
+//   },
+//   Details:{
+//     screen:ProductDetailScreen,
+//     options:{headerShown:false,
+//       tabBarIcon:({color})=>(
+//         <CartIcon
+//         name='shopping-cart' color={color} size={25}
+//         />
+//       ),
+//       tabBarLabel:''
+//     }
+//   },
+//   Settings:{
+//     screen:ShoppingSetting,
+//     options:{
+//       headerShown:false,
+//       tabBarIcon:({color})=>(
+//         <ProfileIcon
+//         name='user-large' color={color} size={23}
+//         />
+//       ),
+//       tabBarLabel:''
+//     }
+//   }
+
+// },
+
+// screenOptions:{tabBarActiveTintColor:'#ED6767'}
+// })
+// // const drawer =  createDrawerNavigator({
+// //   screens:{
+// //     Screen:CartScreen
+// //   }
+// // })
+//  const Navigation = createStaticNavigation(bottomstack);
+
+// const App = () => {
+//  return( <Provider store={Store}>  
+//     <Navigation/>
+//     </Provider>
+//  )
+
+// };
+
+// export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import React from 'react'
 // import Contacts from './Contacts'
 // import Practice from './Practice'
 // import DataScreen from './screens/Contact App/DataScreen';
@@ -13,61 +125,23 @@
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import Icon from 'react-native-vector-icons/MaterialIcons'
 // import Detail from 'react-native-vector-icons/MaterialCommunityIcons'
+// import { Screen } from 'react-native-screens';
 
 // const Stack = createNativeStackNavigator({
 //   screens: {
-//     DataScreen: {screen:DataScreen, options:{headerShown:false}}
-
-//   },
-//   AllContact:allcontacts,
-//   ContactInfo:Contactinfo
-// });
-
-// const MyDrawer = createDrawerNavigator({
-//   screens: {
-//     AddContacts: Stack, 
-//     Profile: Profile,
-//     Settings: Settings,
-//     AboutUs:AboutUs
-//   },
-//   // screenOptions: {
-//   //   headerShown: false
-//   // }
-// });
-
-// const BottomStack = createBottomTabNavigator({
-
-//   screens: {
-//     Home:{screen:MyDrawer,
-//       options: {
-//         tabBarIcon:() => (
-//           <Detail name="home-variant" color={'black'} size={25}/>  
-//         ),
-//         tabBarLabel: 'Home',
-//         tabBarLabelStyle: {color: 'black'}
+//      AllContacts:{
+//       screen:allcontacts,
+//       options:{
+//         headerShown:false
 //       }
-//     },
-//     AllContacts : {
-//       screen: allcontacts,
-//       options: {
-//         tabBarIcon:() => (
-//           <Icon name="call" color={'black'} size={25}/>  
-//         ),
-//         tabBarLabel: 'All Contacts',
-//         tabBarLabelStyle: {color: 'black'}
-//       }
-//     },
-//     Contactinfo : {
-//       screen: Contactinfo,
-//       options: {
-//         headerShown:false,
-//         tabBarIcon:() => (
-//           <Detail name="account-details-outline" color={'black'} size={25}/>  
-//         ),
-//         tabBarLabel: 'Contacts Info',
-//         tabBarLabelStyle: {color: 'black'}
-//       }
-//     },
+//      },
+//      AddContact:{
+//       screen:DataScreen,
+//      },
+//      Contactinfo:{
+//       screen:Contactinfo,
+//       options:{headerShown:false}
+//      }
 //   },
 // });
 
@@ -76,7 +150,7 @@
 // // ContactInfo: {screen:Contactinfo, options:{headerShown:false}}
 
 
-// const Navigation = createStaticNavigation(BottomStack);
+// const Navigation = createStaticNavigation(Stack);
 
 // const App = () => {
 //   return <Navigation/>
@@ -123,6 +197,8 @@
 // import BookMark from 'react-native-vector-icons/Feather'
 // import { Screen } from 'react-native-screens'
 // import firstpage from './screens/Furniture/firstpage'
+// import EditProfile from './screens/Furniture/EditProfile'
+// import { LogLevel, OneSignal } from 'react-native-onesignal';
 
 
 
@@ -136,7 +212,7 @@
 //     home: {
 //       screen: Home, options: {
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <Icon
 //             name='home' color={color} size={23}
 //           />
@@ -147,9 +223,8 @@
 //     BooksFurniture: {
 //       screen: BooksFurniture,
 //       options: {
-//         // tabBarStyle:{display:'none'},
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <BooksIcon
 //             name='bookshelf' color={color} size={23}
 //           />
@@ -162,7 +237,7 @@
 //       screen: Save,
 //       options: {
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <BookMark
 //             name='bookmark' color={color} size={23}
 //           />
@@ -174,7 +249,7 @@
 //       screen: Message,
 //       options: {
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <MessageIcon
 //             name='message-square' color={color} size={23}
 //           />
@@ -187,7 +262,7 @@
 //       screen: ProfileFurniture,
 //       options: {
 //         headerShown: false,
-//         tabBarIcon: ({color}) => (
+//         tabBarIcon: ({ color }) => (
 //           <ProfileIcon
 //             name='user-o' color={color} size={23}
 //           />
@@ -197,15 +272,15 @@
 //     },
 
 //   },
-//   screenOptions:{tabBarActiveTintColor:'black'}
+//   screenOptions: { tabBarActiveTintColor: 'black' }
 // })
 
 // const Stack = createNativeStackNavigator({
 //   screens: {
 
-//     firstpage:{
-//       screen:firstpage,options:{
-//        headerShown:false,
+//     firstpage: {
+//       screen: firstpage, options: {
+//         headerShown: false,
 //       }
 //     },
 //     Intro: {
@@ -214,7 +289,9 @@
 //       },
 //     },
 //     Cart: {
-//       screen: Cart, options: { headerShown: false }
+//       screen: Cart, options: {
+//         headerShown: false
+//       }
 //     },
 
 //     BooksFurniture: {
@@ -227,10 +304,16 @@
 //       }
 //     },
 //     ProfileFurniture: {
-//       screen: ProfileFurniture,
+//       screen: Bottomnavigation,
 //       options: {
 //         headerShown: false,
 //       },
+//     },
+//     EditProfile: {
+//       screen: EditProfile,
+//       options: {
+//         headerShown: false,
+//       }
 //     },
 //     Message: {
 //       screen: Message,
@@ -249,6 +332,7 @@
 //         headerShown: false,
 //       }
 //     },
+
 //     Signup: {
 //       screen: signup, options: {
 //         headerShown: false,
@@ -281,6 +365,22 @@
 
 // const Navigation = createStaticNavigation(Stack)
 // const App = () => {
+
+//   // Remove this method to stop OneSignal Debugging
+//   OneSignal.Debug.setLogLevel(LogLevel.Verbose);
+
+//   // OneSignal Initialization
+//   OneSignal.initialize("999f2278-f73d-4918-9e29-8a40b903585c");
+
+//   // requestPermission will show the native iOS or Android notification permission prompt.
+//   // We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+//   OneSignal.Notifications.requestPermission(true);
+
+//   // Method for listening for notification clicks
+//   OneSignal.Notifications.addEventListener('click', (event) => {
+//     console.log('OneSignal: notification clicked:', event);
+//   });
+
 //   return <Navigation />
 // }
 // export default App
@@ -361,6 +461,26 @@
 //         headerShown: false
 //       }
 //     },
+<<<<<<< HEAD
+=======
+//   }
+// })
+
+// const Navigation = createStaticNavigation(Stack)
+// const App = () => {
+//   return <Navigation />
+// }
+// export default App
+
+
+
+
+
+
+
+
+
+>>>>>>> master
 
 
 
@@ -390,6 +510,19 @@
 
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+>>>>>>> master
 // import { View } from 'react-native'
 // import React from 'react'
 // // Screens
@@ -686,6 +819,7 @@
 
 
 
+<<<<<<< HEAD
 // import { View } from 'react-native'
 // import React from 'react'
 // // Navigations
@@ -1089,6 +1223,70 @@ const Profilee = createNativeStackNavigator({
       screen: ZonixEditProfile,
       options: {
         animation: 'slide_from_bottom',
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+import { View } from 'react-native'
+import React from 'react'
+// Navigations
+import { createStaticNavigation } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+//Icons
+import Home from 'react-native-vector-icons/Feather'
+import Find from 'react-native-vector-icons/MaterialCommunityIcons'
+import Donation from 'react-native-vector-icons/Octicons'
+import Profile from 'react-native-vector-icons/FontAwesome5'
+//Screens
+import BloodSplash from './screens/Bloodapp/BloodSplash'
+import BloodLoginSignup from './screens/Bloodapp/BloodLoginSignup'
+import BloodLogin from './screens/Bloodapp/BloodLogin'
+import BloodSignup from './screens/Bloodapp/BloodSignup'
+import BloodHome from './screens/Bloodapp/BloodHome'
+import BloodProfile from './screens/Bloodapp/BloodProfile'
+import BloodDonate from './screens/Bloodapp/BloodDonate'
+import BloodDonor from './screens/Bloodapp/BloodDonor'
+import { Provider } from 'react-redux'
+import store, { persistor } from './store/Store'
+import BloodDetail from './screens/Bloodapp/BloodDetail'
+import BloodMyDonations from './screens/Bloodapp/BloodMyDonations'
+import BloodForget from './screens/Bloodapp/BloodForget'
+import { PersistGate } from 'redux-persist/integration/react'
+import BloodEdit from './screens/Bloodapp/BloodEdit'
+import BloodSearch from './screens/Bloodapp/BloodSearch'
+import BloodLanguage from './screens/Bloodapp/BloodLanguage'
+import BloodPrivacy from './screens/Bloodapp/BloodPrivacy'
+import BloodTerms from './screens/Bloodapp/BloodTerms'
+
+const stack2 = createNativeStackNavigator({
+  screens: {
+    BloodProfile1: {
+      screen: BloodProfile,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodEdit: {
+      screen: BloodEdit,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodMyDonations: {
+      screen: BloodMyDonations,
+      options: {
+        headerShown: false,
+>>>>>>> master
       }
     }
 
@@ -1097,6 +1295,144 @@ const Profilee = createNativeStackNavigator({
     headerShown: false
   }
 })
+const bottomnavigation = createBottomTabNavigator({
+  screens: {
+    Home: {
+      screen: BloodHome,
+      options: {
+        animation: 'shift',
+        headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <Home
+            name='home' color={color} size={27}
+          />
+        )
+      }
+    },
+    FindDonor: {
+      screen: BloodDonor,
+      options: {
+        headerShown: false,
+        animation: 'shift',
+
+
+        tabBarIcon: ({ color }) => (
+          <Find
+            name='account-search-outline' color={color} size={28}
+          />
+        )
+      }
+    },
+    Donation: {
+      screen: BloodDonate,
+      options: {
+        headerShown: false,
+        animation: 'shift',
+        tabBarIcon: ({ color }) => (
+          <Donation
+            name='checklist' color={color} size={23}
+          />
+        )
+      }
+    },
+    Profile: {
+      screen: stack2,
+      options: {
+        headerShown: false,
+        animation: 'shift',
+        tabBarIcon: ({ color }) => (
+          <Profile
+            name='user-circle' color={color} size={26}
+          />
+        )
+      }
+    },
+  },
+  screenOptions: {
+    tabBarActiveTintColor: '#D80032',
+  }
+})
+
+const Stack = createNativeStackNavigator({
+  screens: {
+    BloodSplash: {
+      screen: BloodSplash,
+      options: {
+        animation: 'slide_from_right',
+        headerShown: false
+      }
+    },
+    BloodLoginSignup: {
+      screen: BloodLoginSignup,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodLogin: {
+      screen: BloodLogin,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodSignup: {
+      screen: BloodSignup,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodTerms:{
+      screen:BloodTerms,
+      options:{
+        headerShown:false,
+
+      }
+    },
+    BloodHome: {
+      screen: bottomnavigation,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodDonate: {
+      screen: BloodDonate,
+      options: {
+        headerShown: false,
+      }
+    },
+
+    BloodDetail: {
+      screen: BloodDetail,
+      options: {
+        headerShown: false,
+      }
+    },
+
+    BloodForget: {
+      screen: BloodForget,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodSearch: {
+      screen: BloodSearch,
+      options: {
+        headerShown: false,
+      }
+    },
+    BloodLanguage:{
+      screen:BloodLanguage,
+      options:{
+        headerShown:false
+      }
+    },
+    BloodPrivacy:{
+      screen:BloodPrivacy,
+      options:{
+        headerShown:false
+      }
+    }
+  }
+});
 
 
 const Bottom = createBottomTabNavigator({
@@ -1223,12 +1559,24 @@ const stack = createNativeStackNavigator({
 })
 const Navigation = createStaticNavigation(stack)
 const App = () => {
+<<<<<<< HEAD
   return <Navigation />
 
+=======
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Navigation />
+      </PersistGate>
+    </Provider>
+
+  )
+>>>>>>> master
 }
 
 export default App
 
+<<<<<<< HEAD
 
 
 
@@ -1260,3 +1608,5 @@ const styles = StyleSheet.create({
   }
 })
 
+=======
+>>>>>>> master

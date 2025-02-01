@@ -273,6 +273,10 @@ const BloodDonate = ({ route }: any) => {
                     <View style={{
                         flex: 1,
                         backgroundColor: 'transparent',
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>

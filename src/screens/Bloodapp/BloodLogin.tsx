@@ -9,7 +9,10 @@ import { useDispatch } from 'react-redux'
 import { addUserEmail } from '../../store/Slice/BloodSlice'
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 const BloodLogin = () => {
     const navigation = useNavigation()
     const [email, setEmail] = useState<any>('')
@@ -47,7 +50,11 @@ const BloodLogin = () => {
                 .then(() => {
                     console.log('User account created & signed in!');
                     // if (user?.emailVerified) {
+<<<<<<< HEAD
                     Dispatch(addUserEmail(email))
+=======
+                    //     Dispatch(addUserEmail(email))
+>>>>>>> master
                     //     navigation.dispatch(CommonActions.reset({
                     //         index: 0,
                     //         routes: [{ name: 'BloodHome' }],
@@ -65,15 +72,23 @@ const BloodLogin = () => {
                     if (error.code === 'auth/email-already-in-use') {
                         setIsloading(false)
                         console.log('That email address is already in use!');
+<<<<<<< HEAD
                     }
 
                     else if (error.code === 'auth/invalid-email') {
+=======
+
+                    }
+
+                    if (error.code === 'auth/invalid-email') {
+>>>>>>> master
                         setIsloading(false)
                         console.log('That email address is invalid!');
                         // return Alert.alert('Invalid Email')
 
                         return setModelVisible(true)
                     }
+<<<<<<< HEAD
                     else if (error.code === 'auth/invalid-credential') {
                         setIsloading(false)
                         Alert.alert('Email and password does not match or Email does not exist')
@@ -86,6 +101,12 @@ const BloodLogin = () => {
                         setIsloading(false)
                         Alert.alert('Network error')
                     }
+=======
+                    if (error.code === 'auth/invalid-credential') {
+                        setIsloading(false)
+                        Alert.alert('Email and password does not match or Email does not exist')
+                    }
+>>>>>>> master
                     console.error(error);
                 })
         )
@@ -122,11 +143,15 @@ const BloodLogin = () => {
                         <View style={styles.modelcircle2}></View>
                         <View style={styles.modelcircle3}></View> */}
 
+<<<<<<< HEAD
                         <Text style={{
                             color: '#fff',
                             fontSize: 20,
                             fontFamily: 'Poppins-Medium'
                         }}>
+=======
+                        <Text style={{ color: '#fff', fontSize: 20, fontFamily: 'Poppins-Medium' }}>
+>>>>>>> master
                             Invalid Email
                         </Text>
 
@@ -177,6 +202,7 @@ const BloodLogin = () => {
 
                         />
                         <TouchableOpacity
+<<<<<<< HEAD
                             style={{
                                 alignSelf: 'center',
                                 marginRight: 15,
@@ -184,6 +210,9 @@ const BloodLogin = () => {
                                 right: 10,
                                 top: 20,
                             }}
+=======
+                            style={{ alignSelf: 'center', marginRight: 15, position: "absolute", right: 10, top: 20, }}
+>>>>>>> master
                             onPress={() => setHide(!hide)}
                         >
                             <Eye

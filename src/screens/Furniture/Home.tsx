@@ -1,30 +1,30 @@
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Search from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
 
 
-
 export const home = () => {
-    const navigation=useNavigation()
+    const navigation = useNavigation()
+
+
     return (
         <View style={styles.body}>
             <View style={styles.head}>
                 <TextInput
                     style={styles.searchInput}
-
                     placeholder='Search here'
                     placeholderTextColor='gray'
                 />
                 <View style={styles.cartIcon}>
-                    <TouchableOpacity 
-                    onPress={()=>navigation.navigate('Cart' as never)}>
-                    <Icon
-                    
-                        style={{ alignSelf: 'center' }}
-                        name='shoppingcart' color='black' size={20}
-                    /></TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Cart' as never)}>
+                        <Icon
+
+                            style={{ alignSelf: 'center' }}
+                            name='shoppingcart' color='black' size={20}
+                        /></TouchableOpacity>
                 </View>
 
             </View>
@@ -37,24 +37,28 @@ export const home = () => {
 
             <View style={styles.main1}>
                 <View>
-                    <View style={styles.container1}></View><Text style={styles.txt1}>Fresh space with plants</Text> 
-                    </View>
-                    
+                    <View style={styles.container1}></View><Text style={styles.txt1}>Fresh space with plants</Text>
+                </View>
+
                 <View>
-                    <View style={styles.container2}></View><Text style={styles.txt2}>Fresh space with plants</Text>
-                     </View>
+                    <View style={styles.container2}></View>
+                    <Text style={styles.txt2}>Fresh space with plants</Text>
+                </View>
             </View>
             <View style={styles.main1}>
                 <View>
-                    <View style={styles.container1}></View><Text style={styles.txt1}>Fresh space with plants</Text> 
-                    </View>
-                    <View>
-                    <View style={styles.container1}></View><Text style={styles.txt1}>Fresh space with plants</Text> 
-                    </View>
-                    <View>
-                    <View style={styles.container1}></View><Text style={styles.txt1}>Fresh space with plants</Text> 
-                    </View>
-                    </View>
+                    <View style={styles.container1}></View>
+                    <Text style={styles.txt1}>Fresh space with plants</Text>
+                </View>
+                <View>
+                    <View style={styles.container1}></View>
+                    <Text style={styles.txt1}>Fresh space with plants</Text>
+                </View>
+                <View>
+                    <View style={styles.container1}></View>
+                    <Text style={styles.txt1}>Fresh space with plants</Text>
+                </View>
+            </View>
         </View>
     )
 }
@@ -71,7 +75,6 @@ const styles = StyleSheet.create({
         marginTop: 40,
         justifyContent: 'space-between',
         marginHorizontal: 15,
-
     },
     searchInput: {
         height: 35,
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         alignItems: 'center',
         justifyContent: 'center',
-
     },
     suggestion2: {
         height: 25,
@@ -132,14 +134,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: 'space-between',
         marginHorizontal: 15,
-        
     },
     container1: {
         height: 230,
         width: 160,
         backgroundColor: 'lightgray',
         borderRadius: 10,
-
     },
     container2: {
         height: 170,
@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 15,
-
     },
     txt1: {
         color: 'black',
@@ -164,7 +163,5 @@ const styles = StyleSheet.create({
         fontSize: 18,
         width: 180,
         fontFamily: 'Poppins-Regular',
-    }
-
-
+    },
 })

@@ -4,9 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import InputText from './../../components/InputText'
+import { launchImageLibrary, } from 'react-native-image-picker';
+import Edit from 'react-native-vector-icons/MaterialCommunityIcons'
+import Profile from 'react-native-vector-icons/MaterialIcons'
 
-export const DataScreen = () => {
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
@@ -18,6 +21,14 @@ export const DataScreen = ({ route }: any) => {
   const Save = route.params
 
   const [selectedImage, setSelectedImage] = useState<any>(Save?.Image ? Save.Image : null)
+=======
+
+
+export const DataScreen = ({route}:any) => {
+  const Save  =route.params
+  
+  const [selectedImage, setSelectedImage] = useState<any>(Save?.Image?Save.Image:null)
+>>>>>>> master
 
 
   const openImagePicker = () => {
@@ -41,10 +52,16 @@ export const DataScreen = ({ route }: any) => {
   };
 
 
+<<<<<<< HEAD
   const [name, setName] = useState(Save?.Name ? Save.Name : '')
   const [surname, setSurname] = useState(Save?.Surname ? Save.Surname : '')
   const [number, setNumber] = useState(Save?.Number ? Save.Number : '')
 >>>>>>> Stashed changes
+=======
+  const [name, setName] = useState(Save?.Name?Save.Name:'')
+  const [surname, setSurname] = useState(Save?.Surname?Save.Surname:'')
+  const [number, setNumber] = useState(Save?.Number?Save.Number:'')
+>>>>>>> master
   const [data, setData] = useState([])
   const navigation = useNavigation()
 
@@ -54,13 +71,14 @@ export const DataScreen = ({ route }: any) => {
 
   const SaveData = () => {
     if (name !== '' && number !== '') {
-      const dataArray = [...data, { ContactName: name, SurName: surname, PhoneNumber: number }]
+      const dataArray = [...data, { ContactName: name, SurName: surname, PhoneNumber: number, Image: selectedImage, }]
       console.log('Data', dataArray)
       storeObjectValue(dataArray)
       setData(dataArray as any)
       setName('')
       setSurname('')
       setNumber('')
+      setSelectedImage(null)
       navigation.navigate('AllContacts' as never)
     }
     else {
@@ -92,37 +110,39 @@ export const DataScreen = ({ route }: any) => {
 
 <<<<<<< Updated upstream
   // const renderData = ({ item, index }: any) => {
-  const renderData =({index}:any)=>{
-  //   return (
-  //     <View style={styles.storeddata}>
-  //       <View style={{ flexDirection: 'row' }}>
-  //         <Image source={require('./../images/profileicon.jpg')} />
-  //         <View style={{ flexDirection: 'column' }}>
-  //           <Text style={styles.storeddatatxt}>
-  //             {item.ContactName} {item.SurName}
-  //           </Text>
-  //           <Text style={styles.storeddatatxt}>
-  //             {item.PhoneNumber}
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <TouchableOpacity
-  //         style={{ justifyContent: 'center' }}
-  //       >
-  //         <Icon
-  //           name="call" color="green" size={25}
-  //         />
-  //       </TouchableOpacity>
-        
-        <TouchableOpacity 
-        style={{justifyContent:'center'}}
-        onPress={() => deleteContact(index)}>
-         <Icon
-         name="delete-sweep" color="red" size={25}/>
-        </TouchableOpacity>}
+  const renderData = ({ index }: any) => {
+    //   return (
+    //     <View style={styles.storeddata}>
+    //       <View style={{ flexDirection: 'row' }}>
+    //         <Image source={require('./../images/profileicon.jpg')} />
+    //         <View style={{ flexDirection: 'column' }}>
+    //           <Text style={styles.storeddatatxt}>
+    //             {item.ContactName} {item.SurName}
+    //           </Text>
+    //           <Text style={styles.storeddatatxt}>
+    //             {item.PhoneNumber}
+    //           </Text>
+    //         </View>
+    //       </View>
+    //       <TouchableOpacity
+    //         style={{ justifyContent: 'center' }}
+    //       >
+    //         <Icon
+    //           name="call" color="green" size={25}
+    //         />
+    //       </TouchableOpacity>
+
+    <TouchableOpacity
+      style={{ justifyContent: 'center' }}
+      onPress={() => deleteContact(index)}>
+      <Icon
+        name="delete-sweep" color="red" size={25} />
+    </TouchableOpacity>
+  }
   //     </View>
   //   )
   // }
+<<<<<<< HEAD
 =======
 
 
@@ -135,8 +155,39 @@ export const DataScreen = ({ route }: any) => {
 
 
 >>>>>>> Stashed changes
+=======
+
+const UpdatedContacts =()=>{
+  const OldContactArray=data as any
+  OldContactArray[Save.index] = { ContactName: name, SurName: surname, PhoneNumber: number, Image: selectedImage, }
+  storeObjectValue(OldContactArray)
+  navigation.navigate('AllContacts' as never)
+}
+
+
+>>>>>>> master
   return (
     <View style={styles.body}>
+
+      <View style={{ flexDirection: 'row', marginTop: 15, justifyContent: 'center' }}>
+        {selectedImage ?
+          selectedImage &&
+          <Image style={{ height: 70, width: 70, borderRadius: 35 }} source={{ uri: selectedImage }} /> :
+          <Profile
+            name='account-circle' size={80} color='gray'
+          />
+        }
+        <TouchableOpacity
+          style={{ alignSelf: 'flex-end' }}
+          onPress={openImagePicker}
+        >
+          <Edit
+            name='image-edit' color='black' size={20}
+          />
+        </TouchableOpacity>
+
+
+      </View>
       <View style={{ height: 390 }}>
         <View style={styles.mainnametop}>
           <Text style={styles.titalname}>Name:</Text>
@@ -147,19 +198,19 @@ export const DataScreen = ({ route }: any) => {
             placeholder='Enter name'
             placeholderTextColor={'gray'}
           /> */}
-          <InputText value={name} setValue={setName} placeholder='Enter Name'/>
+          <InputText value={name} setValue={setName} placeholder='Enter Name' />
         </View>
 
         <View style={styles.mainname}>
-           <Text style={styles.titalname}>Surname:</Text>
-         {/* <TextInput
+          <Text style={styles.titalname}>Surname:</Text>
+          {/* <TextInput
             style={styles.name}
             value={surname}
             onChangeText={setSurname}
             placeholder='Enter surname (Optional)'
             placeholderTextColor={'gray'}
           /> */}
-          <InputText value={surname} setValue={setSurname} placeholder='Enter SurName(optional)'/>
+          <InputText value={surname} setValue={setSurname} placeholder='Enter SurName(optional)' />
         </View>
 
         <View style={styles.mainname}>
@@ -172,16 +223,20 @@ export const DataScreen = ({ route }: any) => {
             placeholderTextColor={'gray'}
             keyboardType='phone-pad'
           /> */}
-          <InputText value={number} setValue={setNumber} placeholder='+923__-_______' keyboardType='phone-pad'/>
+          <InputText value={number} setValue={setNumber} placeholder='+923__-_______' keyboardType='phone-pad' />
         </View>
 
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             onPress={SaveData}
 =======
             onPress={Save ? UpdatedContacts : SaveData}
 >>>>>>> Stashed changes
+=======
+            onPress={Save?UpdatedContacts:SaveData}
+>>>>>>> master
             style={styles.button}
           >
             <Text style={styles.buttontxt}>Save Data</Text>
@@ -192,6 +247,8 @@ export const DataScreen = ({ route }: any) => {
       data={data}
       renderItem={renderData}
       /> */}
+
+
     </View>
   )
 }

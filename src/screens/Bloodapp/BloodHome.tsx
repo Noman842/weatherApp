@@ -98,7 +98,31 @@ const BloodHome = () => {
                         </Text>
                     </View>
                 </View>
+<<<<<<< HEAD
               
+=======
+                <View style={styles.container}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Image
+                            style={{ height: 150, width: 150, }}
+                            source={require('./../../images/Blooddonation.png')}
+                        />
+                        <Text numberOfLines={3} style={styles.containertxt}>
+                            "Your BLOOD can make someone’s HEART BEAT again."
+                        </Text>
+                    </View>
+                </View><View style={styles.container}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Image
+                            style={{ height: 150, width: 150, }}
+                            source={require('./../../images/Blooddonation.png')}
+                        />
+                        <Text numberOfLines={4} style={styles.containertxt}>
+                            "BLOOD donation is not just about giving blood; it’s about giving someone a tomorrow."
+                        </Text>
+                    </View>
+                </View>
+>>>>>>> master
             </ScrollView>
 
             <View style={styles.checkview}>
@@ -174,8 +198,13 @@ const styles = StyleSheet.create({
     },
     container: {
         backgroundColor: '#f7f5f5',
+<<<<<<< HEAD
         width: '90%',
         height: '95%',
+=======
+        width: '30.5%',
+        height: '100%',
+>>>>>>> master
         borderRadius: 15,
         padding: 15,
         elevation: 2,

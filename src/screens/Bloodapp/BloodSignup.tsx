@@ -12,11 +12,15 @@ import { firebase } from '@react-native-firebase/auth'
 import Snackbar from 'react-native-snackbar'
 import CheckBox from '@react-native-community/checkbox'
 import Toast from 'react-native-toast-message'
+<<<<<<< HEAD
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 
 
 
+=======
+import { Button } from 'react-native'
+>>>>>>> master
 
 const BloodSignup = () => {
     const navigation = useNavigation()
@@ -69,6 +73,10 @@ const BloodSignup = () => {
                     //         routes: [{ name: 'BloodLogin' }],
                     //     }));
                     //   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
                 })
                 .catch(error => {
                     if (error.code === 'auth/email-already-in-use') {
@@ -138,11 +146,15 @@ const BloodSignup = () => {
     };
 
 
+<<<<<<< HEAD
     const social = () => {
         GoogleSignin.configure({
             webClientId: '689345118569-a7n36hlg0kog04uv0dsdohbt4pab8jt2',
         })
     }
+=======
+
+>>>>>>> master
     return (
         <SafeAreaView style={styles.body}>
             {isloading ?
@@ -206,7 +218,11 @@ const BloodSignup = () => {
                         <CheckBox
                             value={checked}
                             onValueChange={setChecked}
+<<<<<<< HEAD
                             tintColors={{ true: '#D80032', false: 'gray' }}
+=======
+                            tintColors={{ true: '#D80032', false: 'gray', }}
+>>>>>>> master
                         />
                         <View style={{
                             alignSelf: 'center',
@@ -237,21 +253,33 @@ const BloodSignup = () => {
                     <TouchableOpacity
                         disabled={name === 0 || email === 0 || password === 0 || checked == 0}
                         onPress={() => Signup()}
+<<<<<<< HEAD
                         style={[styles.Loginbutton, {
                             backgroundColor: name == '' || email == '' || password == '' || checked == '' ? 'gray' : '#D80032'
+=======
+                        style={[styles.Loginbutton, { backgroundColor: name=='' ||email =='' || password =='' || checked =='' ?'gray': '#D80032'
+>>>>>>> master
                         }]}
                     >
                         <Text style={styles.Loginbuttontxt}>Create Account</Text>
                     </TouchableOpacity>
 
+<<<<<<< HEAD
                     {/* <View style={styles.lineview}>
+=======
+                    <View style={styles.lineview}>
+>>>>>>> master
                         <View style={styles.line1}></View>
                         <Text style={styles.or}>OR</Text>
                         <View style={styles.line1}></View>
                     </View>
 
+<<<<<<< HEAD
                     <TouchableOpacity
                     onPress={social}
+=======
+                    {/* <TouchableOpacity
+>>>>>>> master
                         style={styles.Google}
                     >
                         <View style={{ flexDirection: 'row' }}>
