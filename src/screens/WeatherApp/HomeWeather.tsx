@@ -90,7 +90,7 @@ const HomeWeather = () => {
                                         <Location
                                             name='location' color='#fff' size={24}
                                         />
-                                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: 16, marginHorizontal: 8 }}>{city}</Text>
+                                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: 16, marginHorizontal: 8 }}>{ }</Text>
                                         <Down
                                             style={{ marginTop: 5 }}
                                             name='down' color='#fff' size={13}

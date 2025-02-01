@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "414684792557",
+    "project_id": "zonix-4b325",
+    "storage_bucket": "zonix-4b325.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414684792557:android:04233a1b1ba0ef5d59eee4",
+        "android_client_info": {
+          "package_name": "ZONIX.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5KxbRJMfKu8T3DTqORS2y4MS3WuObFB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

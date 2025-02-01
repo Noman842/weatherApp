@@ -42,8 +42,35 @@ const Contactinfo = ({ route }: any) => {
             </View>
        
             <View style={styles.profilepic}>
+
                 <Image style={{ height: 130, width: 130 }} source={require('./../images/account_circle.png')} />
                 <Text style={styles.profiletxt}>{Save.ContactName}</Text>
+                <TouchableOpacity>
+                    {Save.Image ? Save.Image &&
+                        <Image style={{ height: 140, width: 140, borderRadius: 100, }} source={{ uri: Save.Image }} /> :
+                        <Icon1 name="account-circle" size={140} color="grey" />
+                    }</TouchableOpacity>
+                <View style={{ alignSelf: 'flex-end', flexDirection: 'row', marginRight: 20 }}>
+                    <TouchableOpacity onPress={() => deleteContact(index)}>
+                        <Delete
+                            style={{ marginHorizontal: 20 }}
+                            name='delete' color='black' size={23}
+                        /></TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('AddContact', {
+                            Name: Save.ContactName,
+                            Surname: Save.SurName,
+                            Number: Save.PhoneNumber,
+                            Image: Save.Image,
+                            index: index
+
+                        })
+                        }>
+                        <Edit
+                            name='pen' color='black' size={19}
+                        /></TouchableOpacity>
+                </View>
+                <Text style={styles.profiletxt}>{Save.ContactName} {Save.SurName}</Text>
             </View>
 
             {/* <View style={styles.profile}>
@@ -141,7 +168,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: '#ffffff',
-        alignItems: 'center'
+        alignItems: 'center',
+        elevation: 3,
     },
     profilepic: {
         justifyContent: 'center',

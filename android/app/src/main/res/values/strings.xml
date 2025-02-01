@@ -1,3 +1,7 @@
 <resources>
+<<<<<<< Updated upstream
     <string name="app_name">AwesomeProject</string>
+=======
+    <string name="app_name">App</string>
+>>>>>>> Stashed changes
 </resources>

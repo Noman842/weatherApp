@@ -7,9 +7,44 @@ import InputText from './../../components/InputText'
 
 export const DataScreen = () => {
 
+<<<<<<< Updated upstream
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
   const [number, setNumber] = useState('')
+=======
+
+
+export const DataScreen = ({ route }: any) => {
+  const Save = route.params
+
+  const [selectedImage, setSelectedImage] = useState<any>(Save?.Image ? Save.Image : null)
+
+
+  const openImagePicker = () => {
+    const options: any = {
+      mediaType: 'photo',
+      includeBase64: false,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    launchImageLibrary(options, (response: any) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('Image picker error: ', response.error);
+      } else {
+        let imageUri = response.uri || response.assets?.[0]?.uri;
+        setSelectedImage(imageUri);
+      }
+    });
+  };
+
+
+  const [name, setName] = useState(Save?.Name ? Save.Name : '')
+  const [surname, setSurname] = useState(Save?.Surname ? Save.Surname : '')
+  const [number, setNumber] = useState(Save?.Number ? Save.Number : '')
+>>>>>>> Stashed changes
   const [data, setData] = useState([])
   const navigation = useNavigation()
 
@@ -42,17 +77,7 @@ export const DataScreen = () => {
       console.log('Error', error)
     }
   }
-  const deleteContact = async (index: any) => {
-    try {
-      const filteredArray = data.filter((_, i) => i !== index)
-      setData(filteredArray)
-      const jsonValue = JSON.stringify(filteredArray)
-      console.log('Contact LIst', jsonValue)
-      await AsyncStorage.setItem('CONTACTS', jsonValue)
-    } catch (error) {
-      console.log('Error', error)
-    }
-  }
+
 
   const getStoredObjectValue = async () => {
     try {
@@ -65,6 +90,7 @@ export const DataScreen = () => {
     }
   }
 
+<<<<<<< Updated upstream
   // const renderData = ({ item, index }: any) => {
   const renderData =({index}:any)=>{
   //   return (
@@ -97,6 +123,18 @@ export const DataScreen = () => {
   //     </View>
   //   )
   // }
+=======
+
+
+  const UpdatedContacts = () => {
+    const OldContactArray = data as any
+    OldContactArray[Save.index] = { ContactName: name, SurName: surname, PhoneNumber: number, Image: selectedImage, }
+    storeObjectValue(OldContactArray)
+    navigation.navigate('AllContacts' as never)
+  }
+
+
+>>>>>>> Stashed changes
   return (
     <View style={styles.body}>
       <View style={{ height: 390 }}>
@@ -139,7 +177,11 @@ export const DataScreen = () => {
 
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity
+<<<<<<< Updated upstream
             onPress={SaveData}
+=======
+            onPress={Save ? UpdatedContacts : SaveData}
+>>>>>>> Stashed changes
             style={styles.button}
           >
             <Text style={styles.buttontxt}>Save Data</Text>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert, FlatList, Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert, FlatList, Image, RefreshControl } from 'react-native'
 import React, { useCallback } from 'react'
 import { useFocusEffect, useNavigation, } from '@react-navigation/native'
 import { useState, useEffect } from 'react'
@@ -21,6 +21,8 @@ const Weather = ({ route }: any) => {
     const [isLoading, setIsLoading] = useState(true)
     const [errorMessage, setErrorMessage] = useState('')
     const [city, setCity] = useState<any>('')
+    const [refresh, setRefresh] = useState(false)
+
 
     // useEffect(() => {
     //     getData()
@@ -69,7 +71,7 @@ const Weather = ({ route }: any) => {
 
     const renderItem = ({ item }: any) => {
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 15 ,height:140,}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 15, height: 140, }}>
                 <View style={styles.days}>
                     <Text style={styles.daystxt}>{item.main.temp}°C</Text>
                     {item?.weather[0]?.icon ? <Image
@@ -77,7 +79,7 @@ const Weather = ({ route }: any) => {
                         onError={(e) => console.log('Image Load Error:', e.nativeEvent.error)}
                         height={60} width={60}
                         source={{ uri: `https://openweathermap.org/img/wn/${item?.weather[0]?.icon}@4x.png` }} />
-                        : <Text style={{color:'black'}}>Loading icon....</Text>
+                        : <Text style={{ color: 'black' }}>Loading icon....</Text>
                     }
                     <Text style={styles.daystxt}>{date.getHours()}:{date.getMinutes()}</Text>
                 </View>
@@ -95,6 +97,10 @@ const Weather = ({ route }: any) => {
     return (
 
         <View style={styles.body}>
+            <RefreshControl
+                refreshing={refresh}
+                onRefresh={getData}
+            />
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20, marginVertical: 25 }}>
                 <View style={{ flexDirection: 'row' }}>
@@ -121,7 +127,8 @@ const Weather = ({ route }: any) => {
                     data={weatherData.list}
                     renderItem={renderItem}
                     horizontal={true}
-
+                    refreshing={refresh}
+                    onRefresh={getData}
                 />
 
             </View>
@@ -247,7 +254,7 @@ const styles = StyleSheet.create({
     days: {
         height: 100,
         justifyContent: "space-between",
-        alignItems:'center',
+        alignItems: 'center',
     },
     daystxt: {
         color: '#fff',
